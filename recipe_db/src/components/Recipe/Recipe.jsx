@@ -21,7 +21,7 @@ function Recipe(props) {
       return (
         <div className="App">
           <h1>{data.title}</h1>
-          <h2>Author: {data.user.username}</h2>
+          <h2>Author: {data.user.first_name} {data.user.last_name}</h2>
           <img src = {data.image} alt = {data.title}/>
           <h2>Ingredients</h2>
           <ul>

@@ -5,8 +5,14 @@ import Landing from './components/Main/Landing';
 
 
 function App() {
+  
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = localStorage.getItem('username')
+    return savedUser || ""
+  })
+
 return (
-  <DataContext.Provider>
+  <DataContext.Provider value = {{currentUser}}>
   <div>
       <Landing/>
   </div>
