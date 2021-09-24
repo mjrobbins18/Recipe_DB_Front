@@ -29,7 +29,6 @@ const handleSubmit = (e) => {
         localStorage.setItem('refresh_token', token.refresh)
         localStorage.setItem('access_token', token.access)
         localStorage.setItem('username', formState.username)
-        console.log(token)
         setState(initialState)
           } )
     .catch(console.error)
