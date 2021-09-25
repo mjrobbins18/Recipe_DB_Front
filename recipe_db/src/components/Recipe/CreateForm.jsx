@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { DataContext } from '../Main/DataContext';
+import axiosInstance from '../../AxiosAPI';
 function CreateForm(props) {
+    // currentuser
+    const { currentUser } = useContext(DataContext)
+
+
     // Initial formstate
-    const initialRecipe = [{
+    const initialRecipe = 
+    {
         title: "",
-        user: "",
+        user: currentUser,
         category: "",
-        image: null,
+        image: "",
         image_url: "",
         dish_components: "",
-    }]
+        recipe_yield: "",
+    }
     const initialIngredients = [{
         quantity: "",
         unit_of_measure: "",
@@ -26,18 +34,71 @@ function CreateForm(props) {
         recipe: "",
     }]
     
-
+    
     // State
+    const [token, setToken] = useState(() => {
+        const savedToken = localStorage.getItem('access_token')
+        return savedToken || ""
+      })
+    const [userID, setUserID] = useState()
     const [selectedFile, setSelectedFile] = useState(null)
     const [inputState, setInputState] = useState(initialRecipe)
     const [inputIngredient, setInputIngredient] = useState(initialIngredients)
     const [inputEquipment, setInputEquipment] = useState(initialEquipment)
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
 
+    // get user id
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/user/${currentUser}`)
+        .then(res => setUserID(res.data.id))
+        .catch(console.error)
+    }, [])
+    console.log('userid',userID)
+
+
     // handle submit
-    const handleSubmit = () => {
+    console.log(currentUser)
+    console.log('cat', inputState.category)
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        console.log(currentUser)
+        axiosInstance.post('/recipes/create',{
+            title: inputState.title,
+            category: inputState.category,
+            user: currentUser,
+            image_url: inputState.image_url,
+            dish_components: inputState.dish_components,
+            recipe_yield: inputState.recipe_yield,
+        })
+        .then(setTimeout(1000, inputIngredient.map(list => {
+            return(
+                axiosInstance.post('/ingredient/create',
+                {name: list.name,
+                 quantity: list.quantity,
+                 unit_of_measure: list.unit_of_measure,
+                 recipe: inputState.title})
+            )
+        })))  
+        .then(setTimeout(1000, inputEquipment.map(list => {
+            return(
+                axiosInstance.post('/equipment/create',
+                {name: list.name,
+                 quantity: list.quantity,
+                 recipe: inputState.title})
+            )
+        })))  
+        .then(setTimeout(1000, inputProcedure.map(list => {
+            return(
+                axiosInstance.post('/procedure/create',
+                {step: list.step,
+                 recipe: inputState.title})
+            )
+        })))  
+        .then(res => console.log(res))
+        .catch(console.error)
 
     }
+    console.log('map', inputEquipment.map(list => list))
 
     // handle change
     const handleChange = (event) => {
@@ -81,15 +142,15 @@ function CreateForm(props) {
       };
       const handleAddIngredient = (event) => {
         event.preventDefault()
-        setInputIngredient([...inputIngredient, { quantity: "", unit_of_measure: "" , name: "", recipe: ""}]);
+        setInputIngredient([...inputIngredient, { quantity: "", unit_of_measure: "" , name: "", recipe: inputState.title}]);
       };
       const handleAddEquipment = (event) => {
         event.preventDefault()
-        setInputEquipment([...inputEquipment, { quantity: "", name: "", recipe: ""}]);
+        setInputEquipment([...inputEquipment, { quantity: "", name: "", recipe: inputState.title}]);
       };
       const handleAddProcedure = (event) => {
         event.preventDefault()
-        setInputProcedure([...inputProcedure, { step: "", recipe: ""}]);
+        setInputProcedure([...inputProcedure, { step: "", recipe: inputState.title}]);
       };
 
     // handle file change for image upload
@@ -102,11 +163,11 @@ function CreateForm(props) {
         setInputState({...inputState, 'image': selectedFile.name})
 
     }
-    console.log(inputIngredient)
+    console.log(inputState)
     return (
         <div>
            
-            <form>
+            <form onSubmit = { handleSubmit }>
         <h1>Title:</h1>
         <input id = 'title'
                value = {inputState.title}
@@ -137,12 +198,12 @@ function CreateForm(props) {
         <h1>Dish Components:</h1>       
         <input id = 'dish_components'
                value = {inputState.dish_components}
-               placeholder = "Title"
+               placeholder = "Components"
                onChange = { handleChange }/>
         <h1>Category:</h1>
-        <select onChange = { handleChange }
+         <select onChange = { handleChange }
                 id = "category"
-                value = {inputState[0].category}>
+                value = {inputState.category}>
             <option value = "null">-----</option>
             <option value = "Bread">Bread</option>
             <option value = "Canape">Canape</option>
@@ -161,7 +222,11 @@ function CreateForm(props) {
             <option value = "Stock">Stock</option>
 
         </select>
-          
+            <h1>Yield:</h1>
+            <input id = 'recipe_yield'
+               value = {inputState.recipe_yield}
+               placeholder = "Yield"
+               onChange = { handleChange }/>
               
                     <div>
                     <h2>Ingredients:</h2>
@@ -241,7 +306,7 @@ function CreateForm(props) {
                             
                     </div> 
 
-      
+                <button type = 'submit'>Submit</button>
            </form>
      </div>
     );

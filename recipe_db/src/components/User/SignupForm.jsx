@@ -12,7 +12,7 @@ function SignupForm(props) {
     }
 
     const [formState, setState] = useState(initialState)
-
+    const [errors, setErrors] = useState()
 const  handleChange = (e) => {
     setState({
         ...formState, [e.target.id]: e.target.value
@@ -30,7 +30,10 @@ const handleSubmit = (e) => {
         last_name: formState.last_name
     })
     .then(res => console.log(res))
-    .catch(console.error)
+    .catch(err => {
+        console.log(err.stack)
+        setErrors({errors: err.response.data})
+    })
     setState(initialState)
 }
 
@@ -46,6 +49,7 @@ const handleSubmit = (e) => {
                            id = "first_name"
                            value = { formState.first_name }
                            onChange = { handleChange }/>
+                           
                     </label>
                     <label>
                         Last Name:
@@ -61,6 +65,7 @@ const handleSubmit = (e) => {
                            id = "username"
                            value = { formState.username }
                            onChange = { handleChange }/>
+                           { errors ? errors.errors.username : null}
                 </label>
                 <label>
                         Email:
@@ -69,6 +74,7 @@ const handleSubmit = (e) => {
                            id = "email"
                            value = { formState.email }
                            onChange = { handleChange }/>
+                           { errors ? errors.errors.email: null}
                     </label>
                 <label>
                     Password:
@@ -77,6 +83,7 @@ const handleSubmit = (e) => {
                            id = "password"
                            value = { formState.password }
                            onChange = { handleChange }/>
+                           { errors ? errors.errors.password : null}
                 </label>
                 <button type = 'submit'>Submit</button>
             </form>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../AxiosAPI';
-
+import axios from 'axios'
 function LoginForm(props) {
     const initialState = {
         username: "",
@@ -25,6 +25,7 @@ const handleSubmit = (e) => {
         password: formState.password
     })
     .then(res => {
+        axiosInstance.defaults.headers['Authorization'] = "JWT " + res.data.access
         const token = res.data
         localStorage.setItem('refresh_token', token.refresh)
         localStorage.setItem('access_token', token.access)
