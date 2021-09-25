@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router';
 import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 
@@ -28,7 +29,11 @@ function NextStep(props) {
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
 
     // Context
-    const {inputState, setInputState} = useContext(DataContext)
+    const {inputState, setInputState, initialRecipe} = useContext(DataContext)
+    
+    // History
+    const history = useHistory()
+
     // HandleSubmit
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -62,56 +67,63 @@ function NextStep(props) {
                  .catch(console.error)
             )
                 })
+        setInputEquipment(initialEquipment)
+        setInputIngredient(initialIngredients)
+        setInputProcedure(initialProcedure)
+        setInputState(initialRecipe)
+        history.push('/')
         
 
     }
+    // Handle Change
     const handleIngredients = (event, index) => {
         const { id, value } = event.target;
         const list = [...inputIngredient];
         list[index][id] = value;
         setInputIngredient(list);
         
-}
-console.log(inputIngredient)
-const handleEquipment = (event, index) => {
-    const { id, value } = event.target;
-        const list = [...inputEquipment];
+    }
+    const handleEquipment = (event, index) => {
+        const { id, value } = event.target;
+            const list = [...inputEquipment];
+            list[index][id] = value;
+            setInputEquipment(list);
+    }
+    const handleProcedure= (event, index) => {
+        const { id, value } = event.target;
+        const list = [...inputProcedure];
         list[index][id] = value;
+        setInputProcedure(list);
+    }
+    // Remove Button Function
+    const handleRemoveIngredient = index => {
+        const list = [...inputIngredient];
+        list.splice(index, 1);
+        setInputIngredient(list);
+    };
+    const handleRemoveEquipment = index=> {
+        const list = [...inputEquipment];
+        list.splice(index, 1);
         setInputEquipment(list);
-}
-const handleProcedure= (event, index) => {
-    const { id, value } = event.target;
-    const list = [...inputProcedure];
-    list[index][id] = value;
-    setInputProcedure(list);
-}
-const handleRemoveIngredient = index => {
-    const list = [...inputIngredient];
-    list.splice(index, 1);
-    setInputIngredient(list);
-  };
-  const handleRemoveEquipment = index=> {
-    const list = [...inputEquipment];
-    list.splice(index, 1);
-    setInputEquipment(list);
-  };
-  const handleRemoveProcedure = index => {
-    const list = [...inputProcedure];
-    list.splice(index, 1);
-    setInputProcedure(list);
-  };
-  const handleAddIngredient = (event) => {
-    event.preventDefault()
-    setInputIngredient([...inputIngredient, { quantity: "", unit_of_measure: "" , name: "", recipe: inputState.title}]);
-  };
-  const handleAddEquipment = (event) => {
-    event.preventDefault()
-    setInputEquipment([...inputEquipment, { quantity: "", name: "", recipe: inputState.title}]);
-  };
-  const handleAddProcedure = (event) => {
-    event.preventDefault()
-    setInputProcedure([...inputProcedure, { step: "", recipe: inputState.title}]);
-  };
+    };
+    const handleRemoveProcedure = index => {
+        const list = [...inputProcedure];
+        list.splice(index, 1);
+        setInputProcedure(list);
+    };
+    // Add Button Function
+    const handleAddIngredient = (event) => {
+        event.preventDefault()
+        setInputIngredient([...inputIngredient, { quantity: "", unit_of_measure: "" , name: "", recipe: inputState.title}]);
+    };
+    const handleAddEquipment = (event) => {
+        event.preventDefault()
+        setInputEquipment([...inputEquipment, { quantity: "", name: "", recipe: inputState.title}]);
+    };
+    const handleAddProcedure = (event) => {
+        event.preventDefault()
+        setInputProcedure([...inputProcedure, { step: "", recipe: inputState.title}]);
+    };
 
     return(
         <div>

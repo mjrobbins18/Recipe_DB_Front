@@ -23,7 +23,7 @@ const [currentUser, setCurrentUser] = useState(() => {
 })
   const [inputState, setInputState] = useState(initialRecipe)
 return (
-  <DataContext.Provider value = {{currentUser, inputState, setInputState}}>
+  <DataContext.Provider value = {{currentUser, initialRecipe, inputState, setInputState}}>
   <div>
       <Landing/>
   </div>

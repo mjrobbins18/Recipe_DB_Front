@@ -4,7 +4,6 @@ import SignupForm from './SignupForm';
 function Signup(props) {
     return (
         <div>
-            Signup
             <SignupForm/>
         </div>
     );

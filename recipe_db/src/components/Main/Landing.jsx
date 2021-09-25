@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, Route } from 'react-router-dom';
 import axiosInstance from '../../AxiosAPI';
-import Hello from '../../hello';
 import Create from '../Recipe/Create';
 import CreateForm from '../Recipe/CreateForm';
 import NextStep from '../Recipe/NextStep';
 import Recipe from '../Recipe/Recipe';
+import RecipeCard from '../Recipe/RecipeCard';
 import RecipeCont from '../Recipe/RecipeCont';
 import Login from '../User/Login';
 import Signup from '../User/Signup';
@@ -34,18 +34,22 @@ function Landing(props) {
     console.log(currentUser)
     return (
         <div>
-            Welcome, {currentUser}
+            <nav>
+                    Welcome, {currentUser}
                     <Link className={"nav-link"} to={"/"}>Home</Link>
                     <Link className={"nav-link"} to={"/login/"}>Login</Link>
                     <Link className={"nav-link"} to={"/signup/"}>Signup</Link>
-                    <Link className={"nav-link"} to={"/hello/"}>Hello</Link>
                     <button onClick= {logout}>Logout</button>
-            {/* <About/> */}
+            </nav>
+            <main>
+                    <Route exact path = '/login' render = { Login }/>
+                    <Route exact path = '/signup' render = { Signup }/>
+                    <Route exact path = '/' render = { RecipeCard }/>
+            </main>
+                
             
-            <Route exact path = '/login' render = { Login }/>
-            <Route exact path = '/signup' render = { Signup }/>
-            <Route exact path = '/' render = { Create }/>
-            <Route exact path = '/hello' render = { RecipeCont }/>
+            
+            
             
         </div>
     );
