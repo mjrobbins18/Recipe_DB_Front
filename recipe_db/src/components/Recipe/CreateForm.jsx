@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { DataContext } from '../Main/DataContext';
 function CreateForm(props) {
+    // currentuser
+    const { currentUser } = useContext(DataContext)
+
+
     // Initial formstate
     const initialRecipe = [{
         title: "",
-        user: "",
+        user: currentUser,
         category: "",
-        image: null,
+        image: "",
         image_url: "",
         dish_components: "",
     }]
@@ -26,16 +31,45 @@ function CreateForm(props) {
         recipe: "",
     }]
     
-
+    
     // State
+    const [token, setToken] = useState(() => {
+        const savedToken = localStorage.getItem('access_token')
+        return savedToken || ""
+      })
+    const [userID, setUserID] = useState()
     const [selectedFile, setSelectedFile] = useState(null)
     const [inputState, setInputState] = useState(initialRecipe)
     const [inputIngredient, setInputIngredient] = useState(initialIngredients)
     const [inputEquipment, setInputEquipment] = useState(initialEquipment)
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
 
+    // get user id
+    useEffect(() => {
+        axios.get(`http://localhost:8000/user/${currentUser}`)
+        .then(res => setUserID(res.data.id))
+        .catch(console.error)
+    }, [])
+    console.log(userID)
+
+
     // handle submit
-    const handleSubmit = () => {
+    console.log('here', inputIngredient[0].name)
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        axios.post('http://localhost:8000/recipes/',{
+            title: inputState.title,
+            category: inputState.category,
+            user_id: token,
+            image_url: inputState.image_url,
+            dish_components: inputState.dish_components,
+            ingredients: {name: 'hello', quantity: 3, unit_of_measure: 'banana'},
+            equipment: inputEquipment,
+            procedure: inputProcedure, 
+        })
+        .then(req => console.log('hello'))
+        .then(res => console.log(res))
+        .catch(console.error)
 
     }
 
@@ -106,7 +140,7 @@ function CreateForm(props) {
     return (
         <div>
            
-            <form>
+            <form onSubmit = { handleSubmit }>
         <h1>Title:</h1>
         <input id = 'title'
                value = {inputState.title}
@@ -241,7 +275,7 @@ function CreateForm(props) {
                             
                     </div> 
 
-      
+                <button type = 'submit'>Submit</button>
            </form>
      </div>
     );
