@@ -4,6 +4,7 @@ import axiosInstance from '../../AxiosAPI';
 import Hello from '../../hello';
 import Create from '../Recipe/Create';
 import CreateForm from '../Recipe/CreateForm';
+import NextStep from '../Recipe/NextStep';
 import Recipe from '../Recipe/Recipe';
 import RecipeCont from '../Recipe/RecipeCont';
 import Login from '../User/Login';
@@ -44,7 +45,7 @@ function Landing(props) {
             <Route exact path = '/login' render = { Login }/>
             <Route exact path = '/signup' render = { Signup }/>
             <Route exact path = '/' render = { Create }/>
-            <Route exact path = '/hello' render = {RecipeCont}/> 
+            <Route exact path = '/hello' render = { RecipeCont }/>
             
         </div>
     );

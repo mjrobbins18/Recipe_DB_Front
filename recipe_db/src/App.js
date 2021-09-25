@@ -5,14 +5,25 @@ import Landing from './components/Main/Landing';
 
 
 function App() {
-  
-  const [currentUser, setCurrentUser] = useState(() => {
-    const savedUser = localStorage.getItem('username')
-    return savedUser || ""
-  })
 
+  const initialRecipe = 
+    {
+        title: "",
+        category: "",
+        image: "",
+        image_url: "",
+        dish_components: "",
+        recipe_yield: "",
+    }
+
+//State 
+const [currentUser, setCurrentUser] = useState(() => {
+  const savedUser = localStorage.getItem('username')
+  return savedUser || ""
+})
+  const [inputState, setInputState] = useState(initialRecipe)
 return (
-  <DataContext.Provider value = {{currentUser}}>
+  <DataContext.Provider value = {{currentUser, inputState, setInputState}}>
   <div>
       <Landing/>
   </div>
