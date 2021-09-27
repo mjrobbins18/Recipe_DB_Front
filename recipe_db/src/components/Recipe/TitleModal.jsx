@@ -13,13 +13,14 @@ function TitleModal(props) {
      const [showTitleModal, setShowTitleModal] = useState(true)
 
     //  Context
-    const { recipeTitle, setRecipeTitle } = useContext(DataContext)
+    const { recipeTitle, setRecipeTitle,currentUser } = useContext(DataContext)
  
      // handle title submit
      const handleTitleSubmit = (event) => {
         event.preventDefault()
         axiosInstance.post('/recipes/create',{
-            title: recipeTitle.title
+            title: recipeTitle.title,
+            user: currentUser,
         })
         .then(res => console.log(res))
         .catch(console.error)

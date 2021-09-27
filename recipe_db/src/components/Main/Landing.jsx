@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import axiosInstance from '../../AxiosAPI';
 import Create from '../Recipe/Create';
 import CreateForm from '../Recipe/CreateForm';
@@ -12,11 +12,14 @@ import About from './About';
 import { DataContext } from './DataContext';
 import Sidebar from './Sidebar';
 import Button from 'react-bootstrap/Button'
-import Offcanvas from 'react-bootstrap/Offcanvas'
+import Dashboard from '../User/Dashboard';
+import DashboardContainer from '../User/DashboardContainer';
+
 
 
 function Landing(props) {
-
+    // Context
+    const { currentUser } = useContext(DataContext)
     // State
     const [showSidebar, setShowSidebar ] = useState(false)
 
@@ -35,7 +38,10 @@ function Landing(props) {
                     <Route exact path = '/login' render = { Login }/>
                     <Route exact path = '/signup' render = { Signup }/>
                     <Route exact path = '/create' render = { Create }/>
-                    <Route exact path = '/' render = { RecipeCard }/>
+                    <Route exact path = '/recipes' render = { RecipeCard }/>
+                    <Route exact path = '/recipe/:id'  render = { routerProps => <RecipeCont match = { routerProps.match }/>}/>
+                    <Route exact path = {`/dash/${currentUser}`} render = { DashboardContainer }/> 
+                    <Route exact path = '/'>{currentUser ? <Redirect to = {`/dash/${currentUser}`}/> : <RecipeCard/> }</Route>
             </main>
                 
             

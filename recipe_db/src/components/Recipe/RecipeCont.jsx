@@ -1,10 +1,11 @@
 import React from 'react';
 import Recipe from './Recipe';
 
-function RecipeCont(props) {
+function RecipeCont({ match }) {
     return (
         <div>
-            <Recipe/>
+            <Recipe
+                match = { match }/>
         </div>
     );
 }
