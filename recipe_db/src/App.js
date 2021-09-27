@@ -5,7 +5,7 @@ import Landing from './components/Main/Landing';
 
 
 function App() {
-
+// Initial State
   const initialRecipe = 
     {
         title: "",
@@ -22,8 +22,13 @@ const [currentUser, setCurrentUser] = useState(() => {
   return savedUser || ""
 })
   const [inputState, setInputState] = useState(initialRecipe)
+  const [recipeTitle, setRecipeTitle] = useState({title: ""})
+  
+
+
+  
 return (
-  <DataContext.Provider value = {{currentUser, initialRecipe, inputState, setInputState}}>
+  <DataContext.Provider value = {{currentUser, initialRecipe, inputState, setInputState, recipeTitle, setRecipeTitle}}>
   <div>
       <Landing/>
   </div>

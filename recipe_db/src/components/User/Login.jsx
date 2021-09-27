@@ -3,8 +3,7 @@ import LoginForm from './LoginForm';
 
 function Login(props) {
     return (
-        <div>
-            Login
+        <div className = 'formContainer'>
             <LoginForm/>
         </div>
     );

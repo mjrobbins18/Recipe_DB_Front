@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import '../../css/User/SignupForm.css'
 import axiosInstance from '../../AxiosAPI';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { FloatingLabel, Popover, Row, Col } from 'react-bootstrap';
+import { FloatingLabel, Modal, Row, Col } from 'react-bootstrap';
+import CreatedModal from './CreatedModal';
+import { useHistory } from 'react-router';
 
 
 function SignupForm(props) {
@@ -19,6 +22,18 @@ function SignupForm(props) {
     const [formState, setState] = useState(initialState)
     const [errors, setErrors] = useState()
     const [validated, setValidated] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    // History
+    const history = useHistory()
+
+    // close Modal
+    const handleClose = () => {
+        setShowModal(false)
+        history.push('/login')
+    }
+    // open Modal
+    const handleShow = () => {
+        return validated ? setShowModal(true) : null }
 
     // Handle Change
     const  handleChange = (e) => {
@@ -35,18 +50,19 @@ function SignupForm(props) {
             e.preventDefault()
             e.stopPropagation()
         }
-        else{
-            setValidated(true)
+        else{   
         axiosInstance.post('/user/create/', {
             username: formState.username,
             password: formState.password,
             email: formState.email,
             first_name: formState.first_name,
             last_name: formState.last_name
+            
         })
         .then(res => console.log(res))
         .catch(err => {
             console.log(err.stack)})
+        setValidated(true)
         setState(initialState)
         }
         
@@ -56,16 +72,16 @@ function SignupForm(props) {
 
 
     return (
-        <div>
+        <div className = "formDiv">
             
             <Form noValidate validated = {validated} onSubmit = { handleSubmit }>
                 <Row className = 'mb-3'>
-                <Form.Group as={Col} controlId = "formGridName" className = 'mb-3'>
+                <Form.Group as={Col}  className = 'mb-3'>
                     <FloatingLabel
-                      controlId = "floatingInput"
                       label = "First Name"
                       className = "mb-3"  >
                             <Form.Control
+                            autoFocus
                             size = "lg"
                             type = "text" 
                             placeholder = "First Name"
@@ -79,7 +95,6 @@ function SignupForm(props) {
                 
                 <Form.Group as = {Col} controlId = "formGridName" className = 'mb-3'>   
                     <FloatingLabel
-                        controlId = "floatingInput"
                         label = "Last Name"
                         className = "mb-3"  >
                             <Form.Control
@@ -93,9 +108,9 @@ function SignupForm(props) {
                 </FloatingLabel>
                 </Form.Group>
               </Row>
-                <Form.Group controlId = "formGroupUsername" className = 'mb-3'> 
+                <Form.Group className = 'mb-3'> 
                     <FloatingLabel
-                        controlId = "floatingInput"
+                        
                         label = "Username"
                         className = "mb-3"  >
                             <Form.Control
@@ -106,13 +121,16 @@ function SignupForm(props) {
                                 id = "username"
                                 value = { formState.username }
                                 onChange = { handleChange }/>
-                    <Form.Control.Feedback type = "invalid">Please Choose a Username</Form.Control.Feedback>
+                                {validated ? 
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        : 
+                        <Form.Control.Feedback type = "invalid">Please Enter a Valid Email</Form.Control.Feedback>}
                     </FloatingLabel>
                 </Form.Group>
                 
-                <Form.Group controlId = "formGroupEmail" className = 'mb-3'>
+                <Form.Group className = 'mb-3'>
                     <FloatingLabel
-                        controlId = "floatingInput"
+                       
                         label = "Email@example.com"
                         className = "mb-3"  >
                             <Form.Control 
@@ -123,12 +141,16 @@ function SignupForm(props) {
                             id = "email"
                             value = { formState.email }
                             onChange = { handleChange }/>
-                        <Form.Control.Feedback type = "invalid">Please Enter a Valid Email</Form.Control.Feedback>
+                        {validated ? 
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        : 
+                        <Form.Control.Feedback type = "invalid">Please Enter a Valid Email</Form.Control.Feedback>}
+                        
                     </FloatingLabel>
                 </Form.Group>
-                <Form.Group controlId = "formGroupPassword" className = 'mb-3'>    
+                <Form.Group className = 'mb-3'>    
                     <FloatingLabel
-                        controlId = "floatingInput"
+                        
                         label = "Password"
                         className = "mb-3"  >
                         <Form.Control
@@ -139,11 +161,20 @@ function SignupForm(props) {
                             id = "password"
                             value = { formState.password }
                             onChange = { handleChange }/>
-                         <Form.Control.Feedback type = "invalid">Please Enter a Password that is at least 8 characters.</Form.Control.Feedback>
+                            {validated ? 
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        : 
+                        <Form.Control.Feedback type = "invalid">Please Enter a Valid Email</Form.Control.Feedback>}
                     </FloatingLabel>
                 </Form.Group>
-                <Button variant="primary" type = 'submit'>Submit</Button>
+                <Button variant="primary" size = 'lg' type = 'submit' onClick = { handleShow }>Submit</Button>
             </Form>
+            
+            <CreatedModal handleShow = { handleShow } 
+            handleClose = { handleClose }
+            showModal = { showModal }
+            setShowModal = { setShowModal }/>
+            
         </div>
     );
 }
