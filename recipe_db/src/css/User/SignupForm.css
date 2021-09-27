@@ -1,0 +1,12 @@
+@media all and (min-width: 480px) {
+    .formDiv {
+        display: flex;
+        width: 50vw;
+    
+    }
+    
+    .formDiv form {
+        margin: 0 auto;
+        min-width: 50%;
+    }
+}

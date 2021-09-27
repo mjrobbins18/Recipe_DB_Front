@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(
                 const refresh_token = localStorage.getItem('refresh_token');
 
                 if (refresh_token) {
-                    const tokenParts = JSON.parse(Buffer(refresh_token.split('.')[1], 'binary').toString('base64'))
+                    const tokenParts = JSON.parse(atob(refresh_token.split('.')[1]))
 
                     const now = Math.ceil(Date.now() / 1000)
                     console.log(tokenParts.exp)
