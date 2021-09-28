@@ -4,13 +4,17 @@ import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
+import { useHistory } from 'react-router';
 
 
 
 function Dashboard(props) {
 
     // Context
-    const { currentUser } = useContext(DataContext)
+    const { currentUser, recipeInfo, setRecipeInfo } = useContext(DataContext)
+
+    // History
+    const history = useHistory()
 
     // State
     const [createdRecipes, setCreatedRecipes] = useState([])
@@ -20,9 +24,26 @@ function Dashboard(props) {
         .then(res => setCreatedRecipes(res.data))
         .catch(console.error)
     }, [])
-    console.log(createdRecipes)
+
+    // Handle Delete Created Recipe
+    const deleteRecipe = (event) => {
+        axiosInstance.delete(`/recipes/${event.target.id}`)
+        .then(res => console.log(res))
+        .finally(window.location.reload())
+        .catch(console.error)
+    }
+
+    // Handle Update
+    const handleUpdate = (event) => {
+        
+        axiosInstance.get(`/recipes/${event.target.id}`)
+        .then(res => setRecipeInfo(res.data))
+        .finally(history.push(`/update/${event.target.id}`))
+        .catch(console.error)
+    }
 
     return (
+        <div className = "dashboardBack">
         <div className = "dashboardContainer">
             <div className = "createdRecipeDiv">
                 <div className = "dashHeading">
@@ -34,8 +55,8 @@ function Dashboard(props) {
                         <div className = "createdItems">
                             <Link to= {`/recipe/${recipe.id}`} id = "recipeLink" className="nav-link">{recipe.title}</Link>
                             <span>
-                            <Button variant = 'outline-primary' size = 'sm'>Update</Button>
-                            <Button variant = 'outline-secondary' size = 'sm'>Delete</Button>
+                            <Button id = {recipe.id} variant = 'outline-primary' size = 'sm' onClick = { handleUpdate }>Update</Button>
+                            <Button id = {recipe.id} variant = 'outline-secondary' size = 'sm' onClick = { deleteRecipe }>Delete</Button>
                             </span>
                            
                         </div>
@@ -65,6 +86,7 @@ function Dashboard(props) {
                 Posts on Your Recipes
                 </div>
             </div>
+        </div>
         </div>
     );
 }

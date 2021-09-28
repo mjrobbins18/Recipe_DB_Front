@@ -175,6 +175,9 @@ function CreateForm(props) {
     };
 
     return (
+        <div className = "recipeFormContainer">
+
+        
         <div className = "recipeForm">
            
             <Form onSubmit = { handleSubmit }>
@@ -413,6 +416,7 @@ function CreateForm(props) {
             showRecipeModal = { showRecipeModal }
             setShowRecipeModal = { setShowRecipeModal }/>
            
+     </div>
      </div>
     );
     

@@ -10,10 +10,11 @@ function TitleModal(props) {
 
 
      // State
-     const [showTitleModal, setShowTitleModal] = useState(true)
+    
+    
 
     //  Context
-    const { recipeTitle, setRecipeTitle,currentUser } = useContext(DataContext)
+    const { recipeTitle, setRecipeTitle,currentUser, showTitleModal, setShowTitleModal, showInstructionModal, setShowInstructionModal } = useContext(DataContext)
  
      // handle title submit
      const handleTitleSubmit = (event) => {
@@ -31,6 +32,12 @@ function TitleModal(props) {
              ...recipeTitle, [event.target.id]: event.target.value
          })
      }
+    //  handle Instruction modal
+    const handleInstructionModal = (event) => {
+        event.preventDefault()
+        setShowInstructionModal(true)
+        setShowTitleModal(false)
+    }
     //  Close Modal
      const handleTitleClose = () => setShowTitleModal(false)
      console.log(recipeTitle.title)
@@ -64,6 +71,7 @@ function TitleModal(props) {
                         </Form.Group>
                         {recipeTitle.title.length > 0 ? <Button variant = 'primary' type = 'submit' onClick = {() => setShowTitleModal(false)}>Next Step</Button>
                         : <Button variant = 'primary' type = 'submit' onClick = {() => setShowTitleModal(false)} disabled>Next Step</Button> }
+                        <Button variant = 'success' onClick = { handleInstructionModal }>First Time?</Button>
                     </Form>
                 </Modal.Body>
             </Modal>

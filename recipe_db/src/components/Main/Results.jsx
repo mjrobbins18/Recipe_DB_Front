@@ -1,41 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
-import '../../css/Recipe/RecipeCard.css'
-import Header from './Header';
-import axiosInstance from '../../AxiosAPI';
+import { DataContext } from './DataContext';
 import { Link } from 'react-router-dom';
+import '../../css/Main/Results.css'
 
-
-function RecipeCard(props) {
+function Results(props) {
     
-    // State
-    const [data, setData] = useState([])
-
-    useEffect(() => {
-        axiosInstance.get('/recipes/view')
-        .then(res => setData(res.data))
-        .catch(console.error)
-    }, [])
-console.log(data)
-    
-    
+    // Context
+    const {searchResults} = useContext(DataContext)
     
     return (
-        <div>
-
-            <Header/>
-            
-            <div className = "browseContainer">
-
-           
-            <div id = "browse">
-                <h1>Just for you</h1>
-            </div>
-        <div className = "recipeCardContainer">
+        <div className = "resultsContainer">
+            <div className = "recipeCardContainer">
             <Row xs={1} md={4} className="g-4">
-                    {data.map((item) => (
+                    {searchResults.map((item) => (
                         <div >
                         <Col>
                         <Link id = "cardLink" to = {`/recipe/${item.id}`}>
@@ -56,9 +36,8 @@ console.log(data)
                 </Row>
             </div>
             
-            </div>
         </div>
     );
 }
 
-export default RecipeCard;
+export default Results;

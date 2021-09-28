@@ -1,17 +1,26 @@
 @media (min-width: 480px){
+    .dashboardBack {
+        background: rgb(215, 243, 215);
+        background-image: url(../../images/limes.png);
+        padding: 2%;
+        
+    }
+    
     .dashboardContainer {
         display: flex;
         width: 80vw;
         height: 100vh;
         margin: 0 auto;
         box-shadow: 4px 4px 8px 2px grey;
+        background: rgb(206, 237, 252);
+        opacity: .9;
     }
     .dashHeading{
         font-size: 20px;
         padding: 2%;
         border-bottom: 1px solid grey;
         color: black;
-        background: white;
+        background: rgb(248, 234, 234);
         min-height: 7vh;
     }
     .createdRecipeDiv {
@@ -29,7 +38,9 @@
         justify-content: space-between;
         box-shadow: 1px 2px 4px 0px grey;
         padding: 1%;
+        background: white;
         margin-top: 1%;
+        cursor: pointer;
     }
     .createdItems:hover {
         box-shadow: 2px 5px 8px 4px grey;
@@ -54,7 +65,7 @@
         flex-direction: column;
         height: 30vh;
         width: 26vw;
-        background: grey;
+        background: rgb(245, 215, 215);
         color: white;
         bottom: 0;
         position: absolute;

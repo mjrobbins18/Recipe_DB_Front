@@ -8,7 +8,9 @@
     }
 
     .recipeDiv{
-       
+       background: rgb(187, 233, 206);
+       background-image: url(../../images/lemon.jpg);
+       padding: 2%;
 
     }
     .recipeBodyDiv{
@@ -17,7 +19,9 @@
         justify-content: space-between;
         width: 80vw;
         padding: 3%;
-        border-bottom: 1px solid grey;
+        background: white;
+        opacity: .9;
+        
 
     }
     .recipeBodyDiv div {
@@ -28,13 +32,16 @@
     .recipeBodyDiv img {
         border-radius: 5%;
         box-shadow: 2px 4px 8px 0px grey;
+        background: white;
+        opacity: .9;
     }
     .ingEquipDiv {
         margin: 2% auto;
         display: flex;
         width: 70vw;
         padding: 3%;
-
+        opacity: .9;
+        background: white;
         box-shadow: 2px 4px 8px 0px grey;
     }
 
@@ -51,8 +58,9 @@
         display: flex;
         width: 70vw;
         padding: 3%;
+        opacity: .9;
         box-shadow: 2px 4px 8px 0px grey;
-
+        background: white;
     }
     .procedureDiv span {
         border-right: 1px solid grey;
@@ -65,5 +73,7 @@
         width: 70vw;
         padding: 3%;
         box-shadow: 2px 4px 8px 0px grey;
+        opacity: .9;
+        background: white;
     }
 }
