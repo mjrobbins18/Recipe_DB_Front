@@ -43,8 +43,8 @@ const handleCloseSidebar = () => setShowSidebar(false)
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/recipes"}>Recipes</Link>
-                    <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/signup"}>Signup</Link>
-                    {currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/create'}>Create Recipe</Link> : null }
+                    {!currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/signup"}>Signup</Link> : null }
+                    {currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/create'}>New Recipe</Link> : null }
                     {currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/'}>Dashboard</Link> : null}
                     {currentUser ? <Button variant = 'primary' onClick= { logout }>Logout</Button> 
                     : 
