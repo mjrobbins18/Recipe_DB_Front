@@ -21,6 +21,7 @@ import OverlayTrigger  from 'react-bootstrap/OverlayTrigger';
 import Tooltip  from 'react-bootstrap/Tooltip';
 import ResultsContainer from './ResultsContainer';
 import UpdateContainer from '../Recipe/UpdateContainer'
+import FormContainer from '../Recipe/FormContainer';
 
 
 function Landing(props) {
@@ -53,6 +54,7 @@ function Landing(props) {
                     <Route exact path = '/login' render = { Login }/>
                     <Route exact path = '/signup' render = { Signup }/>
                     <Route exact path = '/create' render = { Create }/>
+                    <Route exact path = '/create/body' render = { FormContainer } />
                     <Route exact path = '/recipes' render = { RecipeCardCont }/>
                     <Route exact path = '/recipe/:id'  render = { routerProps => <RecipeCont match = { routerProps.match }/>}/>
                     <Route exact path = '/results/:query' render = { routerProps => <ResultsContainer match = {routerProps.match}/> }/>

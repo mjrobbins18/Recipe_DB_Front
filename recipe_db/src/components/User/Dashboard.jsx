@@ -35,9 +35,8 @@ function Dashboard(props) {
 
     // Handle Update
     const handleUpdate = (event) => {
-        
         axiosInstance.get(`/recipes/${event.target.id}`)
-        .then(res => setRecipeInfo(res.data))
+        .then(res => setRecipeInfo(res.data.title))
         .finally(history.push(`/update/${event.target.id}`))
         .catch(console.error)
     }
@@ -62,7 +61,7 @@ function Dashboard(props) {
                         </div>
                     )
                 })}
-                <Link to = "/create">
+                <Link to = "/create" >
                  <div className = "createRecipeDiv">
                  <div className = "dashHeading">
                     New Recipe

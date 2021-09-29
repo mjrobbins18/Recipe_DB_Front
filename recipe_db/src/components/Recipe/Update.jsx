@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
+import { useHistory } from 'react-router';
+import UpdateTitleModal from './UpdateTitleModal';
 
 function Update({ match }) {
     // recipe id
@@ -39,7 +41,10 @@ function Update({ match }) {
     const [inputEquipment, setInputEquipment] = useState(initialEquipment)
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
     const [showRecipeModal, setShowRecipeModal] = useState(false)
+    const [loaded, setLoaded] = useState(false)
     
+    // history
+    const history = useHistory()
    
     // Context
     const {inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe} = useContext(DataContext)
@@ -51,71 +56,104 @@ function Update({ match }) {
      useEffect(() => {
         axiosInstance.get(`/recipes/${recipeID}`)
         .then(res => {
-            setRecipeInfo(res.data)
+            setRecipeInfo(res.data.title)
             })
-        .then(() => setInputIngredient(recipeInfo.ingredients))
+        .catch(console.error)
+        axiosInstance.get(`/recipes/${recipeID}`)
+        .then(res => {
+            if(res.data.recipe_body[0] === undefined){
+                setInputState(initialRecipe)
+            }else{
+                setInputState(res.data.recipe_body[0])
+            }
+            })
+        .catch(console.error)
+        axiosInstance.get(`/recipes/${recipeID}`)
+        .then(res => {
+            setInputIngredient(res.data.ingredients)
+            })
+        .catch(console.error)
+        axiosInstance.get(`/recipes/${recipeID}`)
+        .then(res => {
+            setInputEquipment(res.data.equipment)
+            })
+        .catch(console.error)
+        axiosInstance.get(`/recipes/${recipeID}`)
+        .then(res => {
+            setInputProcedure(res.data.procedure)
+            })
         .catch(console.error)
     }, [])
-   
+
     // Handle Ingredients, Equipment, Procedure Submit
     const handleBottomSubmit = () => {
         
         inputIngredient.map(list => {
             return(
-                axiosInstance.post('/ingredient/create',
+                axiosInstance.put(`/ingredient/${list.id}`,
                 {name: list.name,
                 quantity: list.quantity,
                 unit_of_measure: list.unit_of_measure,
-                recipe: recipeTitle.title})
+                recipe: recipeID})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
                 })
         inputEquipment.map(list => {
             return(
-                axiosInstance.post('/equipment/create',
+                axiosInstance.put(`/equipment/${list.id}`,
                 {name: list.name,
                 quantity: list.quantity,
-                recipe: recipeTitle.title})
+                recipe: recipeID})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
                 })  
         inputProcedure.map(list => {
             return(
-                axiosInstance.post('/procedure/create',
+                axiosInstance.put(`/procedure/${list.id}`,
                 {step: list.step,
-                recipe: recipeTitle.title})
+                recipe: recipeID})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
                 })
-        setInputEquipment(initialEquipment)
-        setInputIngredient(initialIngredients)
-        setInputProcedure(initialProcedure)
-        setInputState(initialRecipe)
-        
-
     }
 
     // handle submit
     const handleSubmit = (event) => {
         event.preventDefault()
+            if(inputState.id){
+                axiosInstance.put(`/recipes/body/${inputState.id}`,{
+                    title: recipeID,
+                    category: inputState.category,
+                    user: currentUser,
+                    image_url: inputState.image_url,
+                    dish_components: inputState.dish_components,
+                    recipe_yield: inputState.recipe_yield,
+        
+                })
+                .then(handleBottomSubmit())
+                .then(res => console.log(res))
+                .catch(console.error)
+                .finally(history.push('/'))
+            }else{
+                axiosInstance.post('/recipes/body/create',{
+                    title: recipeID,
+                    category: inputState.category,
+                    user: currentUser,
+                    image_url: inputState.image_url,
+                    dish_components: inputState.dish_components,
+                    recipe_yield: inputState.recipe_yield,
+        
+                })
+                .then(handleBottomSubmit())
+                .then(res => console.log(res))
+                .catch(console.error)
+                .finally(history.push('/'))
+            }
             
-            axiosInstance.post('/recipes/body/create',{
-                title: recipeTitle.title,
-                category: inputState.category,
-                user: currentUser,
-                image_url: inputState.image_url,
-                dish_components: inputState.dish_components,
-                recipe_yield: inputState.recipe_yield,
-    
-            })
-            .then(handleBottomSubmit())
-            .then(res => console.log(res))
-            .catch(console.error)
-            .finally(handleShowRecipeModal())
-            setRecipeTitle({title: ""})
+           
        
     }
 
@@ -125,24 +163,23 @@ function Update({ match }) {
             ...inputState, [event.target.id]: event.target.value
             
         })
-        console.log(inputState)
     }
     const handleIngredients = (event, index) => {
         const { id, value } = event.target;
-        const list = [...recipeInfo.ingredients];
+        const list = [...inputIngredient];
         list[index][id] = value;
         setInputIngredient(list);
         console.log(inputIngredient)
     }
     const handleEquipment = (event, index) => {
         const { id, value } = event.target;
-            const list = [...recipeInfo.equipment];
+            const list = [...inputEquipment];
             list[index][id] = value;
             setInputEquipment(list);
     }
     const handleProcedure= (event, index) => {
         const { id, value } = event.target;
-        const list = [...recipeInfo.procedure];
+        const list = [...inputProcedure];
         list[index][id] = value;
         setInputProcedure(list);
     }
@@ -177,23 +214,28 @@ function Update({ match }) {
     // Add Button Function
     const handleAddIngredient = (event) => {
         event.preventDefault()
-        setRecipeInfo([recipeInfo.ingredients, { quantity: "", unit_of_measure: "" , name: "", recipe: recipeInfo.title}]);
+        let  new_ing  = inputIngredient
+        let input = { quantity: "", unit_of_measure: "", name: "", recipe: recipeID}
+        new_ing.push(input)
+        setInputIngredient([...new_ing]);
+      
     };
     const handleAddEquipment = (event) => {
         event.preventDefault()
-        setInputEquipment([...inputEquipment, { quantity: "", name: "", recipe: inputState.title}]);
+        let new_equip = inputEquipment
+        let input = { quantity: "", name: "", recipe: recipeID}
+        new_equip.push(input)
+        setInputEquipment([...new_equip]);
     };
     const handleAddProcedure = (event) => {
         event.preventDefault()
-        setRecipeInfo([recipeInfo.procedure, { step: "", recipe: recipeInfo.title}]);
+        let new_proc = inputProcedure
+        let input = { step: "", recipe: recipeID}
+        new_proc.push(input)
+        setInputProcedure([...new_proc]);
     };
 
-console.log(recipeInfo)
-console.log(inputState)
-console.log(inputIngredient)
-console.log(inputProcedure)
-console.log(inputEquipment)
-if(!recipeInfo.recipe_body){
+if(!recipeInfo){
     return (
         <div className = "loadDiv"> 
           <span>
@@ -214,22 +256,17 @@ if(!recipeInfo.recipe_body){
     <Form onSubmit = { handleSubmit }>
 
         <Form.Group>
-            <FloatingLabel label = "Title">
-                <Form.Control
-                    placeholder = "Title"
-                    id = "title"
-                    value = {recipeInfo.title}
-                    onChange = { handleChange }/>
-            </FloatingLabel>
+            <h1>{ recipeInfo }</h1>
         </Form.Group>
         <br></br>
     <Row>        
     <Col xs ="auto">
+            
             <Form.Group>
                 <FloatingLabel label = "Category">
                     <Form.Select onChange = { handleChange }
                                 id = "category"
-                                value = {recipeInfo.recipe_body[0].category}
+                                value = { inputState.category } 
                                 size = 'lg'>
                         <option value = "null"></option>
                         <option value = "Bread">Bread</option>
@@ -237,7 +274,7 @@ if(!recipeInfo.recipe_body){
                         <option value = "Cheese">Cheese</option>
                         <option value = "Chips">Chips</option>
                         <option value = "Core">Core</option>
-                        <option value = "Oils">Oils</option>
+                        <option value = "Oil">Oil</option>
                         <option value = "Pasta">Pasta</option>
                         <option value = "Preservation">Preservation</option>
                         <option value = "Starch">Starch</option>
@@ -250,6 +287,7 @@ if(!recipeInfo.recipe_body){
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>
+            
             <br></br>
     </Col>
 </Row>
@@ -261,7 +299,7 @@ if(!recipeInfo.recipe_body){
             className = "mb-3">
                 <Form.Control
                 id = 'image_url'
-                value = {recipeInfo.recipe_body[0].image_url}
+                value = {inputState.image_url}
                 placeholder = "Image URL"
                 onChange = { handleChange }
                 />
@@ -285,7 +323,7 @@ if(!recipeInfo.recipe_body){
                 >
                     <Form.Control
                     id = 'dish_components'
-                    value = {recipeInfo.recipe_body[0].dish_components}
+                    value = {inputState.dish_components}
                     placeholder = "Components"
                     onChange = { handleChange }/>
                 </FloatingLabel>
@@ -301,7 +339,7 @@ if(!recipeInfo.recipe_body){
                 <Form.Control
                 size = "lg"
                 id = 'recipe_yield'
-                value = {recipeInfo.recipe_body[0].recipe_yield}
+                value = {inputState.recipe_yield}
                 placeholder = "Yield"
                 onChange = { handleChange }
                 />
@@ -313,7 +351,7 @@ if(!recipeInfo.recipe_body){
         <Form.Group>
             <Form.Label><h5>Ingredients:</h5></Form.Label>
         </Form.Group>
-        {recipeInfo.ingredients.map((x, i) => {
+        {inputIngredient.map((x, i) => {
                 return (
                     <div>
             <Row>
@@ -365,8 +403,8 @@ if(!recipeInfo.recipe_body){
                     </Form.Group>
                 </Col>
                     <Form.Group>
-                    {x.length !== 1 && <Button variant = "danger" onClick = {() => handleRemoveIngredient(i)}>x</Button>}
-                    {recipeInfo.ingredients.length - 1 === i && <Button variant = "primary"  onClick = {handleAddIngredient}>+</Button>}
+                    {inputIngredient.length !== 1 && <Button variant = "danger" onClick = {() => handleRemoveIngredient(i)}>x</Button>}
+                    {inputIngredient.length - 1 === i && <Button variant = "primary"  onClick = {handleAddIngredient}>+</Button>}
                     </Form.Group>
             </Row>
             </div>
@@ -375,7 +413,7 @@ if(!recipeInfo.recipe_body){
            <Form.Group>
                <Form.Label><h5>Equipment:</h5></Form.Label>
            </Form.Group>
-           {recipeInfo.equipment.map((x, i) => {
+           {inputEquipment.map((x, i) => {
                 return (
             <div>
                 <Row>
@@ -412,8 +450,8 @@ if(!recipeInfo.recipe_body){
                         </Form.Group>
                     </Col>        
                         <Form.Group>
-                        {recipeInfo.equipment.length !== 1 && <Button variant = 'danger' onClick = {() => handleRemoveEquipment(i)}>x</Button>}
-                        {recipeInfo.equipment.length - 1 === i && <Button variant = 'primary' onClick = {handleAddEquipment}>+</Button>}
+                        {inputEquipment.length !== 1 && <Button variant = 'danger' onClick = {() => handleRemoveEquipment(i)}>x</Button>}
+                        {inputEquipment.length - 1 === i && <Button variant = 'primary' onClick = {handleAddEquipment}>+</Button>}
                         </Form.Group>
                 </Row>
            </div>
@@ -422,7 +460,7 @@ if(!recipeInfo.recipe_body){
            <Form.Group>
                <Form.Label><h5>Procedure:</h5></Form.Label>
            </Form.Group>
-           {recipeInfo.procedure.map((x, i) => {
+           {inputProcedure.map((x, i) => {
                      return (
             <div>  
                     <Form.Group>
@@ -439,8 +477,8 @@ if(!recipeInfo.recipe_body){
                     </Form.Group>
                     <br></br>
             <Form.Group>
-            {recipeInfo.procedure.length !== 1 && <Button variant = "danger" onClick = {() => handleRemoveProcedure(i)}>x</Button>}
-            {recipeInfo.procedure.length - 1 === i && <Button variant = "primary"onClick = {handleAddProcedure}>+</Button>}
+            {inputProcedure.length !== 1 && <Button variant = "danger" onClick = {() => handleRemoveProcedure(i)}>x</Button>}
+            {inputProcedure.length - 1 === i && <Button variant = "primary"onClick = {handleAddProcedure}>+</Button>}
             </Form.Group>
             <br></br>
                 
@@ -452,8 +490,12 @@ if(!recipeInfo.recipe_body){
    
 </div>
 </div>
+<UpdateTitleModal recipeID = { recipeID }/>
         </div>
+        
+    
     );
+    
 }
 }
 
