@@ -2,6 +2,7 @@ import React from 'react';
 import '../../css/Recipe/RecipeCard.css'
 import Search from '../Search/Search';
 import { HashLink } from 'react-router-hash-link';
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 function Header(props) {
     return (
         <div>
@@ -9,7 +10,12 @@ function Header(props) {
             <Search/>
             </div>
         <div className = "headerContainer">
-            
+        {/* <CloudinaryContext cloudName="duod7q5c4">
+  <div>
+    <Image publicId="sample" width="50" />
+  </div>
+  <Image publicId="sample" width="0.5" />
+</CloudinaryContext> */}
        
             <div className= "recipeCardHeader">
                 <h1>Welcome to What's Cookin'!</h1>

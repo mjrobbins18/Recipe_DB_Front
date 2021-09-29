@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
 import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -42,6 +42,7 @@ function Update({ match }) {
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
     const [showRecipeModal, setShowRecipeModal] = useState(false)
     const [loaded, setLoaded] = useState(false)
+    let data = new FormData()
     
     // history
     const history = useHistory()
@@ -119,7 +120,8 @@ function Update({ match }) {
             )
                 })
     }
-
+    console.log(selectedFile)
+    
     // handle submit
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -133,6 +135,7 @@ function Update({ match }) {
                     recipe_yield: inputState.recipe_yield,
         
                 })
+                
                 .then(handleBottomSubmit())
                 .then(res => console.log(res))
                 .catch(console.error)
@@ -142,6 +145,7 @@ function Update({ match }) {
                     title: recipeID,
                     category: inputState.category,
                     user: currentUser,
+                    image: data,
                     image_url: inputState.image_url,
                     dish_components: inputState.dish_components,
                     recipe_yield: inputState.recipe_yield,
@@ -182,17 +186,6 @@ function Update({ match }) {
         const list = [...inputProcedure];
         list[index][id] = value;
         setInputProcedure(list);
-    }
- 
-    // handle file change for image upload
-    const onFileChange = (event) => {
-        setSelectedFile(event.target.files[0])
-    }
-
-
-    const onFileUpload = () => {
-        setInputState({...inputState, 'image': selectedFile.name})
-
     }
 
     // Remove Button Function
@@ -307,11 +300,10 @@ if(!recipeInfo){
 
         </Form.Group>
     </Col>
-    Or:
     <Col md>
-        <Form.Group controlId="formFile" className="mb-3">
-            <Form.Control type="file" size ="lg"/>
-        </Form.Group>
+        {/* <Form.Group controlId="formFile" className="mb-3">
+            <Form.Control type="file" size ="lg" />
+        </Form.Group> */}
     </Col>
 </Row>
 <Row>
