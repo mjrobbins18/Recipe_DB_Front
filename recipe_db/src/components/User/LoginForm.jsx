@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useHistory } from 'react-router';
+import '../../css/User/LoginForm.css'
 
 function LoginForm(props) {
     // Initial state
@@ -41,8 +42,10 @@ function LoginForm(props) {
             localStorage.setItem('access_token', token.access)
             localStorage.setItem('username', formState.username)
             setState(initialState)
-            history.push('/')
+            window.location.reload()
+            
             } )
+        .finally(history.push('/'))
         .catch(console.error)
    
 }

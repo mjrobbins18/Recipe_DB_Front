@@ -1,0 +1,79 @@
+@media (min-width: 480px) {
+    .loadDiv {
+        display: flex;
+        width: 100vw;
+        min-width: 20vw;
+        height: 100vh;
+        justify-content: center;
+    }
+
+    .recipeDiv{
+       background: rgb(187, 233, 206);
+       background-image: url(../../images/lemon.jpg);
+       padding: 2%;
+
+    }
+    .recipeBodyDiv{
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        width: 80vw;
+        padding: 3%;
+        background: white;
+        opacity: .9;
+        
+
+    }
+    .recipeBodyDiv div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .recipeBodyDiv img {
+        border-radius: 5%;
+        box-shadow: 2px 4px 8px 0px grey;
+        background: white;
+        opacity: .9;
+    }
+    .ingEquipDiv {
+        margin: 2% auto;
+        display: flex;
+        width: 70vw;
+        padding: 3%;
+        opacity: .9;
+        background: white;
+        box-shadow: 2px 4px 8px 0px grey;
+    }
+
+    .ingEquipDiv span {
+        border-right: 1px solid grey;
+        padding: 1%;
+    }
+  
+    .ingEquipDiv li {
+        list-style: none;
+    }
+    .procedureDiv{
+        margin: 1% auto;
+        display: flex;
+        width: 70vw;
+        padding: 3%;
+        opacity: .9;
+        box-shadow: 2px 4px 8px 0px grey;
+        background: white;
+    }
+    .procedureDiv span {
+        border-right: 1px solid grey;
+        padding: 1%;
+        margin-right: 2%;
+    }
+    #comments {
+        margin: 1% auto;
+        display: flex;
+        width: 70vw;
+        padding: 3%;
+        box-shadow: 2px 4px 8px 0px grey;
+        opacity: .9;
+        background: white;
+    }
+}

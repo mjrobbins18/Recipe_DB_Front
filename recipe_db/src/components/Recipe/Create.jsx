@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import CreateForm from './CreateForm';
+import InstructionModal from './InstructionModal';
 import TitleModal from './TitleModal';
 
 
-function Create(props) {
 
+function Create(props) {
+    
    
     return (
-        <div>
+        <div className = "recipeFormContainer">
+            <InstructionModal/>
             <TitleModal/>
             <CreateForm/>
         </div>

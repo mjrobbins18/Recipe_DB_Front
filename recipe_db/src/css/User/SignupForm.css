@@ -1,12 +1,21 @@
-@media all and (min-width: 480px) {
-    .formDiv {
+@media (min-width: 480px) {
+    .formContainer {
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
         width: 50vw;
-    
+        margin: 0 auto;
+        min-width: 50%;
+        box-shadow: 4px 8px 8px 4px rgb(100, 167, 221);
+        padding: 2%;
     }
-    
+    .formContainer span {
+        padding: 5%;
+    } 
     .formDiv form {
         margin: 0 auto;
         min-width: 50%;
     }
+
 }

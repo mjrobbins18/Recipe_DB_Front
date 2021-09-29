@@ -28,7 +28,7 @@ const logout = () => {
         setShowSidebar(false)
     }
     )
-    .finally(history.push('/login'))
+    .finally(history.push('/recipes'))
     .catch(console.error) 
 
 }
@@ -42,11 +42,13 @@ const handleCloseSidebar = () => setShowSidebar(false)
                     <Offcanvas.Title><h1>{ currentUser }</h1></Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/"}>Home</Link>
-                    <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/login"}>Login</Link>
-                    <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/signup"}>Signup</Link>
-                    <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/create'}>Create Recipe</Link>
-                    <Button variant = 'primary' onClick= { logout }>Logout</Button>
+                    <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/recipes"}>Home</Link>
+                    {!currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/signup"}>Signup</Link> : null }
+                    {currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/create'}>New Recipe</Link> : null }
+                    {currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/'}>Dashboard</Link> : null}
+                    {currentUser ? <Button variant = 'primary' onClick= { logout }>Logout</Button> 
+                    : 
+                    <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/login"}>Login</Link>}
                 </Offcanvas.Body>
                 </Offcanvas>
                     

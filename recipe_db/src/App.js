@@ -23,12 +23,28 @@ const [currentUser, setCurrentUser] = useState(() => {
 })
   const [inputState, setInputState] = useState(initialRecipe)
   const [recipeTitle, setRecipeTitle] = useState({title: ""})
-  
+  const [showTitleModal, setShowTitleModal] = useState(true)
+  const [showInstructionModal, setShowInstructionModal] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
+  const [recipeInfo, setRecipeInfo] = useState([])
 
 
   
 return (
-  <DataContext.Provider value = {{currentUser, initialRecipe, inputState, setInputState, recipeTitle, setRecipeTitle}}>
+  <DataContext.Provider value = {{currentUser, 
+                                  initialRecipe, 
+                                  inputState, 
+                                  setInputState, 
+                                  recipeTitle, 
+                                  setRecipeTitle, 
+                                  showTitleModal, 
+                                  setShowTitleModal, 
+                                  showInstructionModal, 
+                                  setShowInstructionModal,
+                                  searchResults,
+                                  setSearchResults,
+                                  recipeInfo,
+                                  setRecipeInfo}}>
   <div>
       <Landing/>
   </div>

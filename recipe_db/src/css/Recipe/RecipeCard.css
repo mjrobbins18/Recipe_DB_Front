@@ -1,0 +1,56 @@
+
+
+@media (min-width: 480px){
+    .headerContainer {
+        background-image: url(../../images/banner1.jpg) ;
+        background-size:cover;
+        width: 100%;
+    }
+    .recipeCardHeader{
+        
+        padding: 8%;
+        height: 90vh;
+        width: 100%;
+        margin-bottom: 10%;
+    }
+    .browseContainer {
+        background: rgb(208, 238, 207);
+        background-image: url(../../images/lemon.jpg);
+        background-size: 80%;
+    }
+    .recipeCardContainer {
+        width: 100vw;
+        padding: 2%;
+        
+    }
+    #browse {
+        width: 70vw;
+        margin-bottom: 2%;
+        color: rgb(12, 70, 117);
+    }
+    #browse h1 {
+        font-size: 80px;
+        font-weight: 800;
+    }
+    .recipeCard {
+        width: 23vw;
+    }
+    .recipeCard:hover{
+        box-shadow: 4px 6px 8px 4px grey;
+    }
+    #cardImg {
+        min-height: 45vh;
+    }
+    #cardLink {
+        color:white;
+        font-weight: 800;
+        text-decoration: none;
+    }
+    .cardTitle {
+        padding: 4%;
+        background: rgb(166, 206, 226);
+    }
+    #cardUser {
+        font-weight: 200;
+    }
+}

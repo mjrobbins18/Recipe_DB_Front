@@ -1,0 +1,9 @@
+@media (min-width:480px) {
+    .resultsContainer {
+        background: rgb(247, 240, 240);
+        background-image: url(../../images/limes.png);
+        background-size: 56%;
+        height: 100vh;;
+        padding: 4%
+    }
+}
