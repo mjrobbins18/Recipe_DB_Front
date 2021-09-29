@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
 import { useHistory } from 'react-router';
-import TitleModal from './TitleModal';
+import UpdateTitleModal from './UpdateTitleModal';
 
 function Update({ match }) {
     // recipe id
@@ -61,7 +61,11 @@ function Update({ match }) {
         .catch(console.error)
         axiosInstance.get(`/recipes/${recipeID}`)
         .then(res => {
-            setInputState(res.data.recipe_body[0])
+            if(res.data.recipe_body[0] === undefined){
+                setInputState(initialRecipe)
+            }else{
+                setInputState(res.data.recipe_body[0])
+            }
             })
         .catch(console.error)
         axiosInstance.get(`/recipes/${recipeID}`)
@@ -90,7 +94,7 @@ function Update({ match }) {
                 {name: list.name,
                 quantity: list.quantity,
                 unit_of_measure: list.unit_of_measure,
-                recipe: recipeInfo})
+                recipe: recipeID})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
@@ -100,7 +104,7 @@ function Update({ match }) {
                 axiosInstance.put(`/equipment/${list.id}`,
                 {name: list.name,
                 quantity: list.quantity,
-                recipe: recipeInfo})
+                recipe: recipeID})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
@@ -109,7 +113,7 @@ function Update({ match }) {
             return(
                 axiosInstance.put(`/procedure/${list.id}`,
                 {step: list.step,
-                recipe: recipeInfo.title})
+                recipe: recipeID})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
@@ -119,20 +123,36 @@ function Update({ match }) {
     // handle submit
     const handleSubmit = (event) => {
         event.preventDefault()
+            if(inputState.id){
+                axiosInstance.put(`/recipes/body/${inputState.id}`,{
+                    title: recipeID,
+                    category: inputState.category,
+                    user: currentUser,
+                    image_url: inputState.image_url,
+                    dish_components: inputState.dish_components,
+                    recipe_yield: inputState.recipe_yield,
+        
+                })
+                .then(handleBottomSubmit())
+                .then(res => console.log(res))
+                .catch(console.error)
+                .finally(history.push('/'))
+            }else{
+                axiosInstance.post('/recipes/body/create',{
+                    title: recipeID,
+                    category: inputState.category,
+                    user: currentUser,
+                    image_url: inputState.image_url,
+                    dish_components: inputState.dish_components,
+                    recipe_yield: inputState.recipe_yield,
+        
+                })
+                .then(handleBottomSubmit())
+                .then(res => console.log(res))
+                .catch(console.error)
+                .finally(history.push('/'))
+            }
             
-            axiosInstance.put(`/recipes/body/${inputState.id}`,{
-                title: recipeInfo,
-                category: inputState.category,
-                user: currentUser,
-                image_url: inputState.image_url,
-                dish_components: inputState.dish_components,
-                recipe_yield: inputState.recipe_yield,
-    
-            })
-            .then(handleBottomSubmit())
-            .then(res => console.log(res))
-            .catch(console.error)
-            .finally(history.push('/'))
            
        
     }
@@ -195,7 +215,7 @@ function Update({ match }) {
     const handleAddIngredient = (event) => {
         event.preventDefault()
         let  new_ing  = inputIngredient
-        let input = { quantity: "", unit_of_measure: "", name: "", recipe: recipeInfo}
+        let input = { quantity: "", unit_of_measure: "", name: "", recipe: recipeID}
         new_ing.push(input)
         setInputIngredient([...new_ing]);
       
@@ -203,14 +223,14 @@ function Update({ match }) {
     const handleAddEquipment = (event) => {
         event.preventDefault()
         let new_equip = inputEquipment
-        let input = { quantity: "", name: "", recipe: recipeInfo}
+        let input = { quantity: "", name: "", recipe: recipeID}
         new_equip.push(input)
         setInputEquipment([...new_equip]);
     };
     const handleAddProcedure = (event) => {
         event.preventDefault()
         let new_proc = inputProcedure
-        let input = { step: "", recipe: recipeInfo}
+        let input = { step: "", recipe: recipeID}
         new_proc.push(input)
         setInputProcedure([...new_proc]);
     };
@@ -241,11 +261,12 @@ if(!recipeInfo){
         <br></br>
     <Row>        
     <Col xs ="auto">
+            
             <Form.Group>
                 <FloatingLabel label = "Category">
                     <Form.Select onChange = { handleChange }
                                 id = "category"
-                                value = {inputState.category}
+                                value = { inputState.category } 
                                 size = 'lg'>
                         <option value = "null"></option>
                         <option value = "Bread">Bread</option>
@@ -253,7 +274,7 @@ if(!recipeInfo){
                         <option value = "Cheese">Cheese</option>
                         <option value = "Chips">Chips</option>
                         <option value = "Core">Core</option>
-                        <option value = "Oils">Oils</option>
+                        <option value = "Oil">Oil</option>
                         <option value = "Pasta">Pasta</option>
                         <option value = "Preservation">Preservation</option>
                         <option value = "Starch">Starch</option>
@@ -266,6 +287,7 @@ if(!recipeInfo){
                     </Form.Select>
                 </FloatingLabel>
             </Form.Group>
+            
             <br></br>
     </Col>
 </Row>
@@ -468,7 +490,7 @@ if(!recipeInfo){
    
 </div>
 </div>
-<TitleModal recipeID = { recipeID }/>
+<UpdateTitleModal recipeID = { recipeID }/>
         </div>
         
     

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
@@ -37,13 +37,26 @@ function CreateForm(props) {
     const [inputEquipment, setInputEquipment] = useState(initialEquipment)
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
     const [showRecipeModal, setShowRecipeModal] = useState(false)
+    const [recipe, setRecipe] = useState([])
    
     // Context
     const {inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe} = useContext(DataContext)
     
+    // useEffect
+    useEffect(() => {
+        if(recipeTitle){
+            axiosInstance.get(`/recipes/title/${recipeTitle.title}`)
+            .then(res => setRecipe(res.data[0]))
+            .catch(console.error)
+        }else {
+            return null
+        }
+       
+    }, [])
+    
+
     // open Modal
     const handleShowRecipeModal = () => setShowRecipeModal(true) 
-    
 
     // Handle Ingredients, Equipment, Procedure Submit
     const handleBottomSubmit = () => {
@@ -54,7 +67,7 @@ function CreateForm(props) {
                 {name: list.name,
                 quantity: list.quantity,
                 unit_of_measure: list.unit_of_measure,
-                recipe: recipeTitle.title})
+                recipe: recipe.id})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
@@ -64,7 +77,7 @@ function CreateForm(props) {
                 axiosInstance.post('/equipment/create',
                 {name: list.name,
                 quantity: list.quantity,
-                recipe: recipeTitle.title})
+                recipe: recipe.id})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
@@ -73,7 +86,7 @@ function CreateForm(props) {
             return(
                 axiosInstance.post('/procedure/create',
                 {step: list.step,
-                recipe: recipeTitle.title})
+                recipe: recipe.id})
                 .then(res => console.log(res))
                 .catch(console.error)
             )
@@ -91,7 +104,7 @@ function CreateForm(props) {
         event.preventDefault()
             
             axiosInstance.post('/recipes/body/create',{
-                title: recipeTitle.title,
+                title: recipe.id,
                 category: inputState.category,
                 user: currentUser,
                 image_url: inputState.image_url,
@@ -106,7 +119,6 @@ function CreateForm(props) {
             setRecipeTitle({title: ""})
        
     }
-
     // handle change
     const handleChange = (event) => {
         setInputState({
@@ -199,7 +211,7 @@ function CreateForm(props) {
                                 <option value = "Cheese">Cheese</option>
                                 <option value = "Chips">Chips</option>
                                 <option value = "Core">Core</option>
-                                <option value = "Oils">Oils</option>
+                                <option value = "Oil">Oil</option>
                                 <option value = "Pasta">Pasta</option>
                                 <option value = "Preservation">Preservation</option>
                                 <option value = "Starch">Starch</option>

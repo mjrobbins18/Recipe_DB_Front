@@ -12,7 +12,6 @@ function Create(props) {
         <div className = "recipeFormContainer">
             <InstructionModal/>
             <TitleModal/>
-            <CreateForm/>
         </div>
     );
 }

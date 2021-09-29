@@ -61,7 +61,7 @@ function Dashboard(props) {
                         </div>
                     )
                 })}
-                <Link to = "/create">
+                <Link to = "/create" >
                  <div className = "createRecipeDiv">
                  <div className = "dashHeading">
                     New Recipe

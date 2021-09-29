@@ -40,7 +40,9 @@ console.log(data)
                         <Col>
                         <Link id = "cardLink" to = {`/recipe/${item.id}`}>
                         <Card className = "recipeCard" >
-                            <Card.Img id = "cardImg" variant="top" src={item.recipe_body[0].image ? item.recipe_body[0].image : item.recipe_body[0].image_url}/>
+                            {item.recipe_body[0].image | item.recipe_body[0].image ?
+                            <Card.Img id = "cardImg" variant="top" src={item.recipe_body[0].image ? item.recipe_body[0].image : item.recipe_body[0].image_url}/> 
+                            :null}
                             <div className = "cardTitle"> 
                             <Card.Title><p>{item.recipe_body[0].title}</p></Card.Title>
                             <Card.Text id = "cardUser">{item.user.username}</Card.Text>
@@ -58,6 +60,7 @@ console.log(data)
             
             </div>
         </div>
+      
     );
 }
 
