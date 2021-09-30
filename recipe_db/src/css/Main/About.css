@@ -1,0 +1,29 @@
+@media (min-width: 480px) {
+    .about {
+        height: 13vh;
+        position: relative;
+        bottom: 0;
+        background:#0C4674 ;
+        color: white;
+        text-align: center;
+        padding: 1%;
+    }
+    .aboutLinks{
+        display: flex;
+        margin: 0 auto;
+        width: 20vw;
+        justify-content: space-between;
+        flex-direction: row;
+        padding: 1%;
+    }
+    .aboutLinks a {
+        color: white;
+        
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .linkImg{
+        max-width: 5vw;
+        max-height: 5vh;
+    }
+}

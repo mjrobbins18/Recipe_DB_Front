@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card'
 import { DataContext } from './DataContext';
 import { Link } from 'react-router-dom';
 import '../../css/Main/Results.css'
+import altImage from '../../images/no-food.png'
 
 function Results(props) {
     
@@ -19,14 +20,15 @@ function Results(props) {
                         <div >
                         <Col>
                         <Link id = "cardLink" to = {`/recipe/${item.id}`}>
-                        <Card className = "recipeCard" >
-                            <Card.Img id = "cardImg" variant="top" src={item.recipe_body[0].image ? item.recipe_body[0].image : item.recipe_body[0].image_url}/>
+                        <Card className = "recipeCard grow" >
+                            <Card.Img id = "cardImg" variant="top" src={item.recipe_body[0].image_url ? item.recipe_body[0].image_url : altImage}/>
+                            <div className = "cardBody"> 
                             <div className = "cardTitle"> 
-                            <Card.Title><p>{item.recipe_body[0].title}</p></Card.Title>
-                            <Card.Text id = "cardUser">{item.user.username}</Card.Text>
+                            <Card.Title><div className = "cardTitle"><h2>{item.title}</h2><p id = "cardUser"> Created by {item.user.username}</p></div></Card.Title>
                             <Card.Body>
-                            This is where a breif description of each recipe is going to go. 
+                            {item.recipe_body[0].dish_components ? item.recipe_body[0].dish_components : <h4>Check this dish out!</h4>}
                             </Card.Body>
+                            </div>
                             </div>
                         </Card>
                         </Link>
@@ -41,3 +43,4 @@ function Results(props) {
 }
 
 export default Results;
+

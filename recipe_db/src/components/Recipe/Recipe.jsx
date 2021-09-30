@@ -4,7 +4,7 @@ import axiosInstance from '../../AxiosAPI';
 import '../../css/Recipe/Recipe.css'
 import Spinner from 'react-bootstrap/Spinner'
 import { HashLink } from 'react-router-hash-link';
-
+import altImage from '../../images/no-food.png'
 
 function Recipe({ match }) {
   // Recipe id
@@ -14,7 +14,7 @@ function Recipe({ match }) {
 
   
     useEffect(() => {
-      axiosInstance.get(`/recipes/${recipeId}`)
+      axios.get(`http://127.0.0.1:8000/api/recipes/${recipeId}`)
       .then(res => setData(res.data))
       .catch(console.error)
     }, [])
@@ -37,13 +37,13 @@ function Recipe({ match }) {
                 <span>
               <h1>{data.title}</h1>
                 <p>{data.user.username}</p>
-                
+                <p>{data.recipe_body[0].dish_components}</p>
               </span>
                 <HashLink className = "nav-link" to = {`/recipe/${recipeId}/#comments`}>Comments</HashLink>
                 <h4>{data.recipe_body[0].recipe_yield}</h4>
               </div>
               
-              <img src = {data.recipe_body[0].image ? data.recipe_body[0].image : data.recipe_body[0].image_url} alt = {data.title}/>
+              <img className = 'recipeImg' src = {data.recipe_body[0].image_url ? data.recipe_body[0].image_url : altImage} alt = {data.title}/>
               
           </div>
           <div className = "ingEquipDiv">

@@ -185,7 +185,7 @@ function CreateForm(props) {
         event.preventDefault()
         setInputProcedure([...inputProcedure, { step: "", recipe: inputState.title}]);
     };
-console.log(recipe.id)
+
     return (
         <div className = "recipeFormContainer">
 

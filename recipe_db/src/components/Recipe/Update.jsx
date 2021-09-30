@@ -300,9 +300,9 @@ if(!recipeInfo){
         </Form.Group>
     </Col>
     <Col md>
-        {/* <Form.Group controlId="formFile" className="mb-3">
+        <Form.Group controlId="formFile" className="mb-3">
             <Form.Control type="file" size ="lg" />
-        </Form.Group> */}
+        </Form.Group>
     </Col>
 </Row>
 <Row>

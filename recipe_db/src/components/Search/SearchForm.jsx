@@ -7,6 +7,8 @@ import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 import '../../css/Search/SearchForm.css'
 import { useHistory } from 'react-router';
+import axios from 'axios';
+
 
 function SearchForm(props) {
 
@@ -22,7 +24,7 @@ function SearchForm(props) {
     // handle submit
     const handleSubmit = (event) => {
         event.preventDefault()
-        axiosInstance.get(`/recipes/search/?q=${searchState.search}`)
+        axios.get(`http://127.0.0.1:8000/api/recipes/search/?q=${searchState.search}`)
         .then(res => setSearchResults(res.data))
         .then(setSearchState(""))
         .finally(history.push(`/results/${searchState.search}`))

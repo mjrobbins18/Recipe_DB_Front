@@ -20,9 +20,12 @@ function SignupForm(props) {
 
     // State
     const [formState, setState] = useState(initialState)
-    const [errors, setErrors] = useState()
+    const [errors, setErrors] = useState({errors:""
+    })
     const [validated, setValidated] = useState(false)
     const [showModal, setShowModal] = useState(false)
+    const [errorChecker, setErrorChecker] = useState(false)
+    const [emailError, setEmailError] = useState(false)
     // History
     const history = useHistory()
 
@@ -33,8 +36,8 @@ function SignupForm(props) {
     }
     // open Modal
     const handleShow = () => {
-        return validated ? setShowModal(true) : null }
-
+  setShowModal(true)
+    }
     // Handle Change
     const  handleChange = (e) => {
         setState({
@@ -45,6 +48,7 @@ function SignupForm(props) {
     // Handle Submit
     const handleSubmit = (e) => {
         e.preventDefault()
+        
         const form = e.currentTarget
         if(form.checkValidity() === false){
             e.preventDefault()
@@ -60,21 +64,28 @@ function SignupForm(props) {
             
         })
         .then(res => console.log(res))
-        .catch(err => {
-            console.log(err.stack)})
-        setValidated(true)
-        setState(initialState)
+        .catch (error => {
+        // checks for type of error 
+        let response = error.response.status
+        if(response === 500){
+            setErrorChecker(true)
+        }else if(response === 400){
+            setEmailError(true)
+        }else if(!error){
+            handleShow()
+            setState(initialState)
+        }else{return null}})
         }
         
     
 }
-
-
+        console.log(errorChecker)
+        console.log(errors.errors === 500)
 
     return (
         <div className = "formDiv">
             
-            <Form noValidate validated = {validated} onSubmit = { handleSubmit }>
+            <Form className = 'form' onSubmit = { handleSubmit }>
                 <Row className = 'mb-3'>
                 <Form.Group as={Col}  className = 'mb-3'>
                     <FloatingLabel
@@ -88,7 +99,7 @@ function SignupForm(props) {
                             id = "first_name"
                             value = { formState.first_name }
                             onChange = { handleChange }/>
-                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>       
+                          
                     </FloatingLabel>
                 </Form.Group>
                 
@@ -104,13 +115,12 @@ function SignupForm(props) {
                             id = "last_name"
                             value = { formState.last_name }
                             onChange = { handleChange }/>
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                 
                 </FloatingLabel>
                 </Form.Group>
               </Row>
                 <Form.Group className = 'mb-3'> 
                     <FloatingLabel
-                        
                         label = "Username"
                         className = "mb-3"  >
                             <Form.Control
@@ -121,11 +131,9 @@ function SignupForm(props) {
                                 id = "username"
                                 value = { formState.username }
                                 onChange = { handleChange }/>
-                                {validated ? 
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        : 
-                        <Form.Control.Feedback type = "invalid">Please Enter a Valid Email</Form.Control.Feedback>}
+                            
                     </FloatingLabel>
+                    {errorChecker ? <p>Username already exists</p>: null}
                 </Form.Group>
                 
                 <Form.Group className = 'mb-3'>
@@ -141,13 +149,11 @@ function SignupForm(props) {
                             id = "email"
                             value = { formState.email }
                             onChange = { handleChange }/>
-                        {validated ? 
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        : 
-                        <Form.Control.Feedback type = "invalid">Please Enter a Valid Email</Form.Control.Feedback>}
-                        
+                       
                     </FloatingLabel>
+                    
                 </Form.Group>
+                
                 <Form.Group className = 'mb-3'>    
                     <FloatingLabel
                         
@@ -161,19 +167,19 @@ function SignupForm(props) {
                             id = "password"
                             value = { formState.password }
                             onChange = { handleChange }/>
-                            {validated ? 
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        : 
-                        <Form.Control.Feedback type = "invalid">Please Enter a Valid Email</Form.Control.Feedback>}
+                   
                     </FloatingLabel>
                 </Form.Group>
-                <Button variant="primary" size = 'lg' type = 'submit' onClick = { handleShow }>Submit</Button>
+                {emailError ? <p>Enter a valid Email or Password greater than 8 characters</p>: null}
+                <Button variant="primary" size = 'lg' type = 'submit' >Submit</Button>
             </Form>
-            
+        
             <CreatedModal handleShow = { handleShow } 
             handleClose = { handleClose }
             showModal = { showModal }
             setShowModal = { setShowModal }/>
+            
+          
             
         </div>
     );

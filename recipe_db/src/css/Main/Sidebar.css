@@ -1,0 +1,13 @@
+@media (min-width: 480px) {
+    .sidebarBody {
+        display: flex;
+        flex-direction: column;
+        padding: 5%;
+        font-size: 30px;
+    }
+    .loginbtn {
+        padding: 1%;
+        bottom: 0;
+        position: fixed;
+    }
+}

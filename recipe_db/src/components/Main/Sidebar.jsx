@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../AxiosAPI';
 import { DataContext } from './DataContext';
+import '../../css/Main/Sidebar.css'
 
 
 function Sidebar({ showSidebar, setShowSidebar }) {
@@ -36,19 +37,21 @@ const logout = () => {
 const handleCloseSidebar = () => setShowSidebar(false)
 
     return (
-        <div>
-            <Offcanvas show = { showSidebar } onHide = { handleCloseSidebar }>
+        <div >
+            <Offcanvas className = "sidebar" show = { showSidebar } onHide = { handleCloseSidebar }>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title><h1>{ currentUser }</h1></Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body>
+                <Offcanvas.Body className = "sidebarBody">
                     <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/recipes"}>Home</Link>
                     {!currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/signup"}>Signup</Link> : null }
                     {currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/create'}>New Recipe</Link> : null }
                     {currentUser ? <Link onClick = { handleCloseSidebar } className={"nav-link"} to={'/'}>Dashboard</Link> : null}
-                    {currentUser ? <Button variant = 'primary' onClick= { logout }>Logout</Button> 
+                    <div className = "loginbtn">
+                    {currentUser ? <Button size = 'lg' variant = 'primary' onClick= { logout }>Logout</Button> 
                     : 
                     <Link onClick = { handleCloseSidebar } className={"nav-link"} to={"/login"}>Login</Link>}
+                    </div>
                 </Offcanvas.Body>
                 </Offcanvas>
                     
