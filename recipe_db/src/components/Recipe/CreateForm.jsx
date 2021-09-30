@@ -185,7 +185,7 @@ function CreateForm(props) {
         event.preventDefault()
         setInputProcedure([...inputProcedure, { step: "", recipe: inputState.title}]);
     };
-
+console.log(recipe.id)
     return (
         <div className = "recipeFormContainer">
 
@@ -243,11 +243,11 @@ function CreateForm(props) {
 
                 </Form.Group>
             </Col>
-            Or:
+  
             <Col md>
-                <Form.Group controlId="formFile" className="mb-3">
+                {/* <Form.Group controlId="formFile" className="mb-3">
                     <Form.Control type="file" size ="lg"/>
-                </Form.Group>
+                </Form.Group> */}
             </Col>
         </Row>
         <Row>

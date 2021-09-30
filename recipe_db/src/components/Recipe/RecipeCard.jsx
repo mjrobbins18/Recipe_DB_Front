@@ -18,10 +18,8 @@ function RecipeCard(props) {
         .then(res => setData(res.data))
         .catch(console.error)
     }, [])
-console.log(data)
-    
-    
-    
+
+    console.log(data)
     return (
         <div>
 
@@ -40,14 +38,12 @@ console.log(data)
                         <Col>
                         <Link id = "cardLink" to = {`/recipe/${item.id}`}>
                         <Card className = "recipeCard" >
-                            {item.recipe_body[0].image | item.recipe_body[0].image ?
-                            <Card.Img id = "cardImg" variant="top" src={item.recipe_body[0].image ? item.recipe_body[0].image : item.recipe_body[0].image_url}/> 
-                            :null}
+                            <Card.Img id = "cardImg" variant="top" alt="wtf" src={item.recipe_body[0].image_url}/> 
                             <div className = "cardTitle"> 
-                            <Card.Title><p>{item.recipe_body[0].title}</p></Card.Title>
+                            <Card.Title><p>{item.title}</p></Card.Title>
                             <Card.Text id = "cardUser">{item.user.username}</Card.Text>
                             <Card.Body>
-                            This is where a breif description of each recipe is going to go. 
+                            {item.recipe_body[0].dish_components}
                             </Card.Body>
                             </div>
                         </Card>
