@@ -145,7 +145,6 @@ function Update({ match }) {
                     title: recipeID,
                     category: inputState.category,
                     user: currentUser,
-                    image: data,
                     image_url: inputState.image_url,
                     dish_components: inputState.dish_components,
                     recipe_yield: inputState.recipe_yield,

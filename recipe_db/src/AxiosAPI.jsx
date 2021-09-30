@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
     headers: {
         'Authorization': "JWT " + localStorage.getItem('access_token') ? "JWT " + localStorage.getItem('access_token') : null,
         'Content-Type': 'application/json',
-        'accept': 'application/json',
+        'accept': 'application/json'
     }})
 axiosInstance.interceptors.response.use(
     response => response,
