@@ -16,6 +16,7 @@ function LoginForm(props) {
     // State
     const [formState, setState] = useState(initialState)
     const [data, setData] = useState({})
+    const [errorChecker, setErrorChecker] = useState(false)
     
     // History
     const history = useHistory()
@@ -29,7 +30,6 @@ function LoginForm(props) {
 
     // Handle submit
     const handleSubmit = (e) => {
-        console.log('username:', formState.username, 'password', formState.password)
         e.preventDefault()
         axiosInstance.post('/token/obtain/', {
             username: formState.username,
@@ -42,11 +42,16 @@ function LoginForm(props) {
             localStorage.setItem('access_token', token.access)
             localStorage.setItem('username', formState.username)
             setState(initialState)
+            history.push('/')
             window.location.reload()
             
             } )
-        .finally(history.push('/'))
-        .catch(console.error)
+        .catch(error => {
+            if(error.response.status === 401){
+                setErrorChecker(true)
+            }else{console.log(error)}
+        });
+        
    
 }
 
@@ -82,6 +87,7 @@ function LoginForm(props) {
                            value = { formState.password }
                            onChange = { handleChange }/>
                 </FloatingLabel>
+                {errorChecker ? <p>Incorrect username or password</p> : null}
                 </Form.Group>
                 <Button size = 'lg' variant = "primary" type = 'submit'>Submit</Button>
             </Form>
