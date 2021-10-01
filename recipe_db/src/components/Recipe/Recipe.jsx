@@ -5,6 +5,7 @@ import '../../css/Recipe/Recipe.css'
 import Spinner from 'react-bootstrap/Spinner'
 import { HashLink } from 'react-router-hash-link';
 import altImage from '../../images/no-food.png'
+import Questions from '../Post/Questions';
 
 function Recipe({ match }) {
   // Recipe id
@@ -87,7 +88,7 @@ function Recipe({ match }) {
               </ol>
           </div>
          <div id = "comments">
-           
+           <Questions recipeId = { recipeId }/>
          </div>
           
         </div>
