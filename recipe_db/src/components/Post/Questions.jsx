@@ -2,9 +2,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Toast from 'react-bootstrap/Toast'
 import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext'
 import axios from 'axios';
+import { ToastContainer } from 'react-bootstrap';
 
 
 
@@ -16,6 +18,8 @@ const {currentUser} = useContext(DataContext)
 
 // State
 const [postState, setPostState] = useState("")
+const [commentState, setCommentState] = useState("")
+const [postId, setPostId] = useState()
 const [posts, setPosts] = useState([])
 
 // Get post
@@ -40,6 +44,27 @@ axiosInstance.post('/post/', {
 setPostState("")
 }
 
+// Handle Submit Comment
+const handleSubmitComment = (event) => {
+    event.preventDefault()
+    axiosInstance.post('/comment/', {
+        user: currentUser,
+        body: commentState,
+        post: postId, 
+        recipe: recipeId,
+    })
+    .then(res => console.log(res))
+    .catch(console.error)
+    setCommentState("")
+}
+
+// Handle Comment
+const handleComment = (event) => {
+    setCommentState(event.target.value)
+    setPostId(event.target.name)
+    
+}
+
 // Handle Post
 
 const handlePost = (event) => {
@@ -51,22 +76,32 @@ if (posts.length === 0) {
 
     return (
         <div>
-            <h1>Be the First to Post on this Recipe!</h1>
+            {currentUser ? 
+            <Toast bg = 'primary'>
+                <Toast.Header closeButton = { false }>
+                Be the First to Post on this Recipe!
+                </Toast.Header>
+                <Toast.Body>
+
+                
             <Form onSubmit = { handleSubmitPost }>
                 <Form.Group>
                     <FloatingLabel
-                    label = 'Comment on this Recipe'>
+                    label = 'Post Something on this Recipe'>
                          <Form.Control
                         id = 'post'
                         value = { postState }
-                        placeholder = "Comment on this Recipe"
+                        placeholder = "Post Something on this Recipe"
                         onChange = { handlePost }
                         />
                     </FloatingLabel>
                 </Form.Group>
+                <br/>
                 <Button variant = 'primary' type = 'submit'>Post</Button>
             </Form>
-            
+            </Toast.Body>
+            </Toast>
+            : <h1>Login or Signup to Create a Post or Make a Comment</h1>}
         </div>
     );
 }else{
@@ -74,20 +109,53 @@ if (posts.length === 0) {
    <div>
        {posts.map(post => {
            return(
+               
                <div>
+                   <div>
+                   <Toast bg = 'primary'>
+                       <Toast.Header closeButton = { false }>
                    <h3>{post.user}-</h3>
+                   </Toast.Header>
+                   <Toast.Body>
                    <p>"{post.body}"</p>
                     {currentUser === post.user ? <Button type = 'secondary' >Edit</Button>: null}
-                    {currentUser ? <Button type = 'primary'> Comment</Button> : null}
+                    {currentUser ?
+                    <Form onSubmit = { handleSubmitComment }>
+                    <Form.Group>
+                        <FloatingLabel
+                        label = 'Comment on this Post'>
+                             <Form.Control
+                            id = 'post'
+                            name = {post.id}
+                            value = { commentState }
+                            placeholder = "Comment on this Post"
+                            onChange = { handleComment }
+                            />
+                        </FloatingLabel>
+                    </Form.Group>
+                    <br/>
+                     <Button type = 'primary'> Comment</Button> 
+                     </Form>: null}
+                    </Toast.Body>
+                    </Toast>
+                    </div>
                     <div>
-                        <p>Comments:</p>
+                        {post.comments[0] ? <h2>Comments:</h2> : null}
+                        
+                        
                         {post.comments.map(comment => {
                             return (
-                                <div>
+                                <div className = 'commentDiv'>
+                                <Toast>
+                                    <Toast.Header closeButton = { false }>
                                 <h3>{comment.user}-</h3>
+                                </Toast.Header>
+                                <Toast.Body>
                                 <p>"{ comment.body }"</p>
-                                {currentUser === comment.user ? <Button type = 'secondary' >Edit</Button>: null}
-                                {currentUser ? <Button type = 'primary'> Comment</Button> : null}
+                                <br/>
+                                {currentUser === comment.user ? <Button type = 'secondary' >Edit</Button>: null}                     
+                                </Toast.Body>
+                                </Toast>
                                 </div>
                             )
                         })}
@@ -96,6 +164,32 @@ if (posts.length === 0) {
                </div>
            )
        })}
+       {currentUser ? 
+       <div>
+       <Toast bg = 'primary'>
+                <Toast.Header closeButton = { false }>
+                Create another Post
+                </Toast.Header>
+                <Toast.Body>
+       <Form onSubmit = { handleSubmitPost }>
+                <Form.Group>
+                    <FloatingLabel
+                    label = 'Post Something on this Recipe'>
+                         <Form.Control
+                        id = 'post'
+                        value = { postState }
+                        placeholder = "Post Something on this Recipe"
+                        onChange = { handlePost }
+                        />
+                    </FloatingLabel>
+                </Form.Group>
+                <br/>
+                <Button variant = 'primary' type = 'submit'>Post</Button>
+            </Form>
+            </Toast.Body>
+            </Toast>
+       </div>
+       : null}
    </div>
     )
 }
