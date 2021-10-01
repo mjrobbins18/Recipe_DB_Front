@@ -10,8 +10,11 @@ import { ToastContainer } from 'react-bootstrap';
 
 
 
+
+
 function Questions({ recipeId }) {
 
+ 
 // Context
 
 const {currentUser} = useContext(DataContext)
@@ -21,15 +24,71 @@ const [postState, setPostState] = useState("")
 const [commentState, setCommentState] = useState("")
 const [postId, setPostId] = useState()
 const [posts, setPosts] = useState([])
+const [messages, setMessages] = useState([])
+
+const roomName = recipeId;
+
+// Connect to websocket
+const connect = () => {
+    const chatSocket = new WebSocket(
+        'ws://'
+        + 'localhost:8000/ws/chat/'
+        + roomName
+        + '/'
+    );
+    
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+    
+}
 
 // Get post
+const WAIT_TIME = 5000
 useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/post/recipe/${recipeId}`)
-    .then(res => setPosts(res.data))
-    .catch(console.error)
-}, [])
+    const id = setInterval(() => {
+        axios
+        .get(`http://127.0.0.1:8000/api/post/recipe/${recipeId}`)
+        .then(res =>  {
+            setPosts(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }, WAIT_TIME);
+    return () => clearInterval(id)
+}, [posts])
 
-console.log(posts)
+
+// useEffect(() => {
+//     connect()
+// },[])
+
+
+
+// Posts into Chat Room
+// const sendPost = () => {
+//     const chatSocket = new WebSocket(
+//         'ws://'
+//         + 'localhost:8000/ws/chat/'
+//         + roomName
+//         + '/'
+//     );    
+//     const message = postState
+//     chatSocket.onopen = () => chatSocket.send(JSON.stringify({'message': message}))
+
+//         chatSocket.onmessage = function(e) {
+            
+//             const data = JSON.parse(e.data);
+//             var message = data.message
+//             const incomingMessage = message
+//             setMessages(() =>[...messages, incomingMessage]);
+          
+//         }
+        
+      
+// }
+
 
 // Handle Submit
 const handleSubmitPost = (event) => {
@@ -42,6 +101,9 @@ axiosInstance.post('/post/', {
 .then(res => console.log(res))
 .catch(console.error)
 setPostState("")
+
+// sendPost()
+
 }
 
 // Handle Submit Comment
@@ -70,12 +132,15 @@ const handleComment = (event) => {
 const handlePost = (event) => {
     setPostState(event.target.value)
 }
-console.log(postState)
 if (posts.length === 0) {
 
 
     return (
+       
         <div>
+       <div>
+           {/* {messages} */}
+       </div>
             {currentUser ? 
             <Toast bg = 'primary'>
                 <Toast.Header closeButton = { false }>
@@ -107,6 +172,24 @@ if (posts.length === 0) {
 }else{
     return (
    <div>
+       <Button variant = 'primary' onClick = {connect} >Connect</Button>
+       <div>
+       {/* {messages.map((item, i) => {
+           return(
+               <div  id = "message">
+                   <Toast>
+                       <Toast.Header closeButton = { false }>
+                           <h3>{currentUser}</h3>
+                       </Toast.Header>
+                       <Toast.Body>
+                       <div>{item}</div>
+                       </Toast.Body>
+                       </Toast>
+                  
+                   </div>
+           )
+       } )} */}
+       </div>
        {posts.map(post => {
            return(
                
