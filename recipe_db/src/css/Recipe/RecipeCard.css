@@ -108,17 +108,32 @@
         color: rgb(255, 255, 255)
     }
 }
-@media (max-width:375px){
+@media (max-width:376px) and (min-width: 375px){
 
 .headerContainer {
+      
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+   
+    }
+    .headerContainer::before{
+        content: "";
+        position: absolute;
         background-image: url(https://x.yummlystatic.com/web/peach-salad@2x.png) ;
         background-size:100%;
-        background-position:100%;
         background-repeat: no-repeat;
-        width: 100%;
+        top: 50vh;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.6;
+        z-index: -1;
     }
     .recipeCardHeader{
-        margin-top: 20%;
+        margin-top: 10%;
         padding: 8%;
         height: 90vh;
         width: 100%;
@@ -126,7 +141,7 @@
     }
     .linkbtn {
         
-        width: 15vw;
+        width: 40vw;
         padding: 0.5%;
         border-radius: 0.5em;
         text-align: center;
@@ -135,7 +150,8 @@
     }
     .link{
         text-decoration: none;
-        color: rgb(255, 255, 255)
+        color: rgb(255, 255, 255);
+       
     }
     .link:hover{
        color: white
@@ -145,25 +161,30 @@
         background-image: url(../../images/lemon.jpg);
         background-size: 80%;
     }
+  
     .recipeCardContainer {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
         width: 100vw;
         padding: 2%;
-        
-        
+       
     }
     #browse {
-        width: 70vw;
+        width: 100vw;
         margin-bottom: 2%;
         color: rgb(12, 70, 117);
+
     }
     #browse h1 {
-        font-size: 80px;
+        font-size: 50px;
         font-weight: 800;
     }
 
     .recipeCard {
-        width: 23vw;
+        width: 95vw;
         background: rgb(148, 180, 197);
+       
         
     }
     .grow {
@@ -186,7 +207,7 @@
         text-shadow: 0px 4px 5px rgba(0,0,0,0.4),
              0px 8px 20px rgba(0,0,0,0.1),
              0px 18px 30px rgba(0,0,0,0.1); 
-        
+         
     }
     .cardTitle {
         padding: 1%;

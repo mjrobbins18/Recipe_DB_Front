@@ -21,8 +21,8 @@ function RecipeCard(props) {
         .then(res => setData(res.data))
         .catch(console.error)
     }, [])
-
-
+   
+console.log(data)
     if(!data[0]){
         return(
           <div className = "loadDiv">
@@ -59,19 +59,21 @@ function RecipeCard(props) {
                         
                         
                         
-                        
+                      
                         <div>
-                        
-                            <Card.Img id = "cardImg" variant="top" alt="wtf" src={item.recipe_body[0].image_url ? item.recipe_body[0].image_url : altImage}/> 
+                          
+                          <Card.Img id = "cardImg" variant="top" alt="No Image Available" src={item.recipe_body.length === 0 ? altImage : item.recipe_body[0].image_url}/> 
+
                         
                             <div className = "cardBody"> 
                             
-                            <Card.Title><div className = "cardTitle"><h2>{item.title}</h2><p id = "cardUser"> Created by {item.user.username}</p></div></Card.Title>
+                            <Card.Title><div className = "cardTitle"><h2>{item.title}</h2><p id = "cardUser"> Created by {item.user}</p></div></Card.Title>
                             <Card.Body id = "cardBodyText">
-                            {item.recipe_body[0].dish_components ? item.recipe_body[0].dish_components : <h4>Check this dish out!</h4>}
+                            {item.recipe_body.length === 0 ? <h4>Check this dish out!</h4> : item.recipe_body[0].dish_components}
                             </Card.Body>
-                    
+                           
                             </div>
+                           
                             </div>
                         
                         
@@ -79,6 +81,7 @@ function RecipeCard(props) {
                         </Link>
                         </Col>
                         </div>
+                        
                      
                         )
 

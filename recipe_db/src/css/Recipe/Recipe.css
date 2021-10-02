@@ -83,3 +83,95 @@
         background: white;
     }
 }
+@media (min-width: 375px) and (max-width: 376px) {
+    .loadDiv {
+        display: flex;
+        width: 100vw;
+        min-width: 20vw;
+        height: 100vh;
+        justify-content: center;
+    }
+    .recipeImg {
+        max-width: 30vw;
+        max-height: 30vh;
+    }
+
+    .recipeDiv{
+        margin-top: 20%;
+       background: rgb(187, 233, 206);
+       background-image: url(../../images/lemon.jpg);
+       background-size: 60%;
+       padding: 2%;
+
+    }
+    .recipeBodyDiv{
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        width: 90vw;
+        padding: 3%;
+        background: white;
+        opacity: .9;
+        box-shadow: 2px 4px 8px 0px grey;
+        
+
+    }
+    .recipeBodyDiv div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+       
+    }
+    .recipeBodyDiv img {
+        border-radius: 5%;
+        box-shadow: 2px 4px 8px 0px grey;
+        background: white;
+        opacity: .9;
+    }
+    .ingEquipDiv {
+        margin: 2% auto;
+        display: flex;
+        flex-direction: column;
+        width: 90vw;
+        padding: 3%;
+        opacity: .9;
+        background: white;
+        box-shadow: 2px 4px 8px 0px grey;
+    }
+
+    .ingEquipDiv span {
+        border-bottom: 1px solid grey;
+        margin-bottom: 1%;
+        padding: 1%;
+    }
+  
+    .ingEquipDiv li {
+        list-style: none;
+    }
+    .procedureDiv{
+        margin: 1% auto;
+        display: flex;
+        flex-direction: column;
+        width: 90vw;
+        padding: 3%;
+        opacity: .9;
+        box-shadow: 2px 4px 8px 0px grey;
+        background: white;
+    }
+    .procedureDiv span {
+        border-bottom: 1px solid grey;
+        padding: 1%;
+        margin-right: 2%;
+        margin-bottom: 2%;
+    }
+    #comments {
+        margin: 1% auto;
+        margin-bottom: 10%;
+        display: flex;
+        width: 90vw;
+        padding: 3%;
+        box-shadow: 2px 4px 8px 0px grey;
+        opacity: .9;
+        background: white;
+    }
+}

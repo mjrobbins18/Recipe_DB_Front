@@ -94,8 +94,10 @@ function Dashboard(props) {
                 </div>        
                 {renderItems}
                 <br />
-              
-                {paginationBasic}
+              <div className = "pagination">
+              {paginationBasic}
+              </div>
+                
                 </div>
                 {/* <Link to = "/create" >
                  <div className = "createRecipeDiv">

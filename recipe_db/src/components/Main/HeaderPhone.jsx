@@ -6,6 +6,7 @@ import M from '../../images/M Logo.png'
 import { DataContext } from './DataContext';
 import axiosInstance from '../../AxiosAPI';
 import { useHistory } from 'react-router';
+import Search from '../Search/Search';
 
 function HeaderPhone(props) {
     // context
@@ -46,6 +47,7 @@ const logout = () => {
                     <NavDropdown.Item> <Link  className={"nav-link"} to={"/login"}>Login</Link></NavDropdown.Item>}
                     </div>
                 </NavDropdown>
+                <Search/>
             </Navbar>
         </div>
     );

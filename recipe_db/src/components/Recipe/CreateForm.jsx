@@ -269,7 +269,7 @@ const cancelRecipe = () => {
             <Col>
                 <Form.Group>
                         <FloatingLabel
-                        label = 'Dish Components (if any)'
+                        label = 'Dish Details'
                         className = "mb-3"
                         >
                             <Form.Control
@@ -306,7 +306,7 @@ const cancelRecipe = () => {
                         return (
                             <div>
                     <Row>
-                        <Col xs ="auto">
+                        <Col xs ={3}>
                             <Form.Group>
                             <FloatingLabel
                             label = "Qty."
@@ -322,7 +322,7 @@ const cancelRecipe = () => {
                             </FloatingLabel>
                             </Form.Group>
                         </Col>
-                        <Col xs ="auto">
+                        <Col xs ={3}>
                             <Form.Group>
                             <FloatingLabel
                             label = "Unit"
@@ -368,17 +368,17 @@ const cancelRecipe = () => {
                         return (
                     <div>
                         <Row>
-                            <Col xs ="auto">
+                            <Col xs ={3}>
                                 <Form.Group>
                                     <FloatingLabel
-                                    label = "Quantity"
+                                    label = "Qty"
                                     className = "mb-3"
                                         >
                                             <Form.Control
                                             required
                                             id = "quantity"
                                             value = {x.quantity}
-                                            placeholder = "Quantity"
+                                            placeholder = "Qty"
                                             type = "number"
                                             onChange = {e => handleEquipment(e, i)}
                                             />
@@ -440,6 +440,7 @@ const cancelRecipe = () => {
                <Button variant = "danger" onClick = { cancelRecipe }>Cancel</Button>
             </Form>
            <RecipeModal
+            id = {recipe.id}
             handleShowRecipeModal = { handleShowRecipeModal } 
             showRecipeModal = { showRecipeModal }
             setShowRecipeModal = { setShowRecipeModal }/>

@@ -301,17 +301,17 @@ if(!recipeInfo){
 
         </Form.Group>
     </Col>
-    <Col md>
+    {/* <Col md>
         <Form.Group controlId="formFile" className="mb-3">
             <Form.Control type="file" size ="lg" />
         </Form.Group>
-    </Col>
+    </Col> */}
 </Row>
 <Row>
     <Col>
         <Form.Group>
                 <FloatingLabel
-                label = 'Dish Components (if any)'
+                label = 'Dish Details'
                 className = "mb-3"
                 >
                     <Form.Control
@@ -346,9 +346,9 @@ if(!recipeInfo){
         </Form.Group>
         {inputIngredient.map((x, i) => {
                 return (
-                    <div>
+                    <div className = "ingredients">
             <Row>
-                <Col xs ="auto">
+                <Col xs ={3}>
                     <Form.Group>
                     <FloatingLabel
                     label = "Qty."
@@ -364,7 +364,7 @@ if(!recipeInfo){
                     </FloatingLabel>
                     </Form.Group>
                 </Col>
-                <Col xs ="auto">
+                <Col xs = {3}>
                     <Form.Group>
                     <FloatingLabel
                     label = "Unit"
@@ -410,17 +410,17 @@ if(!recipeInfo){
                 return (
             <div>
                 <Row>
-                    <Col xs ="auto">
+                    <Col xs ={3}>
                         <Form.Group>
                             <FloatingLabel
-                            label = "Quantity"
+                            label = "Qty."
                             className = "mb-3"
                                 >
                                     <Form.Control
                                     required
                                     id = "quantity"
                                     value = {x.quantity}
-                                    placeholder = "Quantity"
+                                    placeholder = "Qty."
                                     type = "number"
                                     onChange = {e => handleEquipment(e, i)}
                                     />

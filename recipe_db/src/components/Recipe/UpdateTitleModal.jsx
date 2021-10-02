@@ -74,7 +74,7 @@ function TitleModal({ recipeID }) {
                         </Form.Group>
                         { recipeInfo.length > 0 ? <Button variant = 'primary' type = 'submit' onClick = {() => setShowTitleModal(false)}>Next Step</Button>
                         : <Button variant = 'primary' type = 'submit' onClick = {() => setShowTitleModal(false)} disabled>Next Step</Button> }
-                        <Button variant = 'success' onClick = { handleInstructionModal }>First Time?</Button>
+                        {/* <Button variant = 'success' onClick = { handleInstructionModal }>First Time?</Button> */}
                     </Form>
                 </Modal.Body>
             </Modal>

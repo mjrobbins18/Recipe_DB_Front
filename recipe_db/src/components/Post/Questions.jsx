@@ -191,7 +191,7 @@ if (posts.length === 0) {
         <div className = "postContainer">
     
             {currentUser ? 
-            <Toast bg = 'primary' className = "post">
+            <Toast bg = 'primary' className = "post" id = "fade">
                 <Toast.Header closeButton = { false }>
                 Be the First to Post on this Recipe!
                 </Toast.Header>

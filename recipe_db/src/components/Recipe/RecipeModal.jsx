@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 
 
 
-function RecipeModal({ showRecipeModal, setShowRecipeModal, handleShowRecipeModal}) {
+function RecipeModal({ showRecipeModal, setShowRecipeModal, handleShowRecipeModal, id}) {
 
 
 // History
@@ -37,7 +37,7 @@ const handleCloseRecipeModal = (event) => {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant = 'primary' id = '/' onClick = { handleCloseRecipeModal }> Home </Button>
-                        <Button variant = 'primary' id = '/recipe' onClick = { handleCloseRecipeModal }> View Recipe </Button>
+                        <Button variant = 'primary' id = {`/recipe/${id}`} onClick = { handleCloseRecipeModal }> View Recipe </Button>
                     </Modal.Footer>
                 </Modal>
         </div>

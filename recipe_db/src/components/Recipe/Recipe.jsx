@@ -37,14 +37,17 @@ function Recipe({ match }) {
               <div>
                 <span>
               <h1>{data.title}</h1>
-                <p>{data.user.username}</p>
-                <p>{data.recipe_body[0].dish_components}</p>
+                <p> Created by: {data.user}</p>
+                <p>{data.recipe_body ? data.recipe_body[0].dish_components : null}</p>
               </span>
-                <HashLink className = "nav-link" to = {`/recipe/${recipeId}/#comments`}>Comments</HashLink>
-                <h4>{data.recipe_body[0].recipe_yield}</h4>
+              <div className = "linkbtn grow">
+                <HashLink className = "link" to = {`/recipe/${recipeId}/#comments`}>Comments</HashLink>
+                </div>
+                <br/>
+                <h4>{data.recipe_body ? data.recipe_body[0].recipe_yield : null}</h4>
               </div>
               
-              <img className = 'recipeImg' src = {data.recipe_body[0].image_url ? data.recipe_body[0].image_url : altImage} alt = {data.title}/>
+              <img className = 'recipeImg' src = {data.recipe_body? data.recipe_body[0].image_url : altImage} alt = {data.title}/>
               
           </div>
           <div className = "ingEquipDiv">
