@@ -9,6 +9,7 @@ import axiosInstance from '../../AxiosAPI';
 import { useHistory } from 'react-router-dom';
 import { FloatingLabel } from 'react-bootstrap';
 import '../../css/Recipe/CreateForm.css'
+import axios from 'axios';
 
 function CreateForm(props) {
     //    Initial State
@@ -28,8 +29,11 @@ function CreateForm(props) {
         recipe: "",
     }]
     
-    // currentuser
-    const { currentUser } = useContext(DataContext)
+    // Context
+    const { currentUser, inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe, recipeInfo, setRecipeInfo } = useContext(DataContext)
+
+    // History
+    const history = useHistory()
 
     // State
     const [selectedFile, setSelectedFile] = useState(null)
@@ -38,23 +42,23 @@ function CreateForm(props) {
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
     const [showRecipeModal, setShowRecipeModal] = useState(false)
     const [recipe, setRecipe] = useState([])
-   
-    // Context
-    const {inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe} = useContext(DataContext)
+    
     
     // useEffect
+    
     useEffect(() => {
         if(recipeTitle){
-            axiosInstance.get(`/recipes/title/${recipeTitle.title}`)
-            .then(res => setRecipe(res.data[0]))
-            .catch(console.error)
+            
+                axiosInstance.get(`/recipes/title/${recipeTitle.title}`)
+                .then(res => setRecipe(res.data[0]))
+                .catch(console.error)
+             
         }else {
             return null
         }
        
     }, [])
-    
-
+    console.log(recipe)
     // open Modal
     const handleShowRecipeModal = () => setShowRecipeModal(true) 
 
@@ -113,7 +117,9 @@ function CreateForm(props) {
     
             })
             .then(handleBottomSubmit())
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res)
+                })
             .catch(console.error)
             .finally(handleShowRecipeModal())
             setRecipeTitle({title: ""})
@@ -185,6 +191,15 @@ function CreateForm(props) {
         event.preventDefault()
         setInputProcedure([...inputProcedure, { step: "", recipe: inputState.title}]);
     };
+
+// Cancel Recipe Build
+const cancelRecipe = () => {
+    axiosInstance.delete(`/recipes/${recipeInfo.id}`)
+    .then(() => history.push('/'))
+    .finally(setRecipeInfo([]))
+    .catch(err => console.log(err))
+
+}
 
     return (
         <div className = "recipeFormContainer">
@@ -402,7 +417,7 @@ function CreateForm(props) {
                             <Form.Group>
                                     <FloatingLabel
                                     label = "Step"
-                                    classname = "mb-3">
+                                    className = "mb-3">
                                         <Form.Control
                                         required
                                         id = "step"
@@ -422,7 +437,8 @@ function CreateForm(props) {
                     )})}      
 
                <Button variant = "primary" type = "submit">Submit</Button>
-           </Form>
+               <Button variant = "danger" onClick = { cancelRecipe }>Cancel</Button>
+            </Form>
            <RecipeModal
             handleShowRecipeModal = { handleShowRecipeModal } 
             showRecipeModal = { showRecipeModal }

@@ -9,7 +9,8 @@ import { useHistory } from 'react-router';
 
 function TitleModal({ recipeID }) {
 
-
+     // State
+     const [ errResponse, setErrResponse] = useState(false)
      // History
      const history = useHistory()
     
@@ -25,9 +26,18 @@ function TitleModal({ recipeID }) {
                 title: recipeTitle.title,
                 user: currentUser,
             })
-            .then(res => console.log(res))
-            .finally(history.push('/create/body'))
-            .catch(console.error)
+            .then(res => {console.log(res)
+                history.push('/create/body')
+                setShowTitleModal(false)    
+            })
+            .catch(error => {
+                let response = error.response.status
+                if(response === 400){
+                    setErrResponse(true)
+                    setInterval(() => setErrResponse(false), 4000)
+                }
+            }
+            )
         
      }
      // handle title change
@@ -75,7 +85,8 @@ function TitleModal({ recipeID }) {
                                         onChange = { handleTitleChange }/>
                                 </FloatingLabel>
                         </Form.Group>
-                        {recipeTitle.title.length > 0 ? <Button variant = 'primary' type = 'submit' onClick = {() => setShowTitleModal(false)}>Next Step</Button>
+                        {errResponse ? <p>Recipe title already exists, please choose something slightly different</p> : null}
+                        {recipeTitle.title.length > 0 ? <Button variant = 'primary' type = 'submit' >Next Step</Button>
                         : <Button variant = 'primary' type = 'submit' onClick = {() => setShowTitleModal(false)} disabled>Next Step</Button> }
                         <Button variant = 'success' onClick = { handleInstructionModal }>First Time?</Button>
                     </Form>

@@ -1,19 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext,useState } from 'react';
 import '../../css/Main/Landing.css'
-import { Link, Route, Redirect } from 'react-router-dom';
-import axiosInstance from '../../AxiosAPI';
+import { Route, Redirect } from 'react-router-dom';
 import Create from '../Recipe/Create';
-import CreateForm from '../Recipe/CreateForm';
-import Recipe from '../Recipe/Recipe';
 import RecipeCard from '../Recipe/RecipeCard';
 import RecipeCont from '../Recipe/RecipeCont';
 import Login from '../User/Login';
 import Signup from '../User/Signup';
-import About from './About';
 import { DataContext } from './DataContext';
 import Sidebar from './Sidebar';
-import Button from 'react-bootstrap/Button'
-import Dashboard from '../User/Dashboard';
 import DashboardContainer from '../User/DashboardContainer';
 import arrow from '../../images/arrow.png'
 import RecipeCardCont from '../Recipe/RecipeCardCont';
@@ -22,6 +16,7 @@ import Tooltip  from 'react-bootstrap/Tooltip';
 import ResultsContainer from './ResultsContainer';
 import UpdateContainer from '../Recipe/UpdateContainer'
 import FormContainer from '../Recipe/FormContainer';
+import HeaderPhone from './HeaderPhone';
 
 
 function Landing(props) {
@@ -36,6 +31,7 @@ function Landing(props) {
     return (
         <div>
             <nav>
+            <HeaderPhone/>
             <OverlayTrigger
                     placement='right'
                     overlay={
@@ -50,6 +46,7 @@ function Landing(props) {
                     <Sidebar showSidebar = { showSidebar }
                              setShowSidebar = { setShowSidebar }  />
             </nav>
+
             <main>
                     <Route exact path = '/login' render = { Login }/>
                     <Route exact path = '/signup' render = { Signup }/>

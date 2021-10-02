@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
-function CreatedModal({ showModal, setShowModal, handleShow, handleClose }) {
+function CreatedModal({ showModal, setShowModal, handleClose }) {
 
     return (
         <div>

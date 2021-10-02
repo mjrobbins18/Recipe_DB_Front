@@ -3,7 +3,7 @@ import '../../css/User/SignupForm.css'
 import axiosInstance from '../../AxiosAPI';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { FloatingLabel, Modal, Row, Col } from 'react-bootstrap';
+import { FloatingLabel, Modal, Row, Col, ListGroup } from 'react-bootstrap';
 import CreatedModal from './CreatedModal';
 import { useHistory } from 'react-router';
 
@@ -22,7 +22,7 @@ function SignupForm(props) {
     const [formState, setState] = useState(initialState)
     const [errors, setErrors] = useState({errors:""
     })
-    const [validated, setValidated] = useState(false)
+  
     const [showModal, setShowModal] = useState(false)
     const [errorChecker, setErrorChecker] = useState(false)
     const [emailError, setEmailError] = useState(false)
@@ -34,10 +34,7 @@ function SignupForm(props) {
         setShowModal(false)
         history.push('/login')
     }
-    // open Modal
-    const handleShow = () => {
-  setShowModal(true)
-    }
+
     // Handle Change
     const  handleChange = (e) => {
         setState({
@@ -48,13 +45,6 @@ function SignupForm(props) {
     // Handle Submit
     const handleSubmit = (e) => {
         e.preventDefault()
-        
-        const form = e.currentTarget
-        if(form.checkValidity() === false){
-            e.preventDefault()
-            e.stopPropagation()
-        }
-        else{   
         axiosInstance.post('/user/create/', {
             username: formState.username,
             password: formState.password,
@@ -63,24 +53,22 @@ function SignupForm(props) {
             last_name: formState.last_name
             
         })
-        .then(res => console.log(res))
+        .then(() => {setShowModal(true)})
         .catch (error => {
         // checks for type of error 
         let response = error.response.status
         if(response === 500){
             setErrorChecker(true)
+            setInterval(() => setErrorChecker(false), 5000)
         }else if(response === 400){
             setEmailError(true)
-        }else if(!error){
-            handleShow()
-            setState(initialState)
-        }else{return null}})
+            setInterval(() => setEmailError(false), 5000)
         }
-        
-    
+       
+    })
+   
 }
-        console.log(errorChecker)
-        console.log(errors.errors === 500)
+
 
     return (
         <div className = "formDiv">
@@ -174,7 +162,7 @@ function SignupForm(props) {
                 <Button variant="primary" size = 'lg' type = 'submit' >Submit</Button>
             </Form>
         
-            <CreatedModal handleShow = { handleShow } 
+            <CreatedModal
             handleClose = { handleClose }
             showModal = { showModal }
             setShowModal = { setShowModal }/>

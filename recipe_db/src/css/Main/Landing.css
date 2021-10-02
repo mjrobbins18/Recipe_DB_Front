@@ -21,4 +21,20 @@
     .arrowContainer:hover {
         box-shadow: 4px 8px 10px 2px grey;
     }
+    .headerPhone {
+        display: none;
+    }
+}
+@media (min-width: 375px) {
+    .arrowContainer {
+       display: none;
+    }
+    .headerPhone{
+        top:0;
+        position: fixed;
+        width: 100vw;
+        height:10vh;
+        background:grey;
+        z-index: 1;
+    }
 }

@@ -137,9 +137,12 @@ function Update({ match }) {
                 })
                 
                 .then(handleBottomSubmit())
-                .then(res => console.log(res))
+                .then(res => {
+                    console.log(res)
+                    history.push('/')
+                    window.location.reload()
+                })
                 .catch(console.error)
-                .finally(history.push('/'))
             }else{
                 axiosInstance.post('/recipes/body/create',{
                     title: recipeID,
@@ -226,7 +229,6 @@ function Update({ match }) {
         new_proc.push(input)
         setInputProcedure([...new_proc]);
     };
-
 if(!recipeInfo){
     return (
         <div className = "loadDiv"> 
@@ -457,7 +459,7 @@ if(!recipeInfo){
                     <Form.Group>
                             <FloatingLabel
                             label = "Step"
-                            classname = "mb-3">
+                            className = "mb-3">
                                 <Form.Control
                                 required
                                 id = "step"
@@ -477,6 +479,7 @@ if(!recipeInfo){
             )})}      
 
        <Button variant = "primary" type = "submit">Update</Button>
+       <Button variant = "danger" onClick = {() => history.push('/')}>Cancel</Button>
    </Form>
    
 </div>
