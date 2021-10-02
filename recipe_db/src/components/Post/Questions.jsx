@@ -24,7 +24,11 @@ const [postState, setPostState] = useState("")
 const [commentState, setCommentState] = useState("")
 const [postId, setPostId] = useState()
 const [posts, setPosts] = useState([])
+const [bananas, setBananas] = useState([])
 const [messages, setMessages] = useState([])
+const [edit, setEdit] = useState({edit: false})
+const [postEdit, setPostEdit] = useState([{body: ""}])
+const [editState, setEditState] = useState("")
 
 const roomName = recipeId;
 
@@ -45,24 +49,22 @@ const connect = () => {
 
 // Get post
 const WAIT_TIME = 5000
+
 useEffect(() => {
     const id = setInterval(() => {
-        axios
-        .get(`http://127.0.0.1:8000/api/post/recipe/${recipeId}`)
-        .then(res =>  {
-            setPosts(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }, WAIT_TIME);
+        axios.get(`http://127.0.0.1:8000/api/post/recipe/${recipeId}`)
+        .then(res =>  setPosts(res.data))
+        .catch(err => console.log(err))
+    }, 
+    WAIT_TIME);
     return () => clearInterval(id)
-}, [posts])
+}, [])
 
 
 // useEffect(() => {
 //     connect()
 // },[])
+
 
 
 
@@ -105,7 +107,7 @@ setPostState("")
 // sendPost()
 
 }
-
+console.log(bananas)
 // Handle Submit Comment
 const handleSubmitComment = (event) => {
     event.preventDefault()
@@ -119,28 +121,71 @@ const handleSubmitComment = (event) => {
     .catch(console.error)
     setCommentState("")
 }
+ // Handle Delete Post
+ const deletePost = (event) => {
+    axiosInstance.delete(`/post/${event.target.id}`)
+    .then(res => console.log(res))
+    .catch(console.error)
+}
+ // Handle Edit Post
+ const editPost = (event) => {
+     event.preventDefault()
+    axiosInstance.put(`/post/${event.target.id}`,
+    {user: currentUser,
+        recipe: recipeId,
+        body: postEdit[0].body})
+    .then(res => console.log(res))
+    .catch(console.error)
+    setEdit(false)
+}
+const handleEditPost = (event, index) => {
+    const { id, value } = event.target;
+    const list = [...postEdit];
+    list[index][id] = value
+    setPostEdit(list);
+    console.log(postEdit)
 
+
+
+    // setPostEdit(event.target.value)
+}
+
+const editButton = (event) => {
+    setEdit({edit: true, id: event.target.id});
+    axios.get(`http://localhost:8000/api/post/${event.target.id}`
+       
+    )
+    .then(res => setPostEdit([res.data]))
+    .catch(console.error)
+}
+console.log(postEdit)
 // Handle Comment
 const handleComment = (event) => {
     setCommentState(event.target.value)
     setPostId(event.target.name)
     
 }
+ // Handle Delete Comment
+ const deleteComment = (event) => {
+    axiosInstance.delete(`/comment/${event.target.id}`)
+    .then(res => console.log(res))
+    .catch(console.error)
+}
 
 // Handle Post
 
 const handlePost = (event) => {
     setPostState(event.target.value)
+  
 }
+console.log(edit)
 if (posts.length === 0) {
 
 
     return (
        
         <div>
-       <div>
-           {/* {messages} */}
-       </div>
+    
             {currentUser ? 
             <Toast bg = 'primary'>
                 <Toast.Header closeButton = { false }>
@@ -149,7 +194,7 @@ if (posts.length === 0) {
                 <Toast.Body>
 
                 
-            <Form onSubmit = { handleSubmitPost }>
+            <Form onSubmit = { handleSubmitPost } >
                 <Form.Group>
                     <FloatingLabel
                     label = 'Post Something on this Recipe'>
@@ -162,7 +207,7 @@ if (posts.length === 0) {
                     </FloatingLabel>
                 </Form.Group>
                 <br/>
-                <Button variant = 'primary' type = 'submit'>Post</Button>
+                <Button id = {edit.id} variant = 'primary' type = 'submit'>Post</Button>
             </Form>
             </Toast.Body>
             </Toast>
@@ -172,8 +217,7 @@ if (posts.length === 0) {
 }else{
     return (
    <div>
-       <Button variant = 'primary' onClick = {connect} >Connect</Button>
-       <div>
+       
        {/* {messages.map((item, i) => {
            return(
                <div  id = "message">
@@ -189,7 +233,7 @@ if (posts.length === 0) {
                    </div>
            )
        } )} */}
-       </div>
+
        {posts.map(post => {
            return(
                
@@ -200,10 +244,44 @@ if (posts.length === 0) {
                    <h3>{post.user}-</h3>
                    </Toast.Header>
                    <Toast.Body>
-                   <p>"{post.body}"</p>
-                    {currentUser === post.user ? <Button type = 'secondary' >Edit</Button>: null}
+                       {(edit.edit === true) ?
+                       
+                       <div>
+                           {postEdit.map((item, i )=> {
+                           return (
+                            <Form onSubmit = { editPost } id = {item.id}>
+                            <FloatingLabel
+                            label = "Edit Post"
+                            >
+                                <Form.Control
+                                id = 'body'
+                                name = {item.id}
+                                value = {item.body}
+                                onChange = {e => handleEditPost(e, i)}
+                                />
+                            </FloatingLabel>
+                            <Button id = {item.id} variant = 'secondary' type = 'submit'>Update</Button>
+                        </Form>
+                           )
+                       })}
+                           
+                       </div>:
+                       <p>"{post.body}"</p>}
+                       
+                    {currentUser === post.user ? 
+                    <div>
+                        {edit.edit === true ? null :
+                    <div>
+                        <Button id={post.id} size='sm' variant='secondary' onClick = {editButton} >Edit</Button>
+                        <Button id={post.id} size='sm' variant='danger' onClick={deletePost}>Delete</Button>
+                    </div>
+                        }
+                    </div>
+                    
+                        : null}
                     {currentUser ?
                     <Form onSubmit = { handleSubmitComment }>
+                         <br/>
                     <Form.Group>
                         <FloatingLabel
                         label = 'Comment on this Post'>
@@ -236,7 +314,11 @@ if (posts.length === 0) {
                                 <Toast.Body>
                                 <p>"{ comment.body }"</p>
                                 <br/>
-                                {currentUser === comment.user ? <Button type = 'secondary' >Edit</Button>: null}                     
+                                {currentUser === comment.user ? 
+                                <div>
+                                <Button id = { comment.id } size = 'sm' variant = 'danger' onClick = { deleteComment }>Delete</Button>
+                                </div>
+                                : null}                     
                                 </Toast.Body>
                                 </Toast>
                                 </div>
