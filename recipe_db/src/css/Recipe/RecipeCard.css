@@ -108,8 +108,10 @@
         color: rgb(255, 255, 255)
     }
 }
-@media (max-width:376px) and (min-width: 375px){
-
+@media (min-width:375px) and (max-width: 480px){
+.searchhide{
+    display: none;
+}
 .headerContainer {
       
     position: relative; 
@@ -167,7 +169,7 @@
         justify-content: center;
         flex-direction: column;
         width: 100vw;
-        padding: 2%;
+        padding: 4%;
        
     }
     #browse {

@@ -11,6 +11,62 @@
         padding: 2%;
     }
     .formContainer span {
+        background: white;
+        width: 50vw;
+        opacity: 0.9;
+        margin-bottom: 2%;
+    }
+        .formContainer::before{
+            content: "";
+            position: absolute;
+            background-image: url(../../images/salad.png);
+            background-size: 150%;
+            background-repeat: no-repeat;
+            top:40vh;
+            bottom:0px;
+            left: 0px;
+            right: 0px;
+            opacity: 0.6;
+            z-index: -1;
+        }
+    .form {
+        width: 80%;
+    }
+
+}
+@media (min-width: 375px) and (max-width: 480px) {
+    .formContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        width: 90vw;
+        margin: 0 auto;
+        height: 80vh;
+        min-width: 30%;
+        padding: 2%;
+    }
+.formContainer span {
+    background: white;
+    width: 60vw;
+    margin-left: 10%;
+    opacity: 0.9;
+    margin-bottom: 2%;
+}
+    .formContainer::before{
+        content: "";
+        position: absolute;
+        background-image: url(../../images/salad.png);
+        background-size: 150%;
+        background-repeat: no-repeat;
+        top:40vh;
+        bottom:0px;
+        left: 0px;
+        right: 0px;
+        opacity: 0.6;
+        z-index: -1;
+    }
+    .formContainer span {
         padding: 5%;
     } 
     .form {

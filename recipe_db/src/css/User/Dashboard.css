@@ -104,7 +104,7 @@
     }
 }
 
-@media (min-width: 375px) and (max-width: 376px){
+@media (min-width: 375px) and (max-width: 480px){
     .dashboardBack {
         background: rgb(215, 243, 215);
         background-image: url(../../images/limes.png);

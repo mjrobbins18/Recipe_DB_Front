@@ -2,6 +2,9 @@
     .formDiv {
         display: flex;
         width: 50vw;
+        background: white;
+        padding: 2%;
+        opacity: 0.95;
     
     }
     
@@ -11,3 +14,22 @@
     }
 
 }
+@media (min-width: 375px) and (max-width: 480px) {
+    
+    .formDiv {
+        display: flex;
+        width: 87vw;
+        background: white;
+        padding: 2%;
+        opacity: 0.95;
+    
+    }
+   
+    
+    .formDiv form {
+        margin: 0 auto;
+        min-width: 50%;
+    }
+
+}
+

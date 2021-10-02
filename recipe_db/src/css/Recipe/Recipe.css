@@ -83,7 +83,7 @@
         background: white;
     }
 }
-@media (min-width: 375px) and (max-width: 376px) {
+@media (min-width: 375px) and (max-width: 480px) {
     .loadDiv {
         display: flex;
         width: 100vw;

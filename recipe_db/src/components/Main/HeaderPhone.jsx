@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { NavDropdown, Button } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import M from '../../images/M Logo.png'
+import logo from '../../images/cook.png'
 import { DataContext } from './DataContext';
 import axiosInstance from '../../AxiosAPI';
 import { useHistory } from 'react-router';
 import Search from '../Search/Search';
+
 
 function HeaderPhone(props) {
     // context
@@ -36,8 +37,11 @@ const logout = () => {
     return (
         <div className = "headerPhone">
             <Navbar>
+                <div className = "logoContainer">
+            <Link to={"/recipes"}><img className = 'arrow' src = {logo} alt = "logo"/></Link>
+            </div>
                 <NavDropdown id ="navbarDropDown" className = "dropDown">
-                    <NavDropdown.Item> <Link className={"nav-link"} to={"/recipes"}>Home</Link></NavDropdown.Item>
+                    <NavDropdown.Item><Link className={"nav-link"} to={"/recipes"}> Home</Link></NavDropdown.Item>
                     {!currentUser ? <NavDropdown.Item> <Link className={"nav-link"} to={"/signup"}>Signup</Link></NavDropdown.Item> : null }
                     {currentUser ? <NavDropdown.Item> <Link className={"nav-link"} to={'/create'}>New Recipe</Link></NavDropdown.Item> : null }
                     {currentUser ? <NavDropdown.Item> <Link  className={"nav-link"} to={'/'}>Dashboard</Link> </NavDropdown.Item>: null}

@@ -11,10 +11,10 @@
         cursor: pointer;
     }
     .arrow{
-        height: 3vh;
-        width: 2vw;
-        margin-left: 10%;
-        margin-bottom: 20%;
+        height: 30px;
+        width: 35px;
+        margin-left: 8%;
+        margin-bottom: 26%;
         cursor: pointer;
         
     }
@@ -25,9 +25,18 @@
         display: none;
     }
 }
-@media (min-width: 375px) and (max-width: 376px) {
-    .arrowContainer {
-       display: none;
+@media (min-width: 375px) and (max-width: 480px) {
+    .logoContainer{
+        border-radius: 50%;
+        box-shadow: 2px 4px 8px 0px grey;
+        background: white;
+        height: 7vh;
+        width: 6vh;
+        padding: 1%;
+        margin-bottom:1.5%;
+        margin-top: 1%;
+        margin-left:1.5%;
+        cursor: pointer;
     }
     .headerPhone{
         top:0;
@@ -36,5 +45,10 @@
         height:10vh;
         background:rgb(35, 61, 82);
         z-index: 1;
+    }
+    .arrow{
+        height: 6vh;
+        width: 8vw;
+        margin-left: 10%;
     }
 }

@@ -65,7 +65,7 @@
     }
 }
 
-@media (min-width:375px) and (max-width: 376px) {
+@media (min-width:375px) and (max-width: 480px) {
     .resultsContainer {
         background: rgb(247, 240, 240);
         background-image: url(../../images/limes.png);

@@ -10,6 +10,7 @@ import { DataContext } from './DataContext';
 import Sidebar from './Sidebar';
 import DashboardContainer from '../User/DashboardContainer';
 import arrow from '../../images/arrow.png'
+import logo from '../../images/cook.png'
 import RecipeCardCont from '../Recipe/RecipeCardCont';
 import OverlayTrigger  from 'react-bootstrap/OverlayTrigger';
 import Tooltip  from 'react-bootstrap/Tooltip';
@@ -39,7 +40,7 @@ function Landing(props) {
                     }>
                 <div className = "arrowContainer" onClick = { handleShowSidebar }>
                 
-                <img className = "arrow" src = { arrow } alt = "arrow" />
+                <img className = "arrow" src = { logo } alt = "arrow" />
                 
                 </div>
                 </OverlayTrigger>

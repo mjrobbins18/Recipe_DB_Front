@@ -33,7 +33,7 @@
     } */
 }
 
-@media (min-width: 375px) and (max-width: 376px) {
+@media (min-width: 375px) and (max-width: 480px) {
     #fade {
         width: 85vw;
     }

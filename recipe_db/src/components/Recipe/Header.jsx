@@ -6,7 +6,7 @@ import { HashLink } from 'react-router-hash-link';
 function Header(props) {
     return (
         <div>
-            <div>
+            <div className = "searchhide">
             <Search/>
             </div>
         <div className = "headerContainer">

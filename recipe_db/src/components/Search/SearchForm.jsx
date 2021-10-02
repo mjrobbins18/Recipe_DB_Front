@@ -40,7 +40,7 @@ function SearchForm(props) {
 
     return (
         <div className = "searchForm">
-            <Form onSubmit = { handleSubmit }>
+            <Form className = "sForm" onSubmit = { handleSubmit }>
             <Row>
                 <Col xs={6}>
                 <Form.Group>
