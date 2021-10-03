@@ -17,6 +17,7 @@ const history = useHistory()
 const handleCloseRecipeModal = (event) => {
     setShowRecipeModal(false)
     history.push(`${event.target.id}`)
+    window.location.reload()
 }
 
       
