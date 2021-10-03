@@ -44,7 +44,7 @@ function Recipe({ match }) {
                 <HashLink className = "link" to = {`/recipe/${recipeId}/#comments`}>Comments</HashLink>
                 </div>
                 <br/>
-                {data.recipe_body ? <h4>Yield:  data.recipe_body[0].recipe_yield </h4>: null}
+                {data.recipe_body ? <h4>Yield:  {data.recipe_body[0].recipe_yield} </h4>: null}
               </div>
               
               <img className = 'recipeImg' src = {data.recipe_body? data.recipe_body[0].image_url : altImage} alt = {data.title}/>
