@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: 'https://recipe-db-p4.herokuapp.com/',
+    baseURL: 'https://recipe-db-p4.herokuapp.com/api/',
     timeout: 5000,
     headers: {
         'Authorization': "JWT " + localStorage.getItem('access_token') ? "JWT " + localStorage.getItem('access_token') : null,
