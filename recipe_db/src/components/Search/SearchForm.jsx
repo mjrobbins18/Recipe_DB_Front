@@ -39,11 +39,11 @@ function SearchForm(props) {
     }
 
     return (
-        <div className = "searchForm">
+        <div >
             <Form className = "sForm" onSubmit = { handleSubmit }>
             <Row>
-                <Col xs={6}>
-                <Form.Group>
+                <Col xs={8}>
+                <Form.Group className = "searchForm">
                     <Form.Control
                     id = "search"
                     onChange = { handleChange }
@@ -55,7 +55,7 @@ function SearchForm(props) {
                 </Form.Group>
                 </Col>
                 <Col>
-                <Form.Group>
+                <Form.Group className = "searchbtn">
                     <Button variant = 'primary' type = 'submit'>Search</Button>
                 </Form.Group>
                 </Col>

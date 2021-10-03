@@ -1,20 +1,21 @@
 @media (min-width: 480px) {
     .searchForm {
-        display: flex;
-        justify-content: center;
-        margin-left: 50%;
-        width: 67vw;
+        width: 400px;
+     
     }
 
     .sForm {
-        margin-left: 15%;
+        display: flex;
+        justify-content: space-evenly;
+        
     }
+    .searchbtn {
+        margin-left: 40px;
+    }
+    
 
 }
 @media (max-width: 375px) and (max-width: 480px){
-    .searchForm {
-        display: none;
-    }
-
+    
 
 }
