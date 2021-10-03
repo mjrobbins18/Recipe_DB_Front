@@ -24,7 +24,7 @@
         max-height: 5vh;
     }
 }
-@media (min-width: 375px) and (max-width: 480px) {
+@media  (max-width: 480px) {
     .about {
         height: 13vh;
         position: relative;

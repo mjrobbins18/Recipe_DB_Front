@@ -83,7 +83,7 @@
         background: white;
     }
 }
-@media (min-width: 375px) and (max-width: 480px) {
+@media (max-width: 480px) {
     .loadDiv {
         display: flex;
         width: 100vw;
@@ -92,12 +92,13 @@
         justify-content: center;
     }
     .recipeImg {
-        max-width: 30vw;
-        max-height: 30vh;
+        width: 78vw;
+        height: 35vh;
+        margin-bottom: 5%;
     }
 
     .recipeDiv{
-        margin-top: 20%;
+        margin-top: 12%;
        background: rgb(187, 233, 206);
        background-image: url(../../images/lemon.jpg);
        background-size: 60%;
@@ -108,7 +109,8 @@
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
-        width: 90vw;
+        flex-direction: column-reverse;
+        width: 85vw;
         padding: 3%;
         background: white;
         opacity: .9;
@@ -132,7 +134,7 @@
         margin: 2% auto;
         display: flex;
         flex-direction: column;
-        width: 90vw;
+        width: 85vw;
         padding: 3%;
         opacity: .9;
         background: white;
@@ -152,7 +154,7 @@
         margin: 1% auto;
         display: flex;
         flex-direction: column;
-        width: 90vw;
+        width: 85vw;
         padding: 3%;
         opacity: .9;
         box-shadow: 2px 4px 8px 0px grey;
@@ -168,7 +170,7 @@
         margin: 1% auto;
         margin-bottom: 10%;
         display: flex;
-        width: 90vw;
+        width: 85vw;
         padding: 3%;
         box-shadow: 2px 4px 8px 0px grey;
         opacity: .9;

@@ -33,9 +33,9 @@
     } */
 }
 
-@media (min-width: 375px) and (max-width: 480px) {
+@media (max-width: 480px) {
     #fade {
-        width: 85vw;
+        width: 78vw;
     }
     .postContainer {
         width: 65vw;

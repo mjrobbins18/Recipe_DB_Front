@@ -101,14 +101,18 @@
         background: rgb(12, 70, 117);
         text-align: center;
         
+        min-height: 40vh;
+        
     }
     #cardBodyText{
         text-decoration: none;
         text-shadow: none;
-        color: rgb(255, 255, 255)
+        color: rgb(255, 255, 255);
+        overflow-y: auto;
     }
 }
-@media (min-width:375px) and (max-width: 480px){
+@media (max-width: 480px){
+
 .searchhide{
     display: none;
 }
@@ -167,8 +171,9 @@
     .recipeCardContainer {
         display: flex;
         justify-content: center;
-        flex-direction: column;
         width: 100vw;
+        height: 160vw;
+        overflow-x: auto;
         padding: 4%;
        
     }
@@ -198,6 +203,7 @@
     
     #cardImg {
         min-height: 45vh;
+        width: 90vw;
   
     
     }
@@ -234,6 +240,7 @@
         padding: 3%;
         background: rgb(12, 70, 117);
         text-align: center;
+        width: 90vw;
         
     }
     #cardBodyText{

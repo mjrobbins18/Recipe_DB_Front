@@ -53,7 +53,7 @@ console.log(data)
                      
                         return(
                         <div className = "recipeCardCont">
-                        <Col>
+                        <Col className ='g-4'>
                         <Link id = "cardLink" to = {`/recipe/${item.id}`}>
                         <Card  className = 'recipeCard grow'>
                         

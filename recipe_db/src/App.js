@@ -27,7 +27,7 @@ const [currentUser, setCurrentUser] = useState(() => {
   const [showInstructionModal, setShowInstructionModal] = useState(false)
   const [searchResults, setSearchResults] = useState([])
   const [recipeInfo, setRecipeInfo] = useState([])
-
+const [loading, setLoading] = useState(false)
 
   
 return (
@@ -44,7 +44,9 @@ return (
                                   searchResults,
                                   setSearchResults,
                                   recipeInfo,
-                                  setRecipeInfo}}>
+                                  setRecipeInfo,
+                                  loading,
+                                  setLoading,}}>
   <div>
       <Landing/>
   </div>

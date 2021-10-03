@@ -15,7 +15,8 @@
     
 
 }
-@media (max-width: 375px) and (max-width: 480px){
-    
-
+@media (max-width: 480px){
+    .searchbtn {
+        width: 20px;
+    }
 }

@@ -32,8 +32,8 @@ function Update({ match }) {
         recipe: "",
     }]
     
-    // currentuser
-    const { currentUser, recipeInfo, setRecipeInfo } = useContext(DataContext)
+    // Context
+    const { currentUser, recipeInfo, setRecipeInfo, loading, setLoading, inputState, setInputState, initialRecipe } = useContext(DataContext)
 
     // State
     const [selectedFile, setSelectedFile] = useState(null)
@@ -41,54 +41,58 @@ function Update({ match }) {
     const [inputEquipment, setInputEquipment] = useState(initialEquipment)
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
     const [showRecipeModal, setShowRecipeModal] = useState(false)
-    const [loaded, setLoaded] = useState(false)
-    let data = new FormData()
+
     
     // history
     const history = useHistory()
    
-    // Context
-    const {inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe} = useContext(DataContext)
     
     // open Modal
     const handleShowRecipeModal = () => setShowRecipeModal(true) 
     
      // useeffect
      useEffect(() => {
+         setLoading(true)
         axiosInstance.get(`/recipes/${recipeID}`)
         .then(res => {
             setRecipeInfo(res.data.title)
+            setLoading(false)
             })
         .catch(console.error)
         axiosInstance.get(`/recipes/${recipeID}`)
         .then(res => {
             if(res.data.recipe_body[0] === undefined){
                 setInputState(initialRecipe)
+                setLoading(false)
             }else{
                 setInputState(res.data.recipe_body[0])
+                setLoading(false)
             }
             })
         .catch(console.error)
         axiosInstance.get(`/recipes/${recipeID}`)
         .then(res => {
             setInputIngredient(res.data.ingredients)
+            setLoading(false)
             })
         .catch(console.error)
         axiosInstance.get(`/recipes/${recipeID}`)
         .then(res => {
             setInputEquipment(res.data.equipment)
+            setLoading(false)
             })
         .catch(console.error)
         axiosInstance.get(`/recipes/${recipeID}`)
         .then(res => {
             setInputProcedure(res.data.procedure)
+            setLoading(false)
             })
         .catch(console.error)
     }, [])
-console.log(inputIngredient.map(list => list))
+
     // Handle Ingredients, Equipment, Procedure Submit
     const handleBottomSubmit = () => {
-        
+        setLoading(true)
         inputIngredient.map(list => {
             if(list.id){
                 return(
@@ -97,7 +101,9 @@ console.log(inputIngredient.map(list => list))
                     quantity: list.quantity,
                     unit_of_measure: list.unit_of_measure,
                     recipe: recipeID})
-                    .then(res => console.log(res))
+                    .then(res => {
+                        setLoading(false)
+                        console.log(res)})
                     .catch(console.error)
                 )
             }else {
@@ -108,7 +114,9 @@ console.log(inputIngredient.map(list => list))
                     quantity: list.quantity,
                     unit_of_measure: list.unit_of_measure,
                     recipe: recipeID})
-                    .then(res => console.log(res))
+                    .then(res => {
+                        setLoading(false)
+                        console.log(res)})
                     .catch(console.error)
                 )
         
@@ -122,7 +130,9 @@ console.log(inputIngredient.map(list => list))
                     {name: list.name,
                     quantity: list.quantity,
                     recipe: recipeID})
-                    .then(res => console.log(res))
+                    .then(res => {
+                        setLoading(false)
+                        console.log(res)})
                     .catch(console.error)
                 )
             }else{
@@ -131,7 +141,9 @@ console.log(inputIngredient.map(list => list))
                     {name: list.name,
                     quantity: list.quantity,
                     recipe: recipeID})
-                    .then(res => console.log(res))
+                    .then(res => {
+                        setLoading(false)
+                        console.log(res)})
                     .catch(console.error)
                 )
 
@@ -144,7 +156,9 @@ console.log(inputIngredient.map(list => list))
                     axiosInstance.put(`/procedure/${list.id}`,
                     {step: list.step,
                     recipe: recipeID})
-                    .then(res => console.log(res))
+                    .then(res => {
+                        setLoading(false)
+                        console.log(res)})
                     .catch(console.error)
                 )
             }else {
@@ -152,7 +166,9 @@ console.log(inputIngredient.map(list => list))
                     axiosInstance.post('/procedure/create',
                     {step: list.step,
                     recipe: recipeID})
-                    .then(res => console.log(res))
+                    .then(res => {
+                        setLoading(false)
+                        console.log(res)})
                     .catch(console.error)
                 )
             }
@@ -177,6 +193,7 @@ console.log(inputIngredient.map(list => list))
                 
                 .then(handleBottomSubmit())
                 .then(res => {
+                    setLoading(false)
                     console.log(res)
                     history.push('/')
                     window.location.reload()
@@ -193,7 +210,9 @@ console.log(inputIngredient.map(list => list))
         
                 })
                 .then(handleBottomSubmit())
-                .then(res => console.log(res))
+                .then(res => {
+                    setLoading(false)
+                    console.log(res)})
                 .catch(console.error)
                 .finally(history.push('/'))
             }
@@ -267,7 +286,7 @@ console.log(inputIngredient.map(list => list))
         new_proc.push(input)
         setInputProcedure([...new_proc]);
     };
-if(!recipeInfo){
+if(loading === true){
     return (
         <div className = "loadDiv"> 
           <span>
