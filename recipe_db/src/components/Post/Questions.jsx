@@ -52,7 +52,7 @@ const WAIT_TIME = 5000
 
 useEffect(() => {
     const id = setInterval(() => {
-        axios.get(`http://127.0.0.1:8000/api/post/recipe/${recipeId}`)
+        axios.get(`https://recipe-db-p4.herokuapp.com/api/post/recipe/${recipeId}`)
         .then(res =>  setPosts(res.data))
         .catch(err => console.log(err))
     }, 
