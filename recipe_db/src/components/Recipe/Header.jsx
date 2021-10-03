@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../../css/Recipe/RecipeCard.css'
 import Search from '../Search/Search';
 import { HashLink } from 'react-router-hash-link';
+import Button from 'react-bootstrap/Button'
+import { useHistory } from 'react-router';
+import { DataContext } from '../Main/DataContext';
 
 function Header(props) {
+    
+    // Context
+    const {currentUser} = useContext(DataContext)
+    
+    // history 
+    const history = useHistory()
     return (
         <div>
             <div className = "searchhide">
@@ -21,8 +30,13 @@ function Header(props) {
                     <li>Weekly meal planner on the way.</li>
                     <li>Restaurant accounts coming soon!</li>
                 </ul>
+                <div className = "buttonContainer">
                 <div className = "linkbtn grow">
                 <HashLink className = "link " to = {`/recipes/#browse`}>Check Out Some Recipes!</HashLink>
+                </div>
+                {currentUser ? 
+                <Button variant = "success" className = "grow " onClick = {() => history.push('/create')}>New Recipe</Button>
+                : null }
                 </div>
                 
             </div>

@@ -3,7 +3,7 @@
         background: rgb(247, 240, 240);
         background-image: url(../../images/limes.png);
         background-size: 56%;
-        height: 100vh;;
+        height: 100%;
         padding: 4%
     }
     .recipeCard {
@@ -56,7 +56,8 @@
         padding: 3%;
         background: rgb(12, 70, 117);
         text-align: center;
-        
+        overflow: hidden;
+        height: 45vh;
     }
     #cardBodyText{
         text-decoration: none;
@@ -67,22 +68,19 @@
 
 @media (max-width: 480px) {
     .resultsContainer {
+        padding-top: 2%;
+        padding-right: 4%;
+        display: flex;
+        justify-content: center;
         background: rgb(247, 240, 240);
         background-image: url(../../images/limes.png);
         background-size: 56%;
-        height: 100vh;;
-        padding: 4%
+        height: 100vh;
     }
     .recipeCard {
         width:87vw;
         background: rgb(148, 180, 197);
         
-    }
-    .grow {
-        transition: all .2s ease-in-out;
-    }
-    .grow:hover {
-        transform: scale(1.1);
     }
     
     #cardImg {

@@ -13,6 +13,13 @@
         width: 100%;
         margin-bottom: 10%;
     }
+    .buttonContainer {
+        width: 35vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+ 
+    }
     .linkbtn {
         
         width: 15vw;
@@ -63,7 +70,7 @@
     }
     
     #cardImg {
-        min-height: 45vh;
+        height: 50vh;
   
     
     }
@@ -144,6 +151,12 @@
         height: 90vh;
         width: 100%;
 
+    }
+    .buttonContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+ 
     }
     .linkbtn {
         

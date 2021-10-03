@@ -71,8 +71,10 @@ function Dashboard(props) {
     })
 
     let items = []
-    console.log(createdRecipes)
+    let pageNums = []
+    
     for (let number = 1; number <= Math.ceil(createdRecipes.length / itemsPerPage); number++) {
+        pageNums.push(number)
         items.push(
             <Pagination.Item key = {number} id = {number} active = {number === pages.currentPage}>
                 {number}
@@ -84,20 +86,22 @@ function Dashboard(props) {
             <Pagination onClick = { handleNext }>{items}</Pagination>
         </div>
     )
-    
+    console.log(pageNums.length)
     return (
         <div className = "dashboardBack">
         <div className = "dashboardContainer">
             <div className = "createdRecipeDiv">
                 <div className = "dashHeading">
-                    Created Recipes
+                    Recipes Created by {currentUser}
+                    <Button variant = "success" onClick = {() => history.push('/create')}>Create</Button>
                 </div>        
                 {renderItems}
                 <br />
+                {pageNums.length === 1 ? null :
               <div className = "pagination">
               {paginationBasic}
               </div>
-                
+                }
                 </div>
                 {/* <Link to = "/create" >
                  <div className = "createRecipeDiv">

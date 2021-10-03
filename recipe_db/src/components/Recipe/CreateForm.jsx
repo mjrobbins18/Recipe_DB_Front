@@ -7,9 +7,9 @@ import { DataContext } from '../Main/DataContext';
 import RecipeModal from './RecipeModal';
 import axiosInstance from '../../AxiosAPI';
 import { useHistory } from 'react-router-dom';
-import { FloatingLabel } from 'react-bootstrap';
+import { FloatingLabel, Spinner } from 'react-bootstrap';
 import '../../css/Recipe/CreateForm.css'
-import axios from 'axios';
+
 
 function CreateForm(props) {
     //    Initial State
@@ -30,7 +30,7 @@ function CreateForm(props) {
     }]
     
     // Context
-    const { currentUser, inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe, recipeInfo, setRecipeInfo } = useContext(DataContext)
+    const { currentUser, inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe, recipeInfo, setRecipeInfo, loading, setLoading } = useContext(DataContext)
 
     // History
     const history = useHistory()
@@ -64,7 +64,7 @@ function CreateForm(props) {
 
     // Handle Ingredients, Equipment, Procedure Submit
     const handleBottomSubmit = () => {
-        
+        setLoading(true)
         inputIngredient.map(list => {
             return(
                 axiosInstance.post('/ingredient/create',
@@ -72,7 +72,9 @@ function CreateForm(props) {
                 quantity: list.quantity,
                 unit_of_measure: list.unit_of_measure,
                 recipe: recipe.id})
-                .then(res => console.log(res))
+                .then(res => {
+                    setLoading(false)
+                    console.log(res)})
                 .catch(console.error)
             )
                 })
@@ -82,7 +84,9 @@ function CreateForm(props) {
                 {name: list.name,
                 quantity: list.quantity,
                 recipe: recipe.id})
-                .then(res => console.log(res))
+                .then(res => {
+                    setLoading(false)
+                    console.log(res)})
                 .catch(console.error)
             )
                 })  
@@ -91,7 +95,9 @@ function CreateForm(props) {
                 axiosInstance.post('/procedure/create',
                 {step: list.step,
                 recipe: recipe.id})
-                .then(res => console.log(res))
+                .then(res => {
+                    setLoading(false)
+                    console.log(res)})
                 .catch(console.error)
             )
                 })
@@ -106,7 +112,7 @@ function CreateForm(props) {
     // handle submit
     const handleSubmit = (event) => {
         event.preventDefault()
-            
+            setLoading(true)
             axiosInstance.post('/recipes/body/create',{
                 title: recipe.id,
                 category: inputState.category,
@@ -118,8 +124,8 @@ function CreateForm(props) {
             })
             .then(handleBottomSubmit())
             .then(res => {
-                console.log(res)
-                })
+                setLoading(false)
+                console.log(res)})
             .catch(console.error)
             .finally(handleShowRecipeModal())
             setRecipeTitle({title: ""})
@@ -200,7 +206,15 @@ const cancelRecipe = () => {
     .catch(err => console.log(err))
 
 }
-
+if(loading === true){
+    return (
+        <div className = "loadDiv"> 
+          <span>
+            <Spinner animation="border" variant = "primary"/>
+          </span>
+        </div>
+    )
+}else {
     return (
         <div className = "recipeFormContainer">
 
@@ -449,6 +463,7 @@ const cancelRecipe = () => {
      </div>
     );
     
+}
 }
 
 export default CreateForm;

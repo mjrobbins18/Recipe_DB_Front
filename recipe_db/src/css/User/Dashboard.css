@@ -16,6 +16,8 @@
         opacity: .9;
     }
     .dashHeading{
+        display: flex;
+        justify-content: space-between;
         font-size: 20px;
         padding: 2%;
         border-bottom: 1px solid grey;
@@ -108,6 +110,8 @@
     .dashboardBack {
         background: rgb(215, 243, 215);
         background-image: url(../../images/limes.png);
+        background-size: cover;
+        height: 100%;
     }
     
     .dashboardContainer {
@@ -116,13 +120,15 @@
         width: 95vw;
         margin-left: 2%;
         margin-bottom: 10%;
-        margin-top: 22%;
+        margin-top: 13%;
         height: 150vh;
         box-shadow: 4px 4px 8px 2px grey;
         background: rgb(206, 237, 252);
         opacity: .9;
     }
     .dashHeading{
+        display: flex;
+        justify-content: space-between;
         font-size: 20px;
         padding: 2%;
         width: 93vw;

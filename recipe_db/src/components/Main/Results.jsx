@@ -24,7 +24,7 @@ function Results(props) {
                             <Card.Img id = "cardImg" variant="top" src={item.recipe_body[0].image_url ? item.recipe_body[0].image_url : altImage}/>
                             <div className = "cardBody"> 
                             <div className = "cardTitle"> 
-                            <Card.Title><div className = "cardTitle"><h2>{item.title}</h2><p id = "cardUser"> Created by {item.user.username}</p></div></Card.Title>
+                            <Card.Title><div className = "cardTitle"><h2>{item.title}</h2><p id = "cardUser"> Created by {item.user}</p></div></Card.Title>
                             <Card.Body>
                             {item.recipe_body[0].dish_components ? item.recipe_body[0].dish_components : <h4>Check this dish out!</h4>}
                             </Card.Body>
