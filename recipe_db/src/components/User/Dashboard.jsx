@@ -28,6 +28,9 @@ function Dashboard(props) {
         .catch(console.error)
     }, [])
 
+
+
+console.log(createdRecipes)
     // Handle Delete Created Recipe
     const deleteRecipe = (event) => {
         axiosInstance.delete(`/recipes/${event.target.id}`)
@@ -48,7 +51,7 @@ function Dashboard(props) {
     const [pages, setPages] = useState({
         currentPage: 1
     })
-    const itemsPerPage = 10
+    const itemsPerPage = 9
 
     const handleNext = (event) => {
         setPages({...pages, 'currentPage': Number(event.target.id)})
@@ -86,34 +89,29 @@ function Dashboard(props) {
             <Pagination onClick = { handleNext }>{items}</Pagination>
         </div>
     )
-    console.log(pageNums.length)
+    
     return (
         <div className = "dashboardBack">
         <div className = "dashboardContainer">
             <div className = "createdRecipeDiv">
+                <div>
+
+               
                 <div className = "dashHeading">
                     Recipes Created by {currentUser}
                     <Button variant = "success" onClick = {() => history.push('/create')}>Create</Button>
                 </div>        
                 {renderItems}
                 <br />
+               
+                </div>
+                
                 {pageNums.length === 1 ? null :
-              <div className = "pagination">
+              <div className = "paginationDiv">
               {paginationBasic}
               </div>
                 }
-                </div>
-                {/* <Link to = "/create" >
-                 <div className = "createRecipeDiv">
-                 <div className = "dashHeading">
-                    New Recipe
-                    </div>
-                    <p>+</p>
-                    
-                </div>
-                </Link>
-            
-             */}
+                 </div>
             <div className = "verticalContainer">
                 
                 <div className = "favoriteRecipeDiv">
@@ -127,6 +125,18 @@ function Dashboard(props) {
             <div className = "dashHeading">
                 Posts on Your Recipes
                 </div>
+                {createdRecipes.map(post => {
+                    return (
+                    post.recipe_post.map((item => {
+                        return (
+                            
+                            <div className = "createdItems">
+                            <Link to = {`/recipe/${item.recipe}`} id = "recipeLink" className = "nav-link" >{item.user}: {item.body}</Link>
+                            </div>
+                        )
+                    }))
+                    ) 
+                })}
                 
             </div>
         </div>
