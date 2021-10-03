@@ -36,7 +36,7 @@ const roomName = recipeId;
 const connect = () => {
     const chatSocket = new WebSocket(
         'ws://'
-        + 'localhost:8000/ws/chat/'
+        + 'recipe-db-p4.herokuapp.com/ws/chat/'
         + roomName
         + '/'
     );
@@ -72,7 +72,7 @@ useEffect(() => {
 // const sendPost = () => {
 //     const chatSocket = new WebSocket(
 //         'ws://'
-//         + 'localhost:8000/ws/chat/'
+//         + 'recipe-db-p4.herokuapp.com/ws/chat/'
 //         + roomName
 //         + '/'
 //     );    
@@ -154,7 +154,7 @@ const handleEditPost = (event, index) => {
 // Edit Button Event Listener
 const editButton = (event) => {
     setEdit({edit: true, id: event.target.id});
-    axios.get(`http://localhost:8000/api/post/${event.target.id}`
+    axios.get(`https://recipe-db-p4.herokuapp.com/api/post/${event.target.id}`
        
     )
     .then(res => setPostEdit([res.data]))

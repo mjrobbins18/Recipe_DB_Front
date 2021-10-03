@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/',
+    baseURL: 'https://recipe-db-p4.herokuapp.com/',
     timeout: 5000,
     headers: {
         'Authorization': "JWT " + localStorage.getItem('access_token') ? "JWT " + localStorage.getItem('access_token') : null,
@@ -14,7 +14,7 @@ axiosInstance.interceptors.response.use(
     error => {
         const originalRequest = error.config;
 
-        if (error.response.status === 401 && originalRequest.url === 'http://127.0.0.1:8000/api/token/refresh') {
+        if (error.response.status === 401 && originalRequest.url === 'https://recipe-db-p4.herokuapp.com/api/token/refresh') {
             window.location.href = '/login/'
             return Promise.reject(error);
     }

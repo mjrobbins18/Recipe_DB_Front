@@ -24,7 +24,7 @@ function SearchForm(props) {
     // handle submit
     const handleSubmit = (event) => {
         event.preventDefault()
-        axios.get(`http://127.0.0.1:8000/api/recipes/search/?q=${searchState.search}`)
+        axios.get(`https://recipe-db-p4.herokuapp.com/api/recipes/search/?q=${searchState.search}`)
         .then(res => setSearchResults(res.data))
         .then(setSearchState(""))
         .finally(history.push(`/results/${searchState.search}`))

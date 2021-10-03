@@ -17,7 +17,7 @@ function RecipeCard(props) {
     const [data, setData] = useState({})
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/recipes/view')
+        axios.get('https://recipe-db-p4.herokuapp.com/api/recipes/view')
         .then(res => setData(res.data))
         .catch(console.error)
     }, [])

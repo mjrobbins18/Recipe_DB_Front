@@ -15,7 +15,7 @@ function Recipe({ match }) {
 
   
     useEffect(() => {
-      axios.get(`http://127.0.0.1:8000/api/recipes/${recipeId}`)
+      axios.get(`https://recipe-db-p4.herokuapp.com/api/recipes/${recipeId}`)
       .then(res => setData(res.data))
       .catch(console.error)
     }, [])
