@@ -85,42 +85,81 @@ function Update({ match }) {
             })
         .catch(console.error)
     }, [])
-
+console.log(inputIngredient.map(list => list))
     // Handle Ingredients, Equipment, Procedure Submit
     const handleBottomSubmit = () => {
         
         inputIngredient.map(list => {
-            return(
-                axiosInstance.put(`/ingredient/${list.id}`,
-                {name: list.name,
-                quantity: list.quantity,
-                unit_of_measure: list.unit_of_measure,
-                recipe: recipeID})
-                .then(res => console.log(res))
-                .catch(console.error)
-            )
+            if(list.id){
+                return(
+                    axiosInstance.put(`/ingredient/${list.id}`,
+                    {name: list.name,
+                    quantity: list.quantity,
+                    unit_of_measure: list.unit_of_measure,
+                    recipe: recipeID})
+                    .then(res => console.log(res))
+                    .catch(console.error)
+                )
+            }else {
+
+                return(
+                    axiosInstance.post('/ingredient/create',
+                    {name: list.name,
+                    quantity: list.quantity,
+                    unit_of_measure: list.unit_of_measure,
+                    recipe: recipeID})
+                    .then(res => console.log(res))
+                    .catch(console.error)
+                )
+        
+            }
+           
                 })
         inputEquipment.map(list => {
-            return(
-                axiosInstance.put(`/equipment/${list.id}`,
-                {name: list.name,
-                quantity: list.quantity,
-                recipe: recipeID})
-                .then(res => console.log(res))
-                .catch(console.error)
-            )
+            if(list.id){
+                return(
+                    axiosInstance.put(`/equipment/${list.id}`,
+                    {name: list.name,
+                    quantity: list.quantity,
+                    recipe: recipeID})
+                    .then(res => console.log(res))
+                    .catch(console.error)
+                )
+            }else{
+                return(
+                    axiosInstance.post('/equipment/create',
+                    {name: list.name,
+                    quantity: list.quantity,
+                    recipe: recipeID})
+                    .then(res => console.log(res))
+                    .catch(console.error)
+                )
+
+            }
+           
                 })  
         inputProcedure.map(list => {
-            return(
-                axiosInstance.put(`/procedure/${list.id}`,
-                {step: list.step,
-                recipe: recipeID})
-                .then(res => console.log(res))
-                .catch(console.error)
-            )
+            if(list.id){
+                return(
+                    axiosInstance.put(`/procedure/${list.id}`,
+                    {step: list.step,
+                    recipe: recipeID})
+                    .then(res => console.log(res))
+                    .catch(console.error)
+                )
+            }else {
+                return(
+                    axiosInstance.post('/procedure/create',
+                    {step: list.step,
+                    recipe: recipeID})
+                    .then(res => console.log(res))
+                    .catch(console.error)
+                )
+            }
+            
                 })
     }
-    console.log(selectedFile)
+
     
     // handle submit
     const handleSubmit = (event) => {
@@ -175,7 +214,6 @@ function Update({ match }) {
         const list = [...inputIngredient];
         list[index][id] = value;
         setInputIngredient(list);
-        console.log(inputIngredient)
     }
     const handleEquipment = (event, index) => {
         const { id, value } = event.target;

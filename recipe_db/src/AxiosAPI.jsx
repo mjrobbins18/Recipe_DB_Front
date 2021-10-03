@@ -13,7 +13,7 @@ axiosInstance.interceptors.response.use(
     response => response,
     error => {
         const originalRequest = error.config;
-
+        console.log(error)
         if (error.response.status === 401 && originalRequest.url === 'https://recipe-db-p4.herokuapp.com/api/token/refresh') {
             window.location.href = '/login/'
             return Promise.reject(error);
