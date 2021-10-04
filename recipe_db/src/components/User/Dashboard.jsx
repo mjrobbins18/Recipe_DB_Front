@@ -19,11 +19,15 @@ function Dashboard(props) {
 
     // State
     const [createdRecipes, setCreatedRecipes] = useState([])
-  
+
+    const WAIT_TIME = 5000
     useEffect(() => {
+        const id = setInterval(() => {
         axiosInstance.get(`/recipes/user/${currentUser}`)
         .then(res => setCreatedRecipes(res.data))
-        .catch(console.error)
+        .catch(console.error)}
+        ,WAIT_TIME);
+        return () => clearInterval(id)
     }, [])
 
 
@@ -33,7 +37,7 @@ function Dashboard(props) {
     const deleteRecipe = (event) => {
         axiosInstance.delete(`/recipes/${event.target.id}`)
         .then(res => console.log(res))
-        .finally(window.location.reload())
+        // .finally(window.location.reload())
         .catch(console.error)
     }
 
