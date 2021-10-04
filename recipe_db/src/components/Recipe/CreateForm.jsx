@@ -200,7 +200,7 @@ function CreateForm(props) {
 
 // Cancel Recipe Build
 const cancelRecipe = () => {
-    axiosInstance.delete(`/recipes/${recipeInfo.id}`)
+    axiosInstance.delete(`/recipes/${recipe.id}`)
     .then(() => history.push('/'))
     .finally(setRecipeInfo([]))
     .catch(err => console.log(err))
