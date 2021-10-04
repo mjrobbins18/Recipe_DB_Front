@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -14,7 +14,7 @@ function TitleModal({ recipeID }) {
     
 
     //  Context
-    const { recipeTitle, setRecipeTitle,currentUser, showTitleModal, setShowTitleModal, showInstructionModal, setShowInstructionModal, recipeInfo, setRecipeInfo } = useContext(DataContext)
+    const { currentUser, showTitleModal, setShowTitleModal, recipeInfo, setRecipeInfo } = useContext(DataContext)
  
      // handle title submit
      const handleTitleSubmit = (event) => {
@@ -33,12 +33,7 @@ function TitleModal({ recipeID }) {
             setRecipeInfo(event.target.value)
        
      }
-    //  handle Instruction modal
-    const handleInstructionModal = (event) => {
-        event.preventDefault()
-        setShowInstructionModal(true)
-        setShowTitleModal(false)
-    }
+    
     //  Close Modal
      const handleTitleClose = () => setShowTitleModal(false)
 

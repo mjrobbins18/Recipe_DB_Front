@@ -25,27 +25,27 @@ const [postState, setPostState] = useState("")
 const [commentState, setCommentState] = useState("")
 const [postId, setPostId] = useState()
 const [posts, setPosts] = useState([])
-const [messages, setMessages] = useState([])
+// const [messages, setMessages] = useState([])
 const [edit, setEdit] = useState({edit: false})
 const [postEdit, setPostEdit] = useState([{body: ""}])
 
 
-const roomName = recipeId;
+// const roomName = recipeId;
 
 // Connect to websocket
-const connect = () => {
-    const chatSocket = new WebSocket(
-        'ws://'
-        + 'recipe-db-p4.herokuapp.com/ws/chat/'
-        + roomName
-        + '/'
-    );
+// const connect = () => {
+//     const chatSocket = new WebSocket(
+//         'ws://'
+//         + 'recipe-db-p4.herokuapp.com/ws/chat/'
+//         + roomName
+//         + '/'
+//     );
     
-    chatSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
+//     chatSocket.onclose = function(e) {
+//         console.error('Chat socket closed unexpectedly');
+//     };
     
-}
+// }
 
 // Get post
 const WAIT_TIME = 5000

@@ -30,13 +30,13 @@ function CreateForm(props) {
     }]
     
     // Context
-    const { currentUser, inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe, recipeInfo, setRecipeInfo, loading, setLoading } = useContext(DataContext)
+    const { currentUser, inputState, setInputState, recipeTitle, setRecipeTitle, initialRecipe, setRecipeInfo, loading, setLoading } = useContext(DataContext)
 
     // History
     const history = useHistory()
 
     // State
-    const [selectedFile, setSelectedFile] = useState(null)
+    // const [selectedFile, setSelectedFile] = useState(null)
     const [inputIngredient, setInputIngredient] = useState(initialIngredients)
     const [inputEquipment, setInputEquipment] = useState(initialEquipment)
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
@@ -158,15 +158,15 @@ function CreateForm(props) {
     }
  
     // handle file change for image upload
-    const onFileChange = (event) => {
-        setSelectedFile(event.target.files[0])
-    }
+    // const onFileChange = (event) => {
+    //     setSelectedFile(event.target.files[0])
+    // }
 
 
-    const onFileUpload = () => {
-        setInputState({...inputState, 'image': selectedFile.name})
+    // const onFileUpload = () => {
+    //     setInputState({...inputState, 'image': selectedFile.name})
 
-    }
+    // }
 
     // Remove Button Function
     const handleRemoveIngredient = index => {

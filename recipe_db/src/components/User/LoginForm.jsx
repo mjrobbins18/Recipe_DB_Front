@@ -15,7 +15,6 @@ function LoginForm(props) {
     
     // State
     const [formState, setState] = useState(initialState)
-    const [data, setData] = useState({})
     const [errorChecker, setErrorChecker] = useState(false)
     
     // History

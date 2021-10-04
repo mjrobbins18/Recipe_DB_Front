@@ -3,7 +3,7 @@ import '../../css/User/SignupForm.css'
 import axiosInstance from '../../AxiosAPI';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { FloatingLabel, Modal, Row, Col, ListGroup } from 'react-bootstrap';
+import { FloatingLabel, Row, Col} from 'react-bootstrap';
 import CreatedModal from './CreatedModal';
 import { useHistory } from 'react-router';
 
@@ -20,9 +20,6 @@ function SignupForm(props) {
 
     // State
     const [formState, setState] = useState(initialState)
-    const [errors, setErrors] = useState({errors:""
-    })
-  
     const [showModal, setShowModal] = useState(false)
     const [errorChecker, setErrorChecker] = useState(false)
     const [emailError, setEmailError] = useState(false)

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -36,19 +36,16 @@ function Update({ match }) {
     const { currentUser, recipeInfo, setRecipeInfo, loading, setLoading, inputState, setInputState, initialRecipe } = useContext(DataContext)
 
     // State
-    const [selectedFile, setSelectedFile] = useState(null)
+    // const [selectedFile, setSelectedFile] = useState(null)
     const [inputIngredient, setInputIngredient] = useState(initialIngredients)
     const [inputEquipment, setInputEquipment] = useState(initialEquipment)
     const [inputProcedure, setInputProcedure] = useState(initialProcedure)
-    const [showRecipeModal, setShowRecipeModal] = useState(false)
+    
 
     
     // history
     const history = useHistory()
    
-    
-    // open Modal
-    const handleShowRecipeModal = () => setShowRecipeModal(true) 
     
      // useeffect
      useEffect(() => {

@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 import '../../css/Search/SearchForm.css'
 import { useHistory } from 'react-router';
@@ -13,7 +12,7 @@ import axios from 'axios';
 function SearchForm(props) {
 
     // context
-    const {searchResults, setSearchResults} = useContext(DataContext)
+    const {setSearchResults} = useContext(DataContext)
 
     // history
     const history = useHistory()

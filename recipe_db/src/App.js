@@ -1,5 +1,5 @@
 import './App.css';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DataContext } from './components/Main/DataContext';
 import Landing from './components/Main/Landing';
 
@@ -17,9 +17,9 @@ function App() {
     }
 
 //State 
-const [currentUser, setCurrentUser] = useState(() => {
+const [currentUser] = useState(() => {
   const savedUser = localStorage.getItem('username')
-  return savedUser || ""
+  return savedUser || ""  
 })
   const [inputState, setInputState] = useState(initialRecipe)
   const [recipeTitle, setRecipeTitle] = useState({title: ""})
@@ -27,7 +27,7 @@ const [currentUser, setCurrentUser] = useState(() => {
   const [showInstructionModal, setShowInstructionModal] = useState(false)
   const [searchResults, setSearchResults] = useState([])
   const [recipeInfo, setRecipeInfo] = useState([])
-const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   
 return (

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../AxiosAPI';
 import '../../css/Recipe/Recipe.css'
 import Spinner from 'react-bootstrap/Spinner'
 import { HashLink } from 'react-router-hash-link';

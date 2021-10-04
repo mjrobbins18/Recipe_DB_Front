@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import '../../css/Recipe/RecipeCard.css'
 import Header from './Header';
-import axiosInstance from '../../AxiosAPI';
 import { Link } from 'react-router-dom';
 import altImage from '../../images/no-food.png'
 import axios from 'axios';

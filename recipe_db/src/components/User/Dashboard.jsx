@@ -6,15 +6,13 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import { useHistory } from 'react-router';
 import Pagination from 'react-bootstrap/Pagination'
-import PageItem from 'react-bootstrap/PageItem'
-import { render } from '@testing-library/react';
 
 
 
 function Dashboard(props) {
 
     // Context
-    const { currentUser, recipeInfo, setRecipeInfo } = useContext(DataContext)
+    const { currentUser, setRecipeInfo } = useContext(DataContext)
 
     // History
     const history = useHistory()

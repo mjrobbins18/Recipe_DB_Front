@@ -17,7 +17,7 @@ function TitleModal({ recipeID }) {
     
 
     //  Context
-    const { recipeTitle, setRecipeTitle,currentUser, showTitleModal, setShowTitleModal, showInstructionModal, setShowInstructionModal, recipeInfo, setRecipeInfo } = useContext(DataContext)
+    const { recipeTitle, setRecipeTitle,currentUser, showTitleModal, setShowTitleModal, setShowInstructionModal, } = useContext(DataContext)
  
      // handle title submit
      const handleTitleSubmit = (event) => {
