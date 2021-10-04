@@ -14,15 +14,15 @@ function About(props) {
             This site was created as the capstone project for GA's Software Engineering Immersive by Max Robbins
           </div>
             <div className = "aboutLinks">
-              <a href = 'https://www.linkedin.com/in/maxwell-robbins-1b614a23/'><img className = "linkImg" src = { linkedIn } alt = "linkedin"/></a>
+              <a href = 'https://www.linkedin.com/in/maxwell-robbins-1b614a23/' target="_blank" rel="noopener noreferrer"><img className = "linkImg" src = { linkedIn } alt = "linkedin"/></a>
               <OverlayTrigger
                     placement='top'
                     overlay={
                         <Tooltip>Portfolio</Tooltip>
                     }>
-              <a href = 'https://www.max-robbins.com'><img className = "linkImg" src = { m } alt = "mlogo"/></a>
+              <a href = 'https://www.max-robbins.com' target="_blank" rel="noopener noreferrer"><img className = "linkImg" src = { m } alt = "mlogo"/></a>
               </OverlayTrigger>
-              <a href = 'https://github.com/mjrobbins18'><img className = "linkImg" src = { github } alt = "github"/></a>
+              <a href = 'https://github.com/mjrobbins18' target="_blank" rel="noopener noreferrer"><img className = "linkImg" src = { github } alt = "github"/></a>
               
             </div>
           
