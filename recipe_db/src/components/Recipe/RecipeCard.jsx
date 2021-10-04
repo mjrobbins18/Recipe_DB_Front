@@ -22,7 +22,7 @@ function RecipeCard(props) {
         .catch(console.error)
     }, [])
    
-console.log(data)
+
     if(!data[0]){
         return(
           <div className = "loadDiv">

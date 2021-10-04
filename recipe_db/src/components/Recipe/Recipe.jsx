@@ -20,7 +20,7 @@ function Recipe({ match }) {
       .catch(console.error)
     }, [])
 
-    console.log(data)
+  
     if(!data.title){
       return(
         <div className = "loadDiv">

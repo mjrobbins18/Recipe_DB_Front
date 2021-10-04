@@ -30,7 +30,7 @@ function Dashboard(props) {
 
 
 
-console.log(createdRecipes)
+
     // Handle Delete Created Recipe
     const deleteRecipe = (event) => {
         axiosInstance.delete(`/recipes/${event.target.id}`)

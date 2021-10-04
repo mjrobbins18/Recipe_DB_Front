@@ -58,7 +58,7 @@ function CreateForm(props) {
         }
        
     }, [])
-    console.log(recipe)
+  
     // open Modal
     const handleShowRecipeModal = () => setShowRecipeModal(true) 
 

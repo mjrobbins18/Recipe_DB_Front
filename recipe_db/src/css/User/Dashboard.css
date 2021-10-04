@@ -217,10 +217,11 @@
         overflow-y: auto;
         overflow-x: auto;
     }
-    .pagination {
-        display: flex;
+    .paginationDiv {
+        padding-top: 5%;
         flex-direction: row;
-        justify-content: space-around;
-        width: 8vw;
+        justify-content: space-evenly;
+        width: 5vw;
+        margin-left: 40%;
     }
 }
