@@ -29,6 +29,7 @@ function Header(props) {
                     <li>User's have an interactive dashboard to see all their stuff: Created recipes, favorites, and more!</li>
                     <li>Weekly meal planner on the way.</li>
                     <li>Restaurant accounts coming soon!</li>
+                    <li>Click the icon at the top of the screen to navigate the site.</li>
                 </ul>
                 <div className = "buttonContainer">
                 <div className = "linkbtn grow">

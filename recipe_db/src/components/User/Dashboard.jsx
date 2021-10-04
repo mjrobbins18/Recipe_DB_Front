@@ -91,7 +91,7 @@ function Dashboard(props) {
             <Pagination onClick = { handleNext }>{items}</Pagination>
         </div>
     )
-    
+  
     return (
         <div className = "dashboardBack">
         <div className = "dashboardContainer">
