@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
@@ -9,7 +9,7 @@ import axiosInstance from '../../AxiosAPI';
 import { useHistory } from 'react-router-dom';
 import { FloatingLabel, Spinner } from 'react-bootstrap';
 import '../../css/Recipe/CreateForm.css'
-
+import S3 from 'react-aws-s3'
 
 function CreateForm(props) {
     //    Initial State
@@ -158,6 +158,36 @@ function CreateForm(props) {
     }
  
     // handle file change for image upload
+ 
+    const fileinput = useRef()
+  
+    const handleClick = event => {
+        event.preventDefault()
+        console.log(fileinput.current)
+        let file = fileinput.current.files[0]
+        let newFileName = fileinput.current.files[0].name
+        console.log(file)
+        console.log(newFileName)
+        const config = {
+            bucketName: process.env.REACT_APP_BUCKET_NAME,
+            region: process.env.REACT_APP_REGION,
+            accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+            secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
+        }
+       const ReactS3Client = new S3(config)
+       ReactS3Client.uploadFile(file, newFileName).then(data => {
+           console.log(data)
+           if(data.status === 204){
+               console.log("success")
+           }else {
+               console.log("fail")
+           }
+       })
+    }
+
+
+
+
     // const onFileChange = (event) => {
     //     setSelectedFile(event.target.files[0])
     // }
@@ -274,9 +304,14 @@ if(loading === true){
             </Col>
   
             <Col md>
-                {/* <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Control type="file" size ="lg"/>
-                </Form.Group> */}
+                <Form.Group controlId="formFile" className="mb-3">
+                    {/* <label>
+                        Upload Image:
+                        <input type='file' ref = { fileinput }/>
+                    </label> */}
+                    <Form.Control type = 'file' ref = { fileinput } size = 'lg'/>
+                    <Button onClick = { handleClick }></Button>
+                </Form.Group>
             </Col>
         </Row>
         <Row>

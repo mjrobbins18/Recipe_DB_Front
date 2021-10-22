@@ -53,7 +53,8 @@ const WAIT_TIME = 5000
 useEffect(() => {
     const id = setInterval(() => {
         axios.get(`https://recipe-db-p4.herokuapp.com/api/post/recipe/${recipeId}`)
-        .then(res =>  setPosts(res.data))
+        .then(res =>  {
+            setPosts(res.data)})
         .catch(err => console.log(err))
     }, 
     WAIT_TIME);
@@ -100,7 +101,13 @@ axiosInstance.post('/post/', {
     body: postState,
     recipe: recipeId
 })
-.then(res => console.log(res))
+.then(res => {
+    console.log(res)
+    axios.get(`https://recipe-db-p4.herokuapp.com/api/post/recipe/${recipeId}`)
+    .then(res =>  {
+        setPosts(res.data)})
+    .catch(err => console.log(err))
+})
 .catch(console.error)
 setPostState("")
 
