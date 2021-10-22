@@ -61,6 +61,14 @@ function CreateForm(props) {
   
     // open Modal
     const handleShowRecipeModal = () => setShowRecipeModal(true) 
+    // handle file change for image upload
+ 
+    const fileinput = useRef()
+  
+    const handleClick = () => {
+
+      
+    }
 
     // Handle Ingredients, Equipment, Procedure Submit
     const handleBottomSubmit = () => {
@@ -111,25 +119,49 @@ function CreateForm(props) {
 
     // handle submit
     const handleSubmit = (event) => {
+        
         event.preventDefault()
+            let file = fileinput.current.files[0]
+            let newFileName = fileinput.current.files[0].name
+            console.log(newFileName)
+            console.log(file)
+            const config = {
+                bucketName: process.env.REACT_APP_BUCKET_NAME,
+                region: process.env.REACT_APP_REGION,
+                accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+                secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
+            }
+           const ReactS3Client = new S3(config)
+           if(file.type === "image/png"  || 
+              file.type === "image/jpeg" || 
+              file.type === "image/jpg"  || 
+              file.type === "image.svg"    ){
             setLoading(true)
-            axiosInstance.post('/recipes/body/create',{
-                title: recipe.id,
-                category: inputState.category,
-                user: currentUser,
-                image_url: inputState.image_url,
-                dish_components: inputState.dish_components,
-                recipe_yield: inputState.recipe_yield,
-    
+            ReactS3Client.uploadFile(file, newFileName).then(data => {
+                console.log(data)
+                axiosInstance.post('/recipes/body/create',{
+                    title: recipe.id,
+                    category: inputState.category,
+                    user: currentUser,
+                    image_url: inputState.image_url,
+                    dish_components: inputState.dish_components,
+                    recipe_yield: inputState.recipe_yield,
+        
+                })
+                .then(handleBottomSubmit())
+                .then(res => {
+                    setLoading(false)
+                    
+                    console.log(res)})
+                .catch(console.error)
+                .finally(handleShowRecipeModal())
+                setRecipeTitle({title: ""})
             })
-            .then(handleBottomSubmit())
-            .then(res => {
-                setLoading(false)
-                console.log(res)})
-            .catch(console.error)
-            .finally(handleShowRecipeModal())
-            setRecipeTitle({title: ""})
-       
+           }else{
+               alert('file must be an image')
+           }
+           
+            
     }
     // handle change
     const handleChange = (event) => {
@@ -157,46 +189,6 @@ function CreateForm(props) {
         setInputProcedure(list);
     }
  
-    // handle file change for image upload
- 
-    const fileinput = useRef()
-  
-    const handleClick = event => {
-        event.preventDefault()
-        console.log(fileinput.current)
-        let file = fileinput.current.files[0]
-        let newFileName = fileinput.current.files[0].name
-        console.log(file)
-        console.log(newFileName)
-        const config = {
-            bucketName: process.env.REACT_APP_BUCKET_NAME,
-            region: process.env.REACT_APP_REGION,
-            accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-            secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
-        }
-       const ReactS3Client = new S3(config)
-       ReactS3Client.uploadFile(file, newFileName).then(data => {
-           console.log(data)
-           if(data.status === 204){
-               console.log("success")
-           }else {
-               console.log("fail")
-           }
-       })
-    }
-
-
-
-
-    // const onFileChange = (event) => {
-    //     setSelectedFile(event.target.files[0])
-    // }
-
-
-    // const onFileUpload = () => {
-    //     setInputState({...inputState, 'image': selectedFile.name})
-
-    // }
 
     // Remove Button Function
     const handleRemoveIngredient = index => {
@@ -305,12 +297,7 @@ if(loading === true){
   
             <Col md>
                 <Form.Group controlId="formFile" className="mb-3">
-                    {/* <label>
-                        Upload Image:
-                        <input type='file' ref = { fileinput }/>
-                    </label> */}
                     <Form.Control type = 'file' ref = { fileinput } size = 'lg'/>
-                    <Button onClick = { handleClick }></Button>
                 </Form.Group>
             </Col>
         </Row>
