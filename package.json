@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "react-aws-s3": "^1.5.0",
+    "s3": "^4.4.0",
     "socket.io-client": "^4.2.0"
   }
 }
