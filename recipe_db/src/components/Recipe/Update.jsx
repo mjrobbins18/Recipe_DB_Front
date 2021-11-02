@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import axiosInstance from '../../AxiosAPI';
 import { DataContext } from '../Main/DataContext';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
 import { useHistory } from 'react-router';
 import UpdateTitleModal from './UpdateTitleModal';
+import S3 from 'react-aws-s3'
 
 function Update({ match }) {
     // recipe id
@@ -45,6 +46,10 @@ function Update({ match }) {
     
     // history
     const history = useHistory()
+
+     // handle file change for image upload
+ 
+     const fileinput = useRef()
    
     
      // useeffect
@@ -178,16 +183,35 @@ function Update({ match }) {
     const handleSubmit = (event) => {
         event.preventDefault()
             if(inputState.id){
-                axiosInstance.put(`/recipes/body/${inputState.id}`,{
-                    title: recipeID,
-                    category: inputState.category,
-                    user: currentUser,
-                    image_url: inputState.image_url,
-                    dish_components: inputState.dish_components,
-                    recipe_yield: inputState.recipe_yield,
-        
-                })
+                        let file = fileinput.current.files[0]
+                        let newFileName = fileinput.current.files[0].name
+                        console.log(newFileName)
+                        console.log(file)
+                        const config = {
+                            bucketName: process.env.REACT_APP_BUCKET_NAME,
+                            region: process.env.REACT_APP_REGION,
+                            accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+                            secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
+                        }
+                const ReactS3Client = new S3(config)
+                if(file.type === "image/png"  || 
+                    file.type === "image/jpeg" || 
+                    file.type === "image/jpg"  || 
+                    file.type === "image.svg"    ){
+                    setLoading(true)
+                    ReactS3Client.uploadFile(file, newFileName).then(data => {
+                        console.log(data)
+                        axiosInstance.put(`/recipes/body/${inputState.id}`,{
+                            title: recipeID,
+                            category: inputState.category,
+                            user: currentUser,
+                            image: newFileName,
+                            image_url: inputState.image_url,
+                            dish_components: inputState.dish_components,
+                            recipe_yield: inputState.recipe_yield,
                 
+                        })
+            
                 .then(handleBottomSubmit())
                 .then(res => {
                     setLoading(false)
@@ -196,23 +220,44 @@ function Update({ match }) {
                     window.location.reload()
                 })
                 .catch(console.error)
+            })}
             }else{
-                axiosInstance.post('/recipes/body/create',{
-                    title: recipeID,
-                    category: inputState.category,
-                    user: currentUser,
-                    image_url: inputState.image_url,
-                    dish_components: inputState.dish_components,
-                    recipe_yield: inputState.recipe_yield,
-        
-                })
+                let file = fileinput.current.files[0]
+                let newFileName = fileinput.current.files[0].name
+                console.log(newFileName)
+                console.log(file)
+                const config = {
+                    bucketName: process.env.REACT_APP_BUCKET_NAME,
+                    region: process.env.REACT_APP_REGION,
+                    accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+                    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
+                        }
+                const ReactS3Client = new S3(config)
+                if(file.type === "image/png"  || 
+                    file.type === "image/jpeg" || 
+                    file.type === "image/jpg"  || 
+                    file.type === "image.svg"    ){
+                    setLoading(true)
+                    ReactS3Client.uploadFile(file, newFileName).then(data => {
+                        console.log(data)
+                        axiosInstance.post('/recipes/body/create',{
+                            title: recipeID,
+                            category: inputState.category,
+                            user: currentUser,
+                            image: newFileName,
+                            image_url: inputState.image_url,
+                            dish_components: inputState.dish_components,
+                            recipe_yield: inputState.recipe_yield,
+                
+                        })
                 .then(handleBottomSubmit())
                 .then(res => {
                     setLoading(false)
                     console.log(res)})
                 .catch(console.error)
                 .finally(history.push('/'))
-            }
+                    
+        })}}
             
            
        
@@ -298,7 +343,7 @@ if(loading === true){
         <div>
             <div className = "recipeFormContainer">
 
-        
+            
 <div className = "recipeForm">
    
     <Form onSubmit = { handleSubmit }>
@@ -347,7 +392,7 @@ if(loading === true){
             className = "mb-3">
                 <Form.Control
                 id = 'image_url'
-                value = {inputState.image_url}
+                value = {inputState.image ? `https://mrnewbucket.s3.us-east-2.amazonaws.com/${inputState.image}` : inputState.image_url }
                 placeholder = "Image URL"
                 onChange = { handleChange }
                 />
@@ -355,11 +400,11 @@ if(loading === true){
 
         </Form.Group>
     </Col>
-    {/* <Col md>
+    <Col md>
         <Form.Group controlId="formFile" className="mb-3">
-            <Form.Control type="file" size ="lg" />
-        </Form.Group>
-    </Col> */}
+                    <Form.Control type = 'file' ref = { fileinput } size = 'lg'/>
+                </Form.Group>
+    </Col>
 </Row>
 <Row>
     <Col>

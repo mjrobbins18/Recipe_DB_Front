@@ -61,7 +61,7 @@ function RecipeCard(props) {
                       
                         <div>
                           
-                          <Card.Img id = "cardImg" variant="top" alt="No Image Available" src={item.recipe_body.length === 0 ? altImage : item.recipe_body[0].image_url}/> 
+                          <Card.Img id = "cardImg" variant="top" alt="No Image Available" src={item.recipe_body.length === 0 ? altImage : item.recipe_body[0].image_url || `https://mrnewbucket.s3.us-east-2.amazonaws.com/${item.recipe_body[0].image}`}/> 
 
                         
                             <div className = "cardBody"> 

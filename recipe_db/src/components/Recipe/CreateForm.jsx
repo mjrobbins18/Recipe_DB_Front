@@ -61,14 +61,10 @@ function CreateForm(props) {
   
     // open Modal
     const handleShowRecipeModal = () => setShowRecipeModal(true) 
+    
     // handle file change for image upload
  
     const fileinput = useRef()
-  
-    const handleClick = () => {
-
-      
-    }
 
     // Handle Ingredients, Equipment, Procedure Submit
     const handleBottomSubmit = () => {
@@ -143,6 +139,7 @@ function CreateForm(props) {
                     title: recipe.id,
                     category: inputState.category,
                     user: currentUser,
+                    image: newFileName,
                     image_url: inputState.image_url,
                     dish_components: inputState.dish_components,
                     recipe_yield: inputState.recipe_yield,
