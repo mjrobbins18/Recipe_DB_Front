@@ -39,7 +39,7 @@ function Recipe({ match }) {
                 <p> Created by: {data.user}</p>
                 <p>{data.recipe_body ? data.recipe_body[0].dish_components : null}</p>
               </span>
-              <div className = "linkbtn grow">
+              <div className = "linkbtn">
                 <HashLink className = "link" to = {`/recipe/${recipeId}/#comments`}>Comments</HashLink>
                 </div>
                 <br/>

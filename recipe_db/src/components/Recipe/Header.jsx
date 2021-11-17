@@ -32,11 +32,11 @@ function Header(props) {
                     <li>Click the icon at the top of the screen to navigate the site.</li>
                 </ul>
                 <div className = "buttonContainer">
-                <div className = "linkbtn grow">
+                <div className = "linkbtn">
                 <HashLink className = "link " to = {`/recipes/#browse`}>Check Out Some Recipes!</HashLink>
                 </div>
                 {currentUser ? 
-                <Button variant = "success" className = "grow " onClick = {() => history.push('/create')}>New Recipe</Button>
+                <Button variant = "success" onClick = {() => history.push('/create')}>New Recipe</Button>
                 : null }
                 </div>
                 
