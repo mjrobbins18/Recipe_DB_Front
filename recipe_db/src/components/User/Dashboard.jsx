@@ -89,7 +89,7 @@ function Dashboard(props) {
     const [pages, setPages] = useState({
         currentPage: 1
     })
-    const itemsPerPage = 8
+    const itemsPerPage = 6
 
     const handleNext = (event) => {
         setPages({...pages, 'currentPage': Number(event.target.id)})
@@ -136,9 +136,9 @@ function Dashboard(props) {
                 <div id = "createdRecipes">
 
                
-                <div className = "dashHeading">
+                <div className = "dashHeading1">
                     Recipes Created by {currentUser}
-                    <Button variant = "success" onClick = {() => history.push('/create')}>Create</Button>
+                    <Button variant = "success" id = "createbtn" onClick = {() => history.push('/create')}>Create</Button>
                 </div>
                 {loading ?
           <div className = "loadDiv">
@@ -195,7 +195,7 @@ function Dashboard(props) {
                     post.recipe_post.map((item => {
                         return (
                             
-                            <div className = "createdItems">
+                            <div className = "createdItems1">
                             <Link to = {`/recipe/${item.recipe}`} id = "recipeLink" className = "nav-link" >{item.user}: {item.body}</Link>
                             </div>
                         )
