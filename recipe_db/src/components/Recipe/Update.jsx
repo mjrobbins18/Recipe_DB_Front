@@ -69,6 +69,7 @@ function Update({ match }) {
             }else{
                 setInputState(res.data.recipe_body[0])
                 setLoading(false)
+                console.log(res.data)
             }
             })
         .catch(console.error)
@@ -178,11 +179,11 @@ function Update({ match }) {
                 })
     }
 
-    
     // handle submit
     const handleSubmit = (event) => {
         event.preventDefault()
             if(inputState.id){
+                if(fileinput.current.files[0] !== undefined){
                         let file = fileinput.current.files[0]
                         let newFileName = fileinput.current.files[0].name
                         console.log(newFileName)
@@ -221,6 +222,27 @@ function Update({ match }) {
                 })
                 .catch(console.error)
             })}
+                }else{
+                        axiosInstance.put(`/recipes/body/${inputState.id}`,{
+                            title: recipeID,
+                            category: inputState.category,
+                            user: currentUser,
+                            image: "",
+                            image_url: inputState.image_url,
+                            dish_components: inputState.dish_components,
+                            recipe_yield: inputState.recipe_yield,
+                
+                        })
+            
+                .then(handleBottomSubmit())
+                .then(res => {
+                    setLoading(false)
+                    console.log(res)
+                    history.push('/')
+                    window.location.reload()
+                })
+                .catch(console.error)
+                }
             }else{
                 let file = fileinput.current.files[0]
                 let newFileName = fileinput.current.files[0].name

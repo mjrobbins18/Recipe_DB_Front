@@ -19,7 +19,7 @@ function Recipe({ match }) {
       .catch(console.error)
     }, [])
 
-  
+  console.log(data)
     if(!data.title){
       return(
         <div className = "loadDiv">
@@ -46,7 +46,7 @@ function Recipe({ match }) {
                 {data.recipe_body ? <h4>Yield:  {data.recipe_body[0].recipe_yield} </h4>: null}
               </div>
               
-              <img className = 'recipeImg' src = {data.recipe_body? data.recipe_body[0].image_url : altImage} alt = {data.title}/>
+              <img className = 'recipeImg' src = {data.recipe_body? data.recipe_body[0].image_url || `https://mrnewbucket.s3.us-east-2.amazonaws.com/${data.recipe_body[0].image}`: altImage} alt = {data.title}/>
               
           </div>
           <div className = "ingEquipDiv">

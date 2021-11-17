@@ -21,7 +21,7 @@ function Results(props) {
                         <Col>
                         <Link id = "cardLink" to = {`/recipe/${item.id}`}>
                         <Card className = "recipeCard grow" >
-                            <Card.Img id = "cardImg" variant="top" src={item.recipe_body[0].image_url ? item.recipe_body[0].image_url : altImage}/>
+                            <Card.Img id = "cardImg" variant="top" src={item.recipe_body ? item.recipe_body[0].image_url || `https://mrnewbucket.s3.us-east-2.amazonaws.com/${item.recipe_body[0].image}`: altImage}/>
                             <div className = "cardBody"> 
                             <div className = "cardTitle"> 
                             <Card.Title><div className = "cardTitle"><h2>{item.title}</h2><p id = "cardUser"> Created by {item.user}</p></div></Card.Title>

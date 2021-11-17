@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import { useHistory } from 'react-router';
 import Pagination from 'react-bootstrap/Pagination'
-
+import S3 from 'react-aws-s3'
 
 
 function Dashboard(props) {
@@ -19,6 +19,7 @@ function Dashboard(props) {
 
     // State
     const [createdRecipes, setCreatedRecipes] = useState([])
+    
 
     const WAIT_TIME = 5000
     useEffect(() => {
@@ -35,10 +36,30 @@ function Dashboard(props) {
 
     // Handle Delete Created Recipe
     const deleteRecipe = (event) => {
-        axiosInstance.delete(`/recipes/${event.target.id}`)
+        axiosInstance.get(`/recipes/${event.target.id}`)
+        .then(res => {
+            if(res.data.recipe_body[0].image){
+            let fileName = res.data.recipe_body[0].image
+            const config = {
+                bucketName: process.env.REACT_APP_BUCKET_NAME,
+                region: process.env.REACT_APP_REGION,
+                accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+                secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
+            }
+           const ReactS3Client = new S3(config)
+            ReactS3Client.deleteFile(fileName).then(data => {
+                console.log(data)
+            })
+        }
+        })
+        
+        .then(axiosInstance.delete(`/recipes/${event.target.id}`)
         .then(res => console.log(res))
         // .finally(window.location.reload())
         .catch(console.error)
+        )
+        .catch(console.error)
+
     }
 
     // Handle Update
