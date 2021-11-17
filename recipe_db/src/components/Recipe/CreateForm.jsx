@@ -117,6 +117,9 @@ function CreateForm(props) {
     const handleSubmit = (event) => {
         
         event.preventDefault()
+        if(fileinput.current.files[0] !== undefined){
+
+        
             let file = fileinput.current.files[0]
             let newFileName = fileinput.current.files[0].name
             console.log(newFileName)
@@ -157,7 +160,27 @@ function CreateForm(props) {
            }else{
                alert('file must be an image')
            }
-           
+        }else{
+            setLoading(true)
+            axiosInstance.post('/recipes/body/create',{
+                title: recipe.id,
+                category: inputState.category,
+                user: currentUser,
+                image: "",
+                image_url: inputState.image_url,
+                dish_components: inputState.dish_components,
+                recipe_yield: inputState.recipe_yield,
+    
+            })
+            .then(handleBottomSubmit())
+            .then(res => {
+                setLoading(false)
+                
+                console.log(res)})
+            .catch(console.error)
+            .finally(handleShowRecipeModal())
+            setRecipeTitle({title: ""})
+        }
             
     }
     // handle change

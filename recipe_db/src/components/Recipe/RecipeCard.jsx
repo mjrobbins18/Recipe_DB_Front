@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
@@ -9,29 +9,26 @@ import altImage from '../../images/no-food.png'
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner'
 import About from '../Main/About'
+import { DataContext } from '../Main/DataContext';
 
 function RecipeCard(props) {
     
     // State
-    const [data, setData] = useState({})
+    const [data, setData] = useState([])
+
+    // Context
+    const {loading, setLoading} = useContext(DataContext)
 
     useEffect(() => {
+      setLoading(true)
         axios.get('https://recipe-db-p4.herokuapp.com/api/recipes/view')
-        .then(res => setData(res.data))
+        .then(res => {
+          setData(res.data)
+          setLoading(false)})
         .catch(console.error)
     }, [])
    
 
-    if(!data[0]){
-        return(
-          <div className = "loadDiv">
-            <span>
-              <Spinner animation="border" variant = "primary"/>
-            </span>
-          </div>
-          
-        )
-      }else{
     return (
         <div>
 
@@ -43,10 +40,18 @@ function RecipeCard(props) {
             <div id = "browse">
                 <h1>Just for you</h1>
             </div>
-       
+      
+
+            {loading ?
+       <div className = "loadDiv">
+       <span>
+         <Spinner animation="border" variant = "primary"/>
+       </span>
+     </div>
+       :   
         <div className = "recipeCardContainer">
             <Row xs={1} md={4} className="g-4" id = "recRow">
-                    {data.map((item) => {
+           {data.map((item) => {
 
                     
                      
@@ -91,12 +96,12 @@ function RecipeCard(props) {
 })}
                 </Row>
             </div>
-            
+}        
             </div>
                   <About/>
         </div>
     
-    );}
+    );
 }
 
 export default RecipeCard;

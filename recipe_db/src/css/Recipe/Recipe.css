@@ -1,10 +1,12 @@
 @media (min-width: 480px) {
     .loadDiv {
         display: flex;
-        width: 100vw;
+        /* width: 100vw; */
         min-width: 20vw;
         height: 100vh;
         justify-content: center;
+        margin-top: 200px;
+       
     }
     .recipeImg {
         max-width: 30vw;

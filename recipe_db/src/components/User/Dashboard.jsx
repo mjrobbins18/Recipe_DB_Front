@@ -7,12 +7,13 @@ import Button from 'react-bootstrap/Button'
 import { useHistory } from 'react-router';
 import Pagination from 'react-bootstrap/Pagination'
 import S3 from 'react-aws-s3'
+import Spinner from 'react-bootstrap/Spinner'
 
 
 function Dashboard(props) {
 
     // Context
-    const { currentUser, setRecipeInfo } = useContext(DataContext)
+    const { currentUser, setRecipeInfo, loading, setLoading } = useContext(DataContext)
 
     // History
     const history = useHistory()
@@ -23,12 +24,17 @@ function Dashboard(props) {
 
     const WAIT_TIME = 5000
     useEffect(() => {
-        const id = setInterval(() => {
+        setLoading(true)
+        // const id = setInterval(() => {
         axiosInstance.get(`/recipes/user/${currentUser}`)
-        .then(res => setCreatedRecipes(res.data))
-        .catch(console.error)}
-        ,WAIT_TIME);
-        return () => clearInterval(id)
+        .then(res => {
+            setCreatedRecipes(res.data)
+            setLoading(false)
+        })
+        .catch(console.error)
+    // }
+        // ,WAIT_TIME);
+        // return () => clearInterval(id)
     }, [])
 
 
@@ -36,6 +42,7 @@ function Dashboard(props) {
 
     // Handle Delete Created Recipe
     const deleteRecipe = (event) => {
+        setLoading(true)
         axiosInstance.get(`/recipes/${event.target.id}`)
         .then(res => {
             if(res.data.recipe_body[0].image){
@@ -54,7 +61,15 @@ function Dashboard(props) {
         })
         
         .then(axiosInstance.delete(`/recipes/${event.target.id}`)
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res)
+            axiosInstance.get(`/recipes/user/${currentUser}`)
+            .then(res => {
+            setCreatedRecipes(res.data)
+            setLoading(false)
+        })
+        .catch(console.error)
+        })
         // .finally(window.location.reload())
         .catch(console.error)
         )
@@ -84,6 +99,7 @@ function Dashboard(props) {
     const currentItems = createdRecipes.slice(indexOfFirstItems, indexOfLastItems)
 
     const renderItems = currentItems.map((item, index) => {
+       
         return (
             <div className = "createdItems">
         <Link to = {`/recipe/${item.id}`} id = "recipeLink" className = "nav-link" key={index}>{item.title}</Link>
@@ -112,7 +128,7 @@ function Dashboard(props) {
             <Pagination onClick = { handleNext }>{items}</Pagination>
         </div>
     )
-  
+    
     return (
         <div className = "dashboardBack">
         <div className = "dashboardContainer">
@@ -123,8 +139,27 @@ function Dashboard(props) {
                 <div className = "dashHeading">
                     Recipes Created by {currentUser}
                     <Button variant = "success" onClick = {() => history.push('/create')}>Create</Button>
-                </div>        
-                {renderItems}
+                </div>
+                {loading ?
+          <div className = "loadDiv">
+            <span>
+              <Spinner animation="border" variant = "primary"/>
+            </span>
+          </div>
+          : currentItems.map((item, index) => {
+       
+            return (
+                <div className = "createdItems">
+            <Link to = {`/recipe/${item.id}`} id = "recipeLink" className = "nav-link" key={index}>{item.title}</Link>
+            
+            <div id = "createdButtons">
+            <Button id = {item.id} variant = 'outline-primary' size = 'sm' onClick = { handleUpdate }>Update</Button>
+            <Button id = {item.id} variant = 'outline-secondary' size = 'sm' onClick = { deleteRecipe }>Delete</Button>
+            </div>
+            </div>
+            )
+        })
+}
                 <br />
                
                 </div>
@@ -148,7 +183,14 @@ function Dashboard(props) {
             <div className = "dashHeading">
                 Posts on Your Recipes
                 </div>
-                {createdRecipes.map(post => {
+                {loading ? 
+                <div className = "loadDiv">
+                <span>
+                  <Spinner animation="border" variant = "primary"/>
+                </span>
+              </div>
+              : 
+                createdRecipes.map(post => {
                     return (
                     post.recipe_post.map((item => {
                         return (
@@ -159,8 +201,8 @@ function Dashboard(props) {
                         )
                     }))
                     ) 
-                })}
-                
+                })
+            }
             </div>
         </div>
         </div>
