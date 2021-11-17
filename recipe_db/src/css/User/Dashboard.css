@@ -1,34 +1,26 @@
 @media (min-width: 480px){
-    .dashboardBack {
-        background: rgb(215, 243, 215);
-        background-image: url(../../images/limes.png);
-        padding: 2%;
-        
-    }
+   
     
     .dashboardContainer {
         display: flex;
-        width: 80vw;
-        height: 100vh;
-        margin: 0 auto;
-        box-shadow: 4px 4px 8px 2px grey;
+        width: 100%;
         background: rgb(206, 237, 252);
-        opacity: .9;
+        border-radius: 1em;
     }
     .dashHeading{
         display: flex;
         justify-content: space-between;
-        font-size: 20px;
-        padding: 2%;
-        border-bottom: 1px solid grey;
+        border-radius: 0.5em;
+        font-size: 25px;
+        padding: 3%;
         color: black;
         background: rgb(248, 234, 234);
-        min-height: 7vh;
+        min-height: 80px;
+        font-weight: bold;
     }
     .createdRecipeDiv {
         display: flex;
         flex-direction: column;
-        border-right: 1px solid grey;
         height: 100vh;
         width: 60vw;
         padding: 1%;
@@ -40,7 +32,8 @@
         flex-direction: row;
         justify-content: space-between;
         box-shadow: 1px 2px 4px 0px grey;
-        padding: 1%;
+        border-radius: 1em;
+        padding: 1.5%;
         background: white;
         margin-top: 1%;
         cursor: pointer;
@@ -49,35 +42,31 @@
         box-shadow: 2px 5px 8px 4px grey;
         
     }
-    .createdRecipeDiv span {
-        margin-top: 2%;
-    }
     #recipeLink {
-        font-size: 20px;
+        font-size: 18px;
         color: black;
         font-weight: 600;
     }
     .verticalContainer {
         display: flex;
         flex-direction: column;
-        height: 100vh;
         padding: 1%;
     }
     .createRecipeDiv {
         display: flex;
         flex-direction: column;
-        height: 30vh;
-        width: 26vw;
         background: rgb(245, 215, 215);
         color: white;
         bottom: 0;
         position: absolute;
         box-shadow: 1px 2px 4px 0px grey;
-
-        
        
     }
-  
+    #createdButtons{
+        display: flex;
+        max-height: 60px;
+        padding: 1%;
+    }
     .createRecipeDiv:hover {
         box-shadow: 2px 5px 8px 4px grey;
         color: white;
@@ -91,13 +80,11 @@
         cursor: pointer;
     }
     .favoriteRecipeDiv {
-        border-right: 1px solid grey;
         height: 100vh;
         width: 25vw;
     }
     .postsOnYourRecipeDiv {
         padding: 1%;
-        height: 100vh;
         width: 35vw;
         overflow-y: auto;
         overflow-x: auto;
@@ -107,77 +94,80 @@
         flex-direction: row;
         justify-content: space-evenly;
         width: 5vw;
-        margin-left: 40%;
+        margin-top: 565px;
+        margin-left: 18%;
+        position: absolute;
        
     }
 }
 
 @media  (max-width: 480px){
-    .dashboardBack {
-        background: rgb(215, 243, 215);
-        background-image: url(../../images/limes.png);
-        background-size: cover;
-        height: 100%;
-    }
     
-    .dashboardContainer {
+    /* .dashboardContainer {
         display: flex;
         flex-direction: column;
         width: 95vw;
         margin-left: 2%;
         margin-bottom: 10%;
         margin-top: 13%;
-        height: 150vh;
-        box-shadow: 4px 4px 8px 2px grey;
-        background: rgb(206, 237, 252);
+        height: 160vh;
         opacity: .9;
-    }
+    } */
     .dashHeading{
         display: flex;
         justify-content: space-between;
-        font-size: 20px;
-        padding: 2%;
-        width: 93vw;
-        border-bottom: 1px solid grey;
+        font-size: 25px;
+        padding: 4%;
+        width: 100vw;
+        border-radius: 1em;
         color: black;
         background: rgb(248, 234, 234);
         min-height: 7vh;
+        font-weight: bold;
+        margin-top: 15px;
+        
     }
     .createdRecipeDiv {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 100vh;
+        height: 820px;
         width: 95vw;
         padding: 1%;
-        
+    }
+    #createdRecipes{
+        min-height: 600px;
     }
     .createdItems {
+        width: 98vw;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        border-radius: 1em;
         box-shadow: 1px 2px 4px 0px grey;
-        padding: 1%;
+        padding: 2%;
         background: white;
-        margin-top: 1%;
+        margin-top: 2%;
         cursor: pointer;
+        
+    }
+    #createdButtons{
+        display: flex;
+        max-height: 40px;
     }
     .createdItems:hover {
         box-shadow: 2px 5px 8px 4px grey;
         
     }
-    .createdRecipeDiv span {
-        margin-top: 2%;
-    }
+ 
     #recipeLink {
-        font-size: 20px;
+        font-size: 18px;
         color: black;
         font-weight: 600;
     }
     .verticalContainer {
         display: flex;
         flex-direction: column;
-        height: 100vh;
         padding: 1%;
     }
     .createRecipeDiv {
@@ -207,21 +197,22 @@
         cursor: pointer;
     }
     .favoriteRecipeDiv {
-        height: 50vh;
+        height:100px;
         width: 93vw;
     }
     .postsOnYourRecipeDiv {
         padding: 1%;
-        height: 500vh;
-        width: 93vw;
-        overflow-y: auto;
-        overflow-x: auto;
+        min-height: 700px;
+        width: 100vw;
+       
     }
     .paginationDiv {
-        padding-top: 5%;
+        margin-top: 800px;
         flex-direction: row;
         justify-content: space-evenly;
         width: 5vw;
         margin-left: 40%;
+        position: absolute;
+        z-index: -1;
     }
 }

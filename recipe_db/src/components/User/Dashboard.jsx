@@ -74,7 +74,7 @@ function Dashboard(props) {
     const [pages, setPages] = useState({
         currentPage: 1
     })
-    const itemsPerPage = 9
+    const itemsPerPage = 8
 
     const handleNext = (event) => {
         setPages({...pages, 'currentPage': Number(event.target.id)})
@@ -88,10 +88,10 @@ function Dashboard(props) {
             <div className = "createdItems">
         <Link to = {`/recipe/${item.id}`} id = "recipeLink" className = "nav-link" key={index}>{item.title}</Link>
         
-        <span>
+        <div id = "createdButtons">
         <Button id = {item.id} variant = 'outline-primary' size = 'sm' onClick = { handleUpdate }>Update</Button>
         <Button id = {item.id} variant = 'outline-secondary' size = 'sm' onClick = { deleteRecipe }>Delete</Button>
-        </span>
+        </div>
         </div>
         )
     })
@@ -117,7 +117,7 @@ function Dashboard(props) {
         <div className = "dashboardBack">
         <div className = "dashboardContainer">
             <div className = "createdRecipeDiv">
-                <div>
+                <div id = "createdRecipes">
 
                
                 <div className = "dashHeading">
