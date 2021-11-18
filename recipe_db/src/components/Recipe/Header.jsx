@@ -5,11 +5,11 @@ import { HashLink } from 'react-router-hash-link';
 import Button from 'react-bootstrap/Button'
 import { useHistory } from 'react-router';
 import { DataContext } from '../Main/DataContext';
-
+import salad from '../../images/salad.png'
 function Header(props) {
     
     // Context
-    const {currentUser} = useContext(DataContext)
+    const {currentUser, setBackground} = useContext(DataContext)
     
     // history 
     const history = useHistory()
@@ -36,7 +36,8 @@ function Header(props) {
                 <HashLink className = "link " to = {`/recipes/#browse`}>Check Out Some Recipes!</HashLink>
                 </div>
                 {currentUser ? 
-                <Button variant = "success" onClick = {() => history.push('/create')}>New Recipe</Button>
+                <Button variant = "success" onClick = {() => {setBackground(`url(${salad})`)
+                history.push('/create')}}>New Recipe</Button>
                 : null }
                 </div>
                 

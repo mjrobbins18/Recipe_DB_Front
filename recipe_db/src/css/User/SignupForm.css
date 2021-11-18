@@ -1,4 +1,7 @@
 @media (min-width: 480px) {
+    #white{
+        background: white;
+    }
     .formContainer {
         display: flex;
         flex-direction: column;

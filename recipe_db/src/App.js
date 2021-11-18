@@ -28,7 +28,8 @@ const [currentUser] = useState(() => {
   const [searchResults, setSearchResults] = useState([])
   const [recipeInfo, setRecipeInfo] = useState([])
   const [loading, setLoading] = useState(false)
-
+  const [background, setBackground] = useState(`none`)
+  const [backgroundSize, setBackgroundSize] = useState()
   
 return (
   <DataContext.Provider value = {{currentUser, 
@@ -46,7 +47,11 @@ return (
                                   recipeInfo,
                                   setRecipeInfo,
                                   loading,
-                                  setLoading,}}>
+                                  setLoading,
+                                  background,
+                                  setBackground,
+                                  backgroundSize,
+                                  setBackgroundSize,}}>
   <div>
       <Landing/>
   </div>

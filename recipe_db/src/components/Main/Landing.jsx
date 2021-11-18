@@ -21,7 +21,7 @@ import HeaderPhone from './HeaderPhone';
 
 function Landing(props) {
     // Context
-    const { currentUser } = useContext(DataContext)
+    const { currentUser, background, setBackground } = useContext(DataContext)
     // State
     const [showSidebar, setShowSidebar ] = useState(false)
 
@@ -29,7 +29,7 @@ function Landing(props) {
     const handleShowSidebar = () => setShowSidebar(true)
     
     return (
-        <div>
+        <div id = "landing">
             <nav>
             <HeaderPhone/>
             <OverlayTrigger
@@ -47,11 +47,11 @@ function Landing(props) {
                              setShowSidebar = { setShowSidebar }  />
             </nav>
 
-            <main>
+            <main style = {{backgroundImage: background}}>
                 
                     <Route exact path = '/login' render = { Login }/>
                     <Route exact path = '/signup' render = { Signup }/>
-                    <Route exact path = '/create' render = { Create }/>
+                    <Route exact path = '/create' render = { Create } />
                     <Route exact path = '/create/body' render = { FormContainer } />
                     <Route exact path = '/recipes' render = { RecipeCardCont }/>
                     <Route exact path = '/recipe/:id'  render = { routerProps => <RecipeCont match = { routerProps.match }/>}/>

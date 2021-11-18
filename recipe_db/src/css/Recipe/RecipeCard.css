@@ -1,6 +1,9 @@
 
 
 @media (min-width: 480px){
+    #main{
+        background-color: white;
+    }
     .headerContainer {
         background-image: url(../../images/banner1.jpg) ;
         background-size:cover;
